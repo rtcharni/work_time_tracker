@@ -9,25 +9,34 @@ import {
   IconButton,
   ListSubheader
 } from "@material-ui/core";
+
 import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRounded";
+import { useHistory } from "react-router-dom";
 
 const tileData: any[] = [
   {
     img: `https://img.favpng.com/13/19/9/time-icon-png-favpng-rhQrgcFrGpBniUBzTXqGxttHd.jpg`,
     title: "Image",
     cols: 1,
-    action: "New Time Entry"
+    actionText: "New Time Entry",
+    actionUrl: "/addworkentry"
   },
   {
     img: `https://cdn.pixabay.com/photo/2017/02/16/16/01/hours-2071706_960_720.png`,
     title: "Image",
     cols: 1,
-    action: "New Work Entry"
+    actionText: "New Work Entry",
+    actionUrl: "/addworkentry"
   }
 ];
 
 const FrontpageLayout = () => {
   const classes = useStyles();
+  const routerHistory = useHistory();
+
+  const redirectToActionUrl = (actionUrl: string) => {
+    routerHistory.push(actionUrl);
+  };
 
   return (
     <React.Fragment>
@@ -39,11 +48,12 @@ const FrontpageLayout = () => {
               <GridListTile key={tile.img} cols={tile.cols | 1}>
                 <img src={tile.img} alt={tile.title} />
                 <GridListTileBar
-                  title={tile.action}
+                  title={tile.actionText}
                   // subtitle={<span>by: LOL</span>}
                   actionIcon={
                     <IconButton
-                    // className={classes.icon}
+                      onClick={() => redirectToActionUrl(tile.actionUrl)}
+                      // className={classes.icon}
                     >
                       <AddCircleOutlineRoundedIcon />
                     </IconButton>
