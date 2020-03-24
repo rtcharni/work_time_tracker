@@ -1,9 +1,10 @@
 import React, { useState, Props, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { Container } from "@material-ui/core";
+import { Container, Snackbar } from "@material-ui/core";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import { Config } from "../../../../models";
+import MuiAlert from "@material-ui/lab/Alert";
 
 type AppProps = { config: Config };
 type AllFields = {
@@ -13,25 +14,23 @@ type AllFields = {
 };
 
 const AddWorkEntryForm = ({ config }: AppProps) => {
-  // const [state, setState] = useState({
-  //   workTitle: "Work title",
-  //   workDetails: "Work details",
-  //   customerName: "Customer name"
-  // });
   const [fields, setFields] = useState({} as AllFields);
+  const [showSnackbar, setShowSnackbar] = useState(false);
 
   useEffect((): void => {
-    // console.log(config);
     if (config) {
-      let formFields: any = {};
+      const formFields: any = {};
       for (const k of config.workFormFields) {
         formFields[k] = "";
       }
-      console.log("setting");
       setFields(formFields);
     }
   }, []);
 
+  /**
+   * Handles form input field change
+   * @param event change event
+   */
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -48,16 +47,23 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
     }
   };
 
+  /**
+   * Handles save button
+   */
   const handleSaveButton = (): void => {
-    if (validateForm()) {
+    if (validateFields()) {
       // form good make request to backend
-      console.log("Form Good");
+      console.log("Form Good", fields);
     } else {
       console.log("Form Bad");
+      setShowSnackbar(true);
     }
   };
 
-  const validateForm = (): boolean => {
+  /**
+   * Validates all fields
+   */
+  const validateFields = (): boolean => {
     for (const inputValue of Object.values(fields)) {
       if (!inputValue) {
         return false;
@@ -68,6 +74,21 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
 
   return (
     <React.Fragment>
+      <Snackbar
+        onClose={() => setShowSnackbar(false)}
+        open={showSnackbar}
+        autoHideDuration={3000}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center"
+        }}
+        message="Please correct fields :)"
+      >
+        {/* <MuiAlert variant="outlined" severity="error">
+          Please correct fields :)
+        </MuiAlert> */}
+      </Snackbar>
+
       <Container>
         <h4>Add new work entry</h4>
         {fields.workTitle !== undefined && (
