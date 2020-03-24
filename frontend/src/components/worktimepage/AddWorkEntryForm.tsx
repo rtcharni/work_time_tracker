@@ -105,21 +105,6 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
             />
           </div>
         )}
-        {fields.workDetails !== undefined && (
-          <div className="row">
-            <TextField
-              required
-              name="workDetails"
-              label="Details"
-              variant="outlined"
-              value={fields.workDetails}
-              onChange={handleInputChange}
-              error={fields.workDetails === "" ? true : false}
-              helperText={fields.workDetails === "" ? "Required field" : ""}
-            />
-          </div>
-        )}
-
         {fields.customerName !== undefined && (
           <div className="row">
             <TextField
@@ -131,6 +116,22 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
               onChange={handleInputChange}
               error={fields.customerName === "" ? true : false}
               helperText={fields.customerName === "" ? "Required field" : ""}
+            />
+          </div>
+        )}
+        {fields.workDetails !== undefined && (
+          <div className="row">
+            <TextField
+              multiline
+              rows="3"
+              required
+              name="workDetails"
+              label="Details"
+              variant="outlined"
+              value={fields.workDetails}
+              onChange={handleInputChange}
+              error={fields.workDetails === "" ? true : false}
+              helperText={fields.workDetails === "" ? "Required field" : ""}
             />
           </div>
         )}
