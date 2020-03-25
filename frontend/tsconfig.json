@@ -19,7 +19,12 @@
     "noEmit": true,
     "jsx": "react",
     "watch": true,
-    "baseUrl": "src"
+    "baseUrl": ".",
+    "paths": {
+      "@models": [
+        "../models/index.ts"
+      ]
+    }
   },
   "include": [
     "src"
