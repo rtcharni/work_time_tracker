@@ -13,11 +13,9 @@
                 "node_modules/*"
             ]
         },
-        "watch": true,
         "allowSyntheticDefaultImports": true
     },
     "include": [
         "./src/**/*"
     ],
-    "compileOnSave": true
 }
