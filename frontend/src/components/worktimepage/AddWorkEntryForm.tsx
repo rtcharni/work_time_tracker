@@ -1,4 +1,4 @@
-import React, { useState, Props, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { Container, Snackbar } from "@material-ui/core";
@@ -21,7 +21,7 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
     if (config) {
       const formFields: any = {};
       for (const k of config.workFormFields) {
-        formFields[k] = "";
+        formFields[k] = " ";
       }
       setFields(formFields);
     }
@@ -65,7 +65,7 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
    */
   const validateFields = (): boolean => {
     for (const inputValue of Object.values(fields)) {
-      if (!inputValue) {
+      if (!inputValue || !inputValue.trim()) {
         return false;
       }
     }
@@ -89,10 +89,10 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
         </MuiAlert> */}
       </Snackbar>
 
-      <Container>
+      <div className="d-flex flex-column align-items-center">
         <h4>Add new work entry</h4>
         {fields.workTitle !== undefined && (
-          <div className="row">
+          <div className="mb-3">
             <TextField
               required
               name="workTitle"
@@ -106,7 +106,7 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
           </div>
         )}
         {fields.customerName !== undefined && (
-          <div className="row">
+          <div className="mb-3">
             <TextField
               required
               name="customerName"
@@ -120,7 +120,7 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
           </div>
         )}
         {fields.workDetails !== undefined && (
-          <div className="row">
+          <div className="mb-3">
             <TextField
               multiline
               rows="3"
@@ -144,7 +144,7 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
         >
           Save
         </Button>
-      </Container>
+      </div>
     </React.Fragment>
   );
 };
