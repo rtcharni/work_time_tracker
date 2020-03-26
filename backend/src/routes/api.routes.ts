@@ -19,7 +19,7 @@ export class ApiRoutes {
       Router()
         // .get("/:id")
         .get("", workEntryController.getWorkEntries())
-      // .post("")
+        .post("", workEntryController.addWorkEntry())
       // .patch("/:id")
     );
   }
