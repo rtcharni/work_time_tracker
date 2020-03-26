@@ -1,6 +1,8 @@
 // import { Environment } from '@environment';
 import { App } from "./app";
+// tslint:disable-next-line: no-var-requires
+require("dotenv").config();
 
 // const server: App = new App(Environment.PORT);
-const server: App = new App(3005);
+const server: App = new App(process.env.PORT || 3005);
 server.run();

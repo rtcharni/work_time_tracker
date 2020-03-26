@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { Container, Snackbar } from "@material-ui/core";
+import { Snackbar } from "@material-ui/core";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import { Config } from "../../../../models";
 import MuiAlert from "@material-ui/lab/Alert";
 
 type AppProps = { config: Config };
 type AllFields = {
-  workTitle?: string;
-  workDetails?: string;
+  title?: string;
+  details?: string;
   customerName?: string;
 };
 
@@ -35,11 +35,11 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     switch (event.target.name) {
-      case "workTitle":
-        setFields({ ...fields, workTitle: event.target.value });
+      case "title":
+        setFields({ ...fields, title: event.target.value });
         break;
-      case "workDetails":
-        setFields({ ...fields, workDetails: event.target.value });
+      case "details":
+        setFields({ ...fields, details: event.target.value });
         break;
       case "customerName":
         setFields({ ...fields, customerName: event.target.value });
@@ -91,17 +91,17 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
 
       <div className="d-flex flex-column align-items-center">
         <h4>Add new work entry</h4>
-        {fields.workTitle !== undefined && (
+        {fields.title !== undefined && (
           <div className="mb-3">
             <TextField
               required
-              name="workTitle"
+              name="title"
               label="Title"
               variant="outlined"
-              value={fields.workTitle}
+              value={fields.title}
               onChange={handleInputChange}
-              error={fields.workTitle === "" ? true : false}
-              helperText={fields.workTitle === "" ? "Required field" : ""}
+              error={fields.title === "" ? true : false}
+              helperText={fields.title === "" ? "Required field" : ""}
             />
           </div>
         )}
@@ -119,19 +119,19 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
             />
           </div>
         )}
-        {fields.workDetails !== undefined && (
+        {fields.details !== undefined && (
           <div className="mb-3">
             <TextField
               multiline
               rows="3"
               required
-              name="workDetails"
+              name="details"
               label="Details"
               variant="outlined"
-              value={fields.workDetails}
+              value={fields.details}
               onChange={handleInputChange}
-              error={fields.workDetails === "" ? true : false}
-              helperText={fields.workDetails === "" ? "Required field" : ""}
+              error={fields.details === "" ? true : false}
+              helperText={fields.details === "" ? "Required field" : ""}
             />
           </div>
         )}

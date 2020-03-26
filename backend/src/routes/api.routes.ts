@@ -16,7 +16,11 @@ export class ApiRoutes {
     const workEntryController = new WorkEntryController();
     this.router.use(
       "/workentries",
-      Router().get("/", workEntryController.getWorkEntries())
+      Router()
+        // .get("/:id")
+        .get("", workEntryController.getWorkEntries())
+      // .post("")
+      // .patch("/:id")
     );
   }
 }

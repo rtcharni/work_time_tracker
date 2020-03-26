@@ -6,9 +6,9 @@ import cors from "cors";
 
 export class App {
   private app: any;
-  private port: number;
+  private port: number | string;
 
-  constructor(port: number) {
+  constructor(port: number | string) {
     this.app = express();
     this.port = port;
     this.initMiddlewares();

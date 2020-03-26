@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Config } from "../../models";
 
 const mockConfig: Config = {
-  workFormFields: ["workTitle", "workDetails", "customerName"]
+  workFormFields: ["title", "details", "customerName"]
 };
 
 export default function App() {
