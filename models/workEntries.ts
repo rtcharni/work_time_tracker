@@ -1,7 +1,7 @@
 export interface WorkEntry {
   id: number | undefined;
-  companyName: string;
-  workerId: number;
+  companyId: number;
+  userId: number;
   title: string;
   details: string;
   customerName: string;

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { WorkEntryController } from "../controllers";
+import { WorkEntriesController } from "../controllers";
 
 export class ApiRoutes {
   public router: Router;
@@ -13,7 +13,7 @@ export class ApiRoutes {
    * Initializes the router for '/workentries'.
    */
   private initWorkEntryRoutes(): void {
-    const workEntryController = new WorkEntryController();
+    const workEntryController = new WorkEntriesController();
     this.router.use(
       "/workentries",
       Router()

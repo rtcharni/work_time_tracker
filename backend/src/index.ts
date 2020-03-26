@@ -4,5 +4,5 @@ import { App } from "./app";
 require("dotenv").config();
 
 // const server: App = new App(Environment.PORT);
-const server: App = new App(process.env.PORT || 3005);
+const server: App = new App(process.env.PORT || 3001);
 server.run();

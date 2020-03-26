@@ -8,8 +8,9 @@ import {
 import { query, ValidationChain, param } from "express-validator";
 import { Utils } from "../utils";
 import { mockWorkEntries } from "../mockData/workentries";
+import { WorkEntriesService } from "../services/workEntries.service";
 
-export class WorkEntryController {
+export class WorkEntriesController {
   public getWorkEntries(): (
     | ValidationChain
     | RequestHandler
@@ -17,7 +18,9 @@ export class WorkEntryController {
   )[] {
     return [
       // Request param validators.
-      query("companyName").optional(),
+      query("companyId")
+        .isNumeric()
+        .optional(),
       query("userId")
         .isNumeric()
         .optional(),
@@ -27,8 +30,11 @@ export class WorkEntryController {
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          console.log(req.query);
-          res.send(mockWorkEntries);
+          const result = await WorkEntriesService.getWorkEntries(
+            req.query.companyId,
+            req.query.userId
+          );
+          res.send(result);
         } catch (error) {
           next(error);
         }
