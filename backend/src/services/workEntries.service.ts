@@ -27,5 +27,8 @@ export class WorkEntriesService {
     }
   }
 
-  // static async postWorkEntry();
+  static async addWorkEntry(newEntry: WorkEntry) {
+    // use service to add to database
+    return "null";
+  }
 }

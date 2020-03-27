@@ -6,10 +6,11 @@ import {
   ErrorRequestHandler
 } from "express";
 import { query, ValidationChain, param, body } from "express-validator";
-import { Utils } from "../utils";
+import { Utils } from "../backendUtils";
 import { mockWorkEntries } from "../mockData/workentries";
 import { WorkEntriesService } from "../services/workEntries.service";
 import { WorkEntry } from "../../../models";
+import { Validation } from "../../../utils";
 
 export class WorkEntriesController {
   public getWorkEntries(): (
@@ -72,13 +73,21 @@ export class WorkEntriesController {
         "startTime",
         "endTime"
       ]).exists(),
+      body().custom(value => {
+        if (Validation.isWorkEntryValid(value)) {
+          return true;
+        }
+        throw new Error("Work entry not valid");
+      }),
       // Error handler for request params
       Utils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          console.log(req.body);
-          const result: any = null;
+          // console.log(req.body);
+          const result: any = await WorkEntriesService.addWorkEntry(
+            req.body as WorkEntry
+          );
           res.send(result);
         } catch (error) {
           next(error);

@@ -1,5 +1,5 @@
 export interface WorkEntry {
-  id: number | undefined;
+  workEntryId: number | undefined;
   companyId: number;
   userId: number;
   title: string;

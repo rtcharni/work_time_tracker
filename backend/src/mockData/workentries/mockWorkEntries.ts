@@ -2,7 +2,7 @@ import { WorkEntry } from "../../../../models";
 
 export const mockWorkEntries: WorkEntry[] = [
   {
-    id: 1,
+    workEntryId: 1,
     companyId: 5,
     userId: 1,
     title: "App development",
@@ -13,7 +13,7 @@ export const mockWorkEntries: WorkEntry[] = [
     endTime: "2020-03-21T10:34:59.716Z"
   },
   {
-    id: 2,
+    workEntryId: 2,
     companyId: 5,
     userId: 1,
     title: "Sell monitors",
@@ -24,7 +24,7 @@ export const mockWorkEntries: WorkEntry[] = [
     endTime: "2020-03-22T10:00:59.716Z"
   },
   {
-    id: 3,
+    workEntryId: 3,
     companyId: 5,
     userId: 1,
     title: "App development",
@@ -35,7 +35,7 @@ export const mockWorkEntries: WorkEntry[] = [
     endTime: "2020-03-22T14:34:59.716Z"
   },
   {
-    id: 4,
+    workEntryId: 4,
     companyId: 6,
     userId: 2,
     title: "Fixing",
@@ -46,7 +46,7 @@ export const mockWorkEntries: WorkEntry[] = [
     endTime: "2020-03-23T10:34:59.716Z"
   },
   {
-    id: 5,
+    workEntryId: 5,
     companyId: 6,
     userId: 2,
     title: "Cleaning",
