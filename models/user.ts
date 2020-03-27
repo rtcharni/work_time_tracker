@@ -1,6 +1,6 @@
 export interface User {
-  userId: number; // PK - login
-  password: string; // password
+  userId: number; // PK - login name
+  password: string; // login password
   companyId: number; // FK
   email: string;
   firstName: string;

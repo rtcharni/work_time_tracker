@@ -5,7 +5,9 @@ export interface WorkEntry {
   title: string;
   details: string;
   customerName: string;
+  date: string;
   startTime: string;
   endTime: string;
   breakMIN: number;
+  charged: boolean;
 }
