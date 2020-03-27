@@ -1,2 +1,4 @@
 export * from "./config";
-export * from "./workEntries";
+export * from "./workEntry";
+export * from "./company";
+export * from "./user";
