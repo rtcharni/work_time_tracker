@@ -1,5 +1,5 @@
 export interface User {
-  userId: number; // PK - login name
+  userId: number | undefined; // PK - login name
   password: string; // login password
   companyId: number; // FK
   email: string;
