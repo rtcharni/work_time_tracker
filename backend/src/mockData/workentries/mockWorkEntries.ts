@@ -10,7 +10,10 @@ export const mockWorkEntries: WorkEntry[] = [
     customerName: "Sebu",
     breakMIN: 0,
     startTime: "2020-03-21T08:34:59.716Z",
-    endTime: "2020-03-21T10:34:59.716Z"
+
+    endTime: "2020-03-21T10:34:59.716Z",
+    date: "2020-03-21T08:34:59.716Z",
+    charged: true
   },
   {
     workEntryId: 2,
@@ -21,7 +24,10 @@ export const mockWorkEntries: WorkEntry[] = [
     customerName: "Fujitsu",
     breakMIN: 30,
     startTime: "2020-03-22T06:00:59.716Z",
-    endTime: "2020-03-22T10:00:59.716Z"
+
+    endTime: "2020-03-22T10:00:59.716Z",
+    date: "2020-03-22T06:00:59.716Z",
+    charged: true
   },
   {
     workEntryId: 3,
@@ -32,7 +38,10 @@ export const mockWorkEntries: WorkEntry[] = [
     customerName: "Sebu",
     breakMIN: 20,
     startTime: "2020-03-22T12:34:59.716Z",
-    endTime: "2020-03-22T14:34:59.716Z"
+
+    endTime: "2020-03-22T14:34:59.716Z",
+    date: "2020-03-22T12:34:59.716Z",
+    charged: false
   },
   {
     workEntryId: 4,
@@ -43,7 +52,10 @@ export const mockWorkEntries: WorkEntry[] = [
     customerName: "Toshiba",
     breakMIN: 0,
     startTime: "2020-03-23T08:34:59.716Z",
-    endTime: "2020-03-23T10:34:59.716Z"
+
+    endTime: "2020-03-23T10:34:59.716Z",
+    date: "2020-03-23T08:34:59.716Z",
+    charged: false
   },
   {
     workEntryId: 5,
@@ -54,6 +66,9 @@ export const mockWorkEntries: WorkEntry[] = [
     customerName: "Katja",
     breakMIN: 0,
     startTime: "2020-03-23T14:12:59.716Z",
-    endTime: "2020-03-23T20:56:59.716Z"
+
+    endTime: "2020-03-23T20:56:59.716Z",
+    date: "2020-03-23T14:12:59.716Z",
+    charged: false
   }
 ];
