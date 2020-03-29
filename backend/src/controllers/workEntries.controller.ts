@@ -7,7 +7,7 @@ import {
 } from "express";
 import { query, ValidationChain, param, body } from "express-validator";
 import { Utils } from "../backendUtils";
-import { mockWorkEntries } from "../mockData/workentries";
+import { mockWorkEntries } from "../mockData";
 import { WorkEntriesService } from "../services/workEntries.service";
 import { WorkEntry } from "../../../models";
 import { Validation } from "../../../utils";

@@ -1,5 +1,5 @@
 import { WorkEntry } from "../../../models";
-import { mockWorkEntries } from "../mockData/workentries";
+import { mockWorkEntries } from "../mockData";
 import { Database } from "./database.init";
 import { Queries } from "./database.queries";
 

@@ -1,4 +1,4 @@
-import { WorkEntry } from "../../../../models";
+import { WorkEntry } from "../../../models";
 
 export const mockWorkEntries: WorkEntry[] = [
   {

@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { WorkEntriesController } from "../controllers";
+import {
+  WorkEntriesController,
+  CompaniesController,
+  UsersController
+} from "../controllers";
 
 export class ApiRoutes {
   public router: Router;
@@ -7,6 +11,8 @@ export class ApiRoutes {
   constructor() {
     this.router = Router();
     this.initWorkEntryRoutes();
+    this.initCompaniesRoutes();
+    this.initUsersRoutes();
   }
 
   /**
@@ -22,5 +28,18 @@ export class ApiRoutes {
         .post("", workEntryController.addWorkEntry())
       // .patch("/:id")
     );
+  }
+
+  private initCompaniesRoutes(): void {
+    const companiesController = new CompaniesController();
+    this.router.use(
+      "/companies",
+      Router().get("", companiesController.getCompanies())
+    );
+  }
+
+  private initUsersRoutes(): void {
+    const usersController = new UsersController();
+    this.router.use("/users", Router().get("", usersController.getUsers()));
   }
 }
