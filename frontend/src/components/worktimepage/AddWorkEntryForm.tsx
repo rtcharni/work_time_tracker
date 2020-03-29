@@ -11,6 +11,11 @@ type AllFields = {
   title?: string;
   details?: string;
   customerName?: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  breakMIN: number;
+  charged: boolean;
 };
 
 const AddWorkEntryForm = ({ config }: AppProps) => {
@@ -65,9 +70,9 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
    */
   const validateFields = (): boolean => {
     for (const inputValue of Object.values(fields)) {
-      if (!inputValue || !inputValue.trim()) {
-        return false;
-      }
+      // if (!inputValue || !inputValue.trim()) {
+      //   return false;
+      // } FIX!!!!!!!
     }
     return true;
   };
