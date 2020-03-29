@@ -20,11 +20,15 @@ export class WorkEntriesController {
   )[] {
     return [
       // Request param validators.
-      query("companyId")
+      query("userId")
         .isNumeric()
         .toInt()
         .optional(),
-      query("userId")
+      query("workEntryId")
+        .isNumeric()
+        .toInt()
+        .optional(),
+      query("companyId")
         .isNumeric()
         .toInt()
         .optional(),
@@ -41,8 +45,9 @@ export class WorkEntriesController {
       async (req: Request, res: Response, next: NextFunction) => {
         try {
           const workEntries: WorkEntry[] = await WorkEntriesService.getWorkEntries(
-            req.query.companyId,
             req.query.userId,
+            req.query.workEntryId,
+            req.query.companyId,
             req.query.from,
             req.query.to
           );

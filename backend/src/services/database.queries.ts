@@ -46,7 +46,7 @@ export class Queries {
           if (usersIds.length === 1) builder.where("userId", usersIds[0]);
           if (usersIds.length > 1) builder.whereIn("userId", usersIds);
           if (companyId) builder.where("companyId", companyId);
-          if (from && to) builder.whereBetween("date", [from, to]); // not sure works or not
+          if (from && to) builder.whereBetween("date", [from, to]);
         });
     } catch (error) {
       console.error(`Error while fetching work entries`);

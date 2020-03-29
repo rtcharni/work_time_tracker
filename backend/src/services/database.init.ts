@@ -4,6 +4,7 @@ require("dotenv").config();
 
 function initDatabaseConnection() {
   try {
+    // TODO. In prod make real connection to real database
     const conn = knex({
       client: "pg",
       // connection: process.env.PG_CONNECTION_STRING,

@@ -10,16 +10,18 @@ export class WorkEntriesService {
    * @param userId id of the user
    */
   static async getWorkEntries(
-    companyId: number,
     userId: number,
+    workEntryId: number,
+    companyId: number,
     from: string,
     to: string
   ): Promise<WorkEntry[]> {
     if (process.env.INPROD) {
       // fetch from database with corrent params
+      // console.log(companyId, userId);
       return await Queries.getWorkEntries(
-        [userId],
-        undefined,
+        userId ? [userId] : undefined,
+        workEntryId,
         companyId,
         from,
         to
