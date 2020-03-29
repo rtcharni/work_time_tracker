@@ -1,5 +1,7 @@
 import { WorkEntry } from "../../../models";
 import { mockWorkEntries } from "../mockData/workentries";
+import { Database } from "./database.init";
+import { Queries } from "./database.queries";
 
 export class WorkEntriesService {
   /**
@@ -15,20 +17,24 @@ export class WorkEntriesService {
   ): Promise<WorkEntry[]> {
     if (process.env.INPROD) {
       // fetch from database with corrent params
-      return [];
+      return await Queries.getWorkEntries(
+        [userId],
+        undefined,
+        companyId,
+        from,
+        to
+      );
     } else {
-      let entries: WorkEntry[] = companyId
-        ? mockWorkEntries.filter(entry => entry.companyId === companyId)
-        : mockWorkEntries;
-      entries = userId
-        ? entries.filter(entry => entry.userId === userId)
-        : entries;
-      return entries;
+      return mockWorkEntries;
     }
   }
 
   static async addWorkEntry(newEntry: WorkEntry) {
     // use service to add to database
-    return "null";
+    if (process.env.INPROD) {
+      return await Queries.addGenericEntry(newEntry, "work_entries");
+    } else {
+      // Return added Mockentry of given parameted entry
+    }
   }
 }

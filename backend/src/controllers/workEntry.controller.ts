@@ -85,7 +85,7 @@ export class WorkEntriesController {
       async (req: Request, res: Response, next: NextFunction) => {
         try {
           // console.log(req.body);
-          const result: any = await WorkEntriesService.addWorkEntry(
+          const result: WorkEntry = await WorkEntriesService.addWorkEntry(
             req.body as WorkEntry
           );
           res.send(result);
