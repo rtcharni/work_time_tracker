@@ -23,7 +23,6 @@ export class ApiRoutes {
     this.router.use(
       "/workentries",
       Router()
-        // .get("/:id")
         .get("", workEntryController.getWorkEntries())
         .post("", workEntryController.addWorkEntry())
       // .patch("/:id")
@@ -40,6 +39,11 @@ export class ApiRoutes {
 
   private initUsersRoutes(): void {
     const usersController = new UsersController();
-    this.router.use("/users", Router().get("", usersController.getUsers()));
+    this.router.use(
+      "/users",
+      Router()
+        .get("", usersController.getUsers())
+        .post("", usersController.addUser())
+    );
   }
 }
