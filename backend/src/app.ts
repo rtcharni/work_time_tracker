@@ -1,15 +1,16 @@
 import * as expressTypes from "express";
 // tslint:disable-next-line: no-var-requires
-const express = require("express");
+// const express = require("express");
+import Express, { Request, Response, NextFunction } from "express";
 import { ApiRoutes } from "./routes";
 import cors from "cors";
 
 export class App {
-  private app: any;
+  private app: Express.Application;
   private port: number | string;
 
   constructor(port: number | string) {
-    this.app = express();
+    this.app = Express();
     this.port = port;
     this.initMiddlewares();
     this.initRoutes();
@@ -22,21 +23,17 @@ export class App {
   }
 
   private initMiddlewares(): void {
-    this.app.use(express.json());
+    this.app.use(Express.json());
     this.app.use(cors());
+    this.app.disable("x-powered-by");
+    // TODO CHECK HELMET PACKAGE
   }
 
   private initRoutes(): void {
     this.app.use("/api", new ApiRoutes().router);
     // invalid route
-    this.app.use(
-      (
-        req: expressTypes.Request,
-        res: expressTypes.Response,
-        next: expressTypes.NextFunction
-      ) => {
-        res.status(404).send({ error: `Route for ${req.path} not found` });
-      }
-    );
+    this.app.use((req: Request, res: Response, next: NextFunction) => {
+      res.status(404).send({ error: `Route for ${req.path} not found` });
+    });
   }
 }

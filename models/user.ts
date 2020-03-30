@@ -7,3 +7,8 @@ export interface User {
   lastName: string;
   admin: boolean;
 }
+
+export interface UserCredentials {
+  userId: number;
+  password: string;
+}
