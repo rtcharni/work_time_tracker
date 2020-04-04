@@ -25,7 +25,7 @@ export class ApiRoutes {
       Router()
         .get("", workEntryController.getWorkEntries())
         .post("", workEntryController.addWorkEntry())
-        .put("", workEntryController.editWorkEntry())
+        .put("/:workEntryId", workEntryController.editWorkEntry())
       // .patch("/:id")
     );
   }

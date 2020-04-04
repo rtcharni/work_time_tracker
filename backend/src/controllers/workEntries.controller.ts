@@ -101,7 +101,10 @@ export class WorkEntriesController {
   )[] {
     return [
       // Request param validators.
-      body(["workEntryId", "companyId", "userId"]).exists(),
+      param("workEntryId")
+        .isNumeric()
+        .toInt(),
+      body(["companyId", "userId"]).exists(),
       body().custom(value => {
         if (Validation.isWorkEntryValid(value)) {
           return true;
@@ -115,7 +118,8 @@ export class WorkEntriesController {
         try {
           // console.log(req.body);
           const result: WorkEntry = await WorkEntriesService.editWorkEntry(
-            req.body as WorkEntry
+            // req.body as WorkEntry
+            { ...req.body, workEntryId: req.params.workEntryId } as WorkEntry
           );
           res.send(result);
         } catch (error) {
