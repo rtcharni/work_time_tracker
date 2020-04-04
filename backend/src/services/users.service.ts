@@ -1,4 +1,4 @@
-import { User, UserCredentials } from "../../../models";
+import { User, UserCredentials, LoginResponse } from "../../../models";
 import { Queries } from "./database.queries";
 import { mockUsers } from "../mockData";
 import bcrypt from "bcrypt";
@@ -26,15 +26,21 @@ export class UsersService {
     }
   }
 
-  static async logInUser(userCredentials: UserCredentials) {
+  static async logInUser(
+    userCredentials: UserCredentials
+  ): Promise<LoginResponse> {
     if (process.env.INPROD) {
       // Fetch user and compare
-      if (await bcrypt.compare(userCredentials.password, "ENCRYPTEDHERE")) {
-        // OK!
-      } else {
-        // NOT OK
+      const user = await this.getUsers(userCredentials.userId, undefined);
+      if (
+        user.length === 1 &&
+        (await bcrypt.compare(userCredentials.password, user[0].password))
+      ) {
+        return { success: true, user: user[0] };
       }
+      return { success: false, user: undefined };
     } else {
+      return { success: true, user: mockUsers[0] };
     }
   }
 }

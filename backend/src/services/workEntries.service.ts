@@ -31,10 +31,23 @@ export class WorkEntriesService {
     }
   }
 
-  static async addWorkEntry(newEntry: WorkEntry) {
+  static async addWorkEntry(workEntry: WorkEntry): Promise<WorkEntry> {
     // use service to add to database
     if (process.env.INPROD) {
-      return await Queries.addGenericEntry(newEntry, "work_entries");
+      return await Queries.addGenericEntry(workEntry, "work_entries");
+    } else {
+      // Return added Mockentry of given parameted entry
+    }
+  }
+
+  static async editWorkEntry(workEntry: WorkEntry): Promise<WorkEntry> {
+    if (process.env.INPROD) {
+      return await Queries.editGenericEntry(
+        workEntry,
+        "work_entries",
+        "workEntryId",
+        workEntry.workEntryId
+      );
     } else {
       // Return added Mockentry of given parameted entry
     }

@@ -8,7 +8,7 @@ import {
 import { query, ValidationChain, body } from "express-validator";
 import { Utils } from "../backendUtils";
 import { UsersService } from "../services";
-import { User, UserCredentials } from "../../../models";
+import { User, UserCredentials, LoginResponse } from "../../../models";
 import { Validation } from "../../../utils";
 
 export class UsersController {
@@ -93,10 +93,13 @@ export class UsersController {
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          const AAAA = await UsersService.logInUser(
+          const loginResponse: LoginResponse = await UsersService.logInUser(
             req.body as UserCredentials
           );
-          res.send(AAAA);
+          if (loginResponse.success) {
+            // generate token and add to auth header
+          }
+          res.send(loginResponse);
         } catch (error) {
           next(error);
         }

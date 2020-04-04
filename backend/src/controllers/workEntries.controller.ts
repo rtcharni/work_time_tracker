@@ -68,16 +68,7 @@ export class WorkEntriesController {
   )[] {
     return [
       // Request param validators.
-      body([
-        "companyId",
-        "userId",
-        "title",
-        "details",
-        "customerName",
-        "breakMIN",
-        "startTime",
-        "endTime"
-      ]).exists(),
+      body(["companyId", "userId"]).exists(),
       body().custom(value => {
         if (Validation.isWorkEntryValid(value)) {
           return true;
@@ -91,6 +82,39 @@ export class WorkEntriesController {
         try {
           // console.log(req.body);
           const result: WorkEntry = await WorkEntriesService.addWorkEntry(
+            req.body as WorkEntry
+          );
+          res.send(result);
+        } catch (error) {
+          next(error);
+        }
+      },
+      // Error handler
+      Utils.errorHandler("Could not fetch events!")
+    ];
+  }
+
+  public editWorkEntry(): (
+    | ValidationChain
+    | RequestHandler
+    | ErrorRequestHandler
+  )[] {
+    return [
+      // Request param validators.
+      body(["workEntryId", "companyId", "userId"]).exists(),
+      body().custom(value => {
+        if (Validation.isWorkEntryValid(value)) {
+          return true;
+        }
+        throw new Error("Work entry not valid");
+      }),
+      // Error handler for request params
+      Utils.validatorHandler(),
+      // Actual Request handler
+      async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          // console.log(req.body);
+          const result: WorkEntry = await WorkEntriesService.editWorkEntry(
             req.body as WorkEntry
           );
           res.send(result);

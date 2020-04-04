@@ -71,16 +71,26 @@ export class Queries {
     }
   }
 
-  //   static async addWorkEntry(workEntry: WorkEntry) {
-  //     try {
-  //       return Database.db.withSchema("work-time-tracker").transaction(async trx => {
-  //         return (await trx
-  //           .insert(workEntry, "*")
-  //           .into("workEntry")) as WorkEntry;
-  //       });
-  //     } catch (error) {
-  //       console.error(`Error while adding new work entry`);
-  //       console.error(error);
-  //     }
-  //   }
+  static async editGenericEntry<T>(
+    entry: T,
+    tableName: string,
+    idColumnName: string,
+    id: number
+  ): Promise<T> {
+    try {
+      return Database.db.transaction(async trx => {
+        return (await trx
+          .withSchema("work-time-tracker")
+          .where(idColumnName, id)
+          .update(entry, "*")
+          .into(tableName)) as T;
+      });
+    } catch (error) {
+      console.error(
+        `Error while adding generic entry to table ${tableName}.`,
+        entry
+      );
+      console.error(error);
+    }
+  }
 }

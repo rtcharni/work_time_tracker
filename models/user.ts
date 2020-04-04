@@ -12,3 +12,8 @@ export interface UserCredentials {
   userId: number;
   password: string;
 }
+
+export interface LoginResponse {
+  user: User | undefined;
+  success: boolean;
+}
