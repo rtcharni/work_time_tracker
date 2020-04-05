@@ -36,6 +36,10 @@ export class WorkEntriesService {
     if (process.env.INPROD) {
       return await Queries.addGenericEntry(workEntry, "work_entries");
     } else {
+      return {
+        ...workEntry,
+        workEntryId: Math.floor(Math.random() * Math.floor(1000)) + 1
+      };
       // Return added Mockentry of given parameted entry
     }
   }
@@ -49,6 +53,7 @@ export class WorkEntriesService {
         workEntry.workEntryId
       );
     } else {
+      return workEntry;
       // Return added Mockentry of given parameted entry
     }
   }
@@ -61,6 +66,7 @@ export class WorkEntriesService {
         workEntryId
       );
     } else {
+      return mockWorkEntries[0];
       // Return added Mockentry of given parameted entry
     }
   }

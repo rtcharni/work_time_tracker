@@ -44,6 +44,14 @@ export class UsersService {
     }
   }
 
+  static async deleteUser(userId: number): Promise<User> {
+    if (process.env.INPROD) {
+      return await Queries.deleteGenericEntry<User>("users", "userId", userId);
+    } else {
+      return mockUsers[0];
+    }
+  }
+
   static async logInUser(
     userCredentials: UserCredentials
   ): Promise<LoginResponse> {

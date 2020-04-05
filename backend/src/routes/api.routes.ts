@@ -46,6 +46,7 @@ export class ApiRoutes {
         .get("", usersController.getUsers())
         .post("", usersController.addUser())
         .put("/:userId", usersController.editUser())
+        .delete(":userId", usersController.deleteUser())
     );
   }
 }

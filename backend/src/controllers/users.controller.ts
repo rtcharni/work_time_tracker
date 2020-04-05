@@ -124,6 +124,34 @@ export class UsersController {
     ];
   }
 
+  public deleteUser(): (
+    | ValidationChain
+    | RequestHandler
+    | ErrorRequestHandler
+  )[] {
+    return [
+      // Request param validators.
+      param("userId")
+        .isNumeric()
+        .toInt(),
+      // Error handler for request params
+      Utils.validatorHandler(),
+      // Actual Request handler
+      async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const deletedUser: User = await UsersService.deleteUser(
+            (req.params.userId as unknown) as number
+          );
+          res.send(deletedUser);
+        } catch (error) {
+          next(error);
+        }
+      },
+      // Error handler
+      Utils.errorHandler("Could not fetch events!")
+    ];
+  }
+
   public logInUser(): (
     | ValidationChain
     | RequestHandler
