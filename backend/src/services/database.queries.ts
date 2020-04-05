@@ -87,8 +87,29 @@ export class Queries {
       });
     } catch (error) {
       console.error(
-        `Error while adding generic entry to table ${tableName}.`,
+        `Error while editing generic entry at table ${tableName}, id ${id}, id-column ${idColumnName}.`,
         entry
+      );
+      console.error(error);
+    }
+  }
+
+  static async deleteGenericEntry<T>(
+    tableName: string,
+    idColumnName: string,
+    id: number
+  ): Promise<T> {
+    try {
+      return Database.db.transaction(async trx => {
+        return ((await trx
+          .withSchema("work-time-tracker")
+          .from(tableName)
+          .where(idColumnName, id)
+          .del("*")) as unknown) as T;
+      });
+    } catch (error) {
+      console.error(
+        `Error while deleting generic entry at table ${tableName}, id ${id}, id-column ${idColumnName}.`
       );
       console.error(error);
     }

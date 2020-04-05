@@ -52,4 +52,16 @@ export class WorkEntriesService {
       // Return added Mockentry of given parameted entry
     }
   }
+
+  static async deleteWorkEntry(workEntryId: number) {
+    if (process.env.INPROD) {
+      return await Queries.deleteGenericEntry<WorkEntry>(
+        "work_entries",
+        "workEntryId",
+        workEntryId
+      );
+    } else {
+      // Return added Mockentry of given parameted entry
+    }
+  }
 }

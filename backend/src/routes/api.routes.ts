@@ -26,7 +26,7 @@ export class ApiRoutes {
         .get("", workEntryController.getWorkEntries())
         .post("", workEntryController.addWorkEntry())
         .put("/:workEntryId", workEntryController.editWorkEntry())
-      // .patch("/:id")
+        .delete("/:workEntryId", workEntryController.deleteWorkEntry())
     );
   }
 
@@ -45,6 +45,7 @@ export class ApiRoutes {
       Router()
         .get("", usersController.getUsers())
         .post("", usersController.addUser())
+        .put("/:userId", usersController.editUser())
     );
   }
 }

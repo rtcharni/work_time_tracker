@@ -130,4 +130,33 @@ export class WorkEntriesController {
       Utils.errorHandler("Could not fetch events!")
     ];
   }
+
+  public deleteWorkEntry(): (
+    | ValidationChain
+    | RequestHandler
+    | ErrorRequestHandler
+  )[] {
+    return [
+      // Request param validators.
+      param("workEntryId")
+        .isNumeric()
+        .toInt(),
+      // Error handler for request params
+      Utils.validatorHandler(),
+      // Actual Request handler
+      async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          // console.log(req.body);
+          const result: any = await WorkEntriesService.deleteWorkEntry(
+            (req.params.workEntryId as unknown) as number
+          );
+          res.send(result);
+        } catch (error) {
+          next(error);
+        }
+      },
+      // Error handler
+      Utils.errorHandler("Could not fetch events!")
+    ];
+  }
 }

@@ -5,7 +5,7 @@ import {
   RequestHandler,
   ErrorRequestHandler
 } from "express";
-import { query, ValidationChain, body } from "express-validator";
+import { query, ValidationChain, body, param } from "express-validator";
 import { Utils } from "../backendUtils";
 import { UsersService } from "../services";
 import { User, UserCredentials, LoginResponse } from "../../../models";
@@ -80,6 +80,50 @@ export class UsersController {
     ];
   }
 
+  public editUser(): (
+    | ValidationChain
+    | RequestHandler
+    | ErrorRequestHandler
+  )[] {
+    return [
+      // Request param validators.
+      param("userId")
+        .isNumeric()
+        .toInt(),
+      body([
+        "password",
+        "companyId",
+        "email",
+        "firstName",
+        "lastName",
+        "admin"
+      ]).exists(),
+      body().custom(value => {
+        return true;
+        // if (Validation.isUserValid(value)) {
+        //   return true;
+        // }
+        // throw new Error("User is not valid");
+      }),
+      // Error handler for request params
+      Utils.validatorHandler(),
+      // Actual Request handler
+      async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const user: User = await UsersService.editUser({
+            ...req.body,
+            userId: req.params.userId
+          } as User);
+          res.send(user);
+        } catch (error) {
+          next(error);
+        }
+      },
+      // Error handler
+      Utils.errorHandler("Could not fetch events!")
+    ];
+  }
+
   public logInUser(): (
     | ValidationChain
     | RequestHandler
@@ -98,6 +142,7 @@ export class UsersController {
           );
           if (loginResponse.success) {
             // generate token and add to auth header
+            console.log(`You are logged in!`);
           }
           res.send(loginResponse);
         } catch (error) {

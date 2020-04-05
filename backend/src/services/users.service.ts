@@ -26,6 +26,24 @@ export class UsersService {
     }
   }
 
+  static async editUser(user: User): Promise<User> {
+    if (process.env.INPROD) {
+      const encrypted = await bcrypt.hash(user.password, Constants.SALTROUNDS);
+      user.password = encrypted;
+      return await Queries.editGenericEntry(
+        user,
+        "users",
+        "userId",
+        user.userId
+      );
+    } else {
+      return {
+        ...user,
+        userId: Math.floor(Math.random() * Math.floor(1000)) + 1
+      };
+    }
+  }
+
   static async logInUser(
     userCredentials: UserCredentials
   ): Promise<LoginResponse> {
