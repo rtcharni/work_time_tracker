@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   WorkEntriesController,
   CompaniesController,
-  UsersController
+  UsersController,
 } from "../controllers";
 
 export class ApiRoutes {
@@ -46,7 +46,7 @@ export class ApiRoutes {
         .get("", usersController.getUsers())
         .post("", usersController.addUser())
         .put("/:userId", usersController.editUser())
-        .delete(":userId", usersController.deleteUser())
+        .delete("/:userId", usersController.deleteUser())
     );
   }
 }

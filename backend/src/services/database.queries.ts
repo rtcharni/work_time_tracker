@@ -10,7 +10,7 @@ export class Queries {
       .withSchema("work-time-tracker")
       .select()
       .from<User>("users")
-      .where(builder => {
+      .where((builder) => {
         if (usersIds.length === 1) builder.where("userId", usersIds[0]);
         if (usersIds.length > 1) builder.whereIn("userId", usersIds);
         if (companyId) builder.where("companyId", companyId);
@@ -22,7 +22,7 @@ export class Queries {
       .withSchema("work-time-tracker")
       .select()
       .from<Company>("companies")
-      .where(builder => {
+      .where((builder) => {
         if (companiesIds.length === 1)
           builder.where("companyId", companiesIds[0]);
         if (companiesIds.length > 1) builder.whereIn("companyId", companiesIds);
@@ -41,7 +41,7 @@ export class Queries {
         .withSchema("work-time-tracker")
         .select()
         .from<WorkEntry>("work_entries")
-        .where(builder => {
+        .where((builder) => {
           if (workEntryId) builder.where("workEntryId", workEntryId);
           if (usersIds.length === 1) builder.where("userId", usersIds[0]);
           if (usersIds.length > 1) builder.whereIn("userId", usersIds);
@@ -54,13 +54,13 @@ export class Queries {
     }
   }
 
-  static async addGenericEntry<T>(entry: T, tableName: string): Promise<T> {
+  static async addGenericEntry<T>(entry: T, tableName: string): Promise<T[]> {
     try {
-      return Database.db.transaction(async trx => {
+      return Database.db.transaction(async (trx) => {
         return (await trx
           .withSchema("work-time-tracker")
           .insert(entry, "*")
-          .into(tableName)) as T;
+          .into(tableName)) as T[];
       });
     } catch (error) {
       console.error(
@@ -76,14 +76,14 @@ export class Queries {
     tableName: string,
     idColumnName: string,
     id: number
-  ): Promise<T> {
+  ): Promise<T[]> {
     try {
-      return Database.db.transaction(async trx => {
+      return Database.db.transaction(async (trx) => {
         return (await trx
           .withSchema("work-time-tracker")
           .where(idColumnName, id)
           .update(entry, "*")
-          .into(tableName)) as T;
+          .into(tableName)) as T[];
       });
     } catch (error) {
       console.error(
@@ -100,7 +100,7 @@ export class Queries {
     id: number
   ): Promise<T> {
     try {
-      return Database.db.transaction(async trx => {
+      return Database.db.transaction(async (trx) => {
         return ((await trx
           .withSchema("work-time-tracker")
           .from(tableName)

@@ -13,42 +13,50 @@ export class UsersService {
     }
   }
 
-  static async addUser(user: User): Promise<User> {
+  static async addUser(user: User): Promise<User[]> {
     if (process.env.INPROD) {
       const encrypted = await bcrypt.hash(user.password, Constants.SALTROUNDS);
       user.password = encrypted;
       return await Queries.addGenericEntry(user, "users");
     } else {
-      return {
-        ...user,
-        userId: Math.floor(Math.random() * Math.floor(1000)) + 1
-      };
+      return [
+        {
+          ...user,
+          userId: Math.floor(Math.random() * Math.floor(1000)) + 1,
+        },
+      ];
     }
   }
 
-  static async editUser(user: User): Promise<User> {
+  static async editUser(user: User): Promise<User[]> {
     if (process.env.INPROD) {
       const encrypted = await bcrypt.hash(user.password, Constants.SALTROUNDS);
       user.password = encrypted;
-      return await Queries.editGenericEntry(
+      return await Queries.editGenericEntry<User>(
         user,
         "users",
         "userId",
         user.userId
       );
     } else {
-      return {
-        ...user,
-        userId: Math.floor(Math.random() * Math.floor(1000)) + 1
-      };
+      return [
+        {
+          ...user,
+          userId: Math.floor(Math.random() * Math.floor(1000)) + 1,
+        },
+      ];
     }
   }
 
-  static async deleteUser(userId: number): Promise<User> {
+  static async deleteUser(userId: number): Promise<User[]> {
     if (process.env.INPROD) {
-      return await Queries.deleteGenericEntry<User>("users", "userId", userId);
+      return await Queries.deleteGenericEntry<User[]>(
+        "users",
+        "userId",
+        userId
+      );
     } else {
-      return mockUsers[0];
+      return [mockUsers[0]];
     }
   }
 

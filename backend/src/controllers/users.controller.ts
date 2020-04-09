@@ -3,7 +3,7 @@ import {
   Response,
   NextFunction,
   RequestHandler,
-  ErrorRequestHandler
+  ErrorRequestHandler,
 } from "express";
 import { query, ValidationChain, body, param } from "express-validator";
 import { Utils } from "../backendUtils";
@@ -19,14 +19,8 @@ export class UsersController {
   )[] {
     return [
       // Request param validators.
-      query("userId")
-        .isNumeric()
-        .toInt()
-        .optional(),
-      query("companyId")
-        .isNumeric()
-        .toInt()
-        .optional(),
+      query("userId").isNumeric().toInt().optional(),
+      query("companyId").isNumeric().toInt().optional(),
       // Error handler for request params
       Utils.validatorHandler(),
       // Actual Request handler
@@ -42,7 +36,7 @@ export class UsersController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!")
+      Utils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -55,9 +49,9 @@ export class UsersController {
         "email",
         "firstName",
         "lastName",
-        "admin"
+        "admin",
       ]).exists(),
-      body().custom(value => {
+      body().custom((value) => {
         return true;
         // if (Validation.isUserValid(value)) {
         //   return true;
@@ -69,14 +63,14 @@ export class UsersController {
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          const user: User = await UsersService.addUser(req.body as User);
+          const user: User[] = await UsersService.addUser(req.body as User);
           res.send(user);
         } catch (error) {
           next(error);
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!")
+      Utils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -87,18 +81,16 @@ export class UsersController {
   )[] {
     return [
       // Request param validators.
-      param("userId")
-        .isNumeric()
-        .toInt(),
+      param("userId").isNumeric().toInt(),
       body([
         "password",
         "companyId",
         "email",
         "firstName",
         "lastName",
-        "admin"
+        "admin",
       ]).exists(),
-      body().custom(value => {
+      body().custom((value) => {
         return true;
         // if (Validation.isUserValid(value)) {
         //   return true;
@@ -110,9 +102,9 @@ export class UsersController {
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          const user: User = await UsersService.editUser({
+          const user: User[] = await UsersService.editUser({
             ...req.body,
-            userId: req.params.userId
+            userId: req.params.userId,
           } as User);
           res.send(user);
         } catch (error) {
@@ -120,7 +112,7 @@ export class UsersController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!")
+      Utils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -131,15 +123,13 @@ export class UsersController {
   )[] {
     return [
       // Request param validators.
-      param("userId")
-        .isNumeric()
-        .toInt(),
+      param("userId").isNumeric().toInt(),
       // Error handler for request params
       Utils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          const deletedUser: User = await UsersService.deleteUser(
+          const deletedUser: User[] = await UsersService.deleteUser(
             (req.params.userId as unknown) as number
           );
           res.send(deletedUser);
@@ -148,7 +138,7 @@ export class UsersController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!")
+      Utils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -178,7 +168,7 @@ export class UsersController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!")
+      Utils.errorHandler("Could not fetch events!"),
     ];
   }
 }

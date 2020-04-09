@@ -31,20 +31,22 @@ export class WorkEntriesService {
     }
   }
 
-  static async addWorkEntry(workEntry: WorkEntry): Promise<WorkEntry> {
+  static async addWorkEntry(workEntry: WorkEntry): Promise<WorkEntry[]> {
     // use service to add to database
     if (process.env.INPROD) {
       return await Queries.addGenericEntry(workEntry, "work_entries");
     } else {
-      return {
-        ...workEntry,
-        workEntryId: Math.floor(Math.random() * Math.floor(1000)) + 1
-      };
+      return [
+        {
+          ...workEntry,
+          workEntryId: Math.floor(Math.random() * Math.floor(1000)) + 1,
+        },
+      ];
       // Return added Mockentry of given parameted entry
     }
   }
 
-  static async editWorkEntry(workEntry: WorkEntry): Promise<WorkEntry> {
+  static async editWorkEntry(workEntry: WorkEntry): Promise<WorkEntry[]> {
     if (process.env.INPROD) {
       return await Queries.editGenericEntry(
         workEntry,
@@ -53,20 +55,20 @@ export class WorkEntriesService {
         workEntry.workEntryId
       );
     } else {
-      return workEntry;
+      return [workEntry];
       // Return added Mockentry of given parameted entry
     }
   }
 
-  static async deleteWorkEntry(workEntryId: number) {
+  static async deleteWorkEntry(workEntryId: number): Promise<WorkEntry[]> {
     if (process.env.INPROD) {
-      return await Queries.deleteGenericEntry<WorkEntry>(
+      return await Queries.deleteGenericEntry<WorkEntry[]>(
         "work_entries",
         "workEntryId",
         workEntryId
       );
     } else {
-      return mockWorkEntries[0];
+      return [mockWorkEntries[0]];
       // Return added Mockentry of given parameted entry
     }
   }

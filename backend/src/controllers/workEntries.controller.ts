@@ -3,7 +3,7 @@ import {
   Response,
   NextFunction,
   RequestHandler,
-  ErrorRequestHandler
+  ErrorRequestHandler,
 } from "express";
 import { query, ValidationChain, param, body } from "express-validator";
 import { Utils } from "../backendUtils";
@@ -20,24 +20,11 @@ export class WorkEntriesController {
   )[] {
     return [
       // Request param validators.
-      query("userId")
-        .isNumeric()
-        .toInt()
-        .optional(),
-      query("workEntryId")
-        .isNumeric()
-        .toInt()
-        .optional(),
-      query("companyId")
-        .isNumeric()
-        .toInt()
-        .optional(),
-      query("from")
-        .isISO8601()
-        .optional(),
-      query("to")
-        .isISO8601()
-        .optional(),
+      query("userId").isNumeric().toInt().optional(),
+      query("workEntryId").isNumeric().toInt().optional(),
+      query("companyId").isNumeric().toInt().optional(),
+      query("from").isISO8601().optional(),
+      query("to").isISO8601().optional(),
 
       // Error handler for request params
       Utils.validatorHandler(),
@@ -57,7 +44,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!")
+      Utils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -69,7 +56,7 @@ export class WorkEntriesController {
     return [
       // Request param validators.
       body(["companyId", "userId"]).exists(),
-      body().custom(value => {
+      body().custom((value) => {
         if (Validation.isWorkEntryValid(value)) {
           return true;
         }
@@ -81,7 +68,7 @@ export class WorkEntriesController {
       async (req: Request, res: Response, next: NextFunction) => {
         try {
           // console.log(req.body);
-          const result: WorkEntry = await WorkEntriesService.addWorkEntry(
+          const result: WorkEntry[] = await WorkEntriesService.addWorkEntry(
             req.body as WorkEntry
           );
           res.send(result);
@@ -90,7 +77,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!")
+      Utils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -101,11 +88,9 @@ export class WorkEntriesController {
   )[] {
     return [
       // Request param validators.
-      param("workEntryId")
-        .isNumeric()
-        .toInt(),
+      param("workEntryId").isNumeric().toInt(),
       body(["companyId", "userId"]).exists(),
-      body().custom(value => {
+      body().custom((value) => {
         if (Validation.isWorkEntryValid(value)) {
           return true;
         }
@@ -117,7 +102,7 @@ export class WorkEntriesController {
       async (req: Request, res: Response, next: NextFunction) => {
         try {
           // console.log(req.body);
-          const result: WorkEntry = await WorkEntriesService.editWorkEntry(
+          const result: WorkEntry[] = await WorkEntriesService.editWorkEntry(
             // req.body as WorkEntry
             { ...req.body, workEntryId: req.params.workEntryId } as WorkEntry
           );
@@ -127,7 +112,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!")
+      Utils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -138,16 +123,14 @@ export class WorkEntriesController {
   )[] {
     return [
       // Request param validators.
-      param("workEntryId")
-        .isNumeric()
-        .toInt(),
+      param("workEntryId").isNumeric().toInt(),
       // Error handler for request params
       Utils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
           // console.log(req.body);
-          const result: any = await WorkEntriesService.deleteWorkEntry(
+          const result: WorkEntry[] = await WorkEntriesService.deleteWorkEntry(
             (req.params.workEntryId as unknown) as number
           );
           res.send(result);
@@ -156,7 +139,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!")
+      Utils.errorHandler("Could not fetch events!"),
     ];
   }
 }
