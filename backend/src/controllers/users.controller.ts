@@ -6,7 +6,7 @@ import {
   ErrorRequestHandler,
 } from "express";
 import { query, ValidationChain, body, param } from "express-validator";
-import { Utils } from "../backendUtils";
+import { Utils, TokenManagement } from "../backendUtils";
 import { UsersService } from "../services";
 import { User, UserCredentials, LoginResponse } from "../../../models";
 import { Validation } from "../../../utils";
@@ -160,6 +160,8 @@ export class UsersController {
           );
           if (loginResponse.success) {
             // generate token and add to auth header
+            const token = TokenManagement.generateToken(loginResponse.user);
+            res.setHeader("Authorization", `Bearer ${token}`);
             console.log(`You are logged in!`);
           }
           res.send(loginResponse);
