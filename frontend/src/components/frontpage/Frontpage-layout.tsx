@@ -7,7 +7,7 @@ import {
   GridListTileBar,
   makeStyles,
   IconButton,
-  ListSubheader
+  ListSubheader,
 } from "@material-ui/core";
 
 import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRounded";
@@ -19,15 +19,15 @@ const tileData: any[] = [
     title: "Image",
     cols: 1,
     actionText: "New Time Entry",
-    actionUrl: "/addworkentry"
+    actionUrl: "/addworkentry",
   },
   {
     img: `https://cdn.pixabay.com/photo/2017/02/16/16/01/hours-2071706_960_720.png`,
     title: "Image",
     cols: 1,
     actionText: "New Work Entry",
-    actionUrl: "/addworkentry"
-  }
+    actionUrl: "/addworkentry",
+  },
 ];
 
 const FrontpageLayout = () => {
@@ -44,7 +44,7 @@ const FrontpageLayout = () => {
       <Container>
         <div className={classes.root}>
           <GridList cellHeight={160} className={classes.gridList} cols={2}>
-            {tileData.map(tile => (
+            {tileData.map((tile) => (
               <GridListTile key={tile.img} cols={tile.cols | 1}>
                 <img src={tile.img} alt={tile.title} />
                 <GridListTileBar
@@ -68,18 +68,18 @@ const FrontpageLayout = () => {
   );
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   gridList: {
     width: 500,
-    height: 450
-  }
+    height: 450,
+  },
 }));
 
 export default FrontpageLayout;
