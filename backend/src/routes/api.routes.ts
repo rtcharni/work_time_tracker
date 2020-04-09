@@ -43,6 +43,7 @@ export class ApiRoutes {
     this.router.use(
       "/users",
       Router()
+        .post("/login", usersController.logInUser())
         .get("", usersController.getUsers())
         .post("", usersController.addUser())
         .put("/:userId", usersController.editUser())
