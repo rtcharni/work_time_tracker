@@ -5,7 +5,7 @@ import {
   UsersController,
 } from "../controllers";
 
-export class ApiRoutes {
+export class DatabaseRoutes {
   public router: Router;
 
   constructor() {
@@ -43,7 +43,7 @@ export class ApiRoutes {
     this.router.use(
       "/users",
       Router()
-        .post("/login", usersController.logInUser())
+        // .post("/login", usersController.logInUser())
         .get("", usersController.getUsers())
         .post("", usersController.addUser())
         .put("/:userId", usersController.editUser())

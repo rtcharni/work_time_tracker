@@ -67,11 +67,19 @@ export class WorkEntriesController {
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
+          console.log("HERE");
+          console.log(req.cookies.auth);
+          // console.log(req.cookies);
+          // console.log(req.signedCookies);
+          // console.log(req.headers);
+          // console.log(req.headers.authorization);
+          // console.log(req.headers);
+          // res.send(req.body);
           // console.log(req.body);
-          const result: WorkEntry[] = await WorkEntriesService.addWorkEntry(
-            req.body as WorkEntry
-          );
-          res.send(result);
+          // const result: WorkEntry[] = await WorkEntriesService.addWorkEntry(
+          //   req.body as WorkEntry
+          // );
+          // res.send(result);
         } catch (error) {
           next(error);
         }

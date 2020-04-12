@@ -141,36 +141,4 @@ export class UsersController {
       Utils.errorHandler("Could not fetch events!"),
     ];
   }
-
-  public logInUser(): (
-    | ValidationChain
-    | RequestHandler
-    | ErrorRequestHandler
-  )[] {
-    return [
-      // Request param validators.
-      body(["userId", "password"]).exists(),
-      // Error handler for request params
-      Utils.validatorHandler(),
-      // Actual Request handler
-      async (req: Request, res: Response, next: NextFunction) => {
-        try {
-          const loginResponse: LoginResponse = await UsersService.logInUser(
-            req.body as UserCredentials
-          );
-          if (loginResponse.success) {
-            // generate token and add to auth header
-            const token = TokenManagement.generateToken(loginResponse.user);
-            res.setHeader("Authorization", `Bearer ${token}`);
-            console.log(`You are logged in!`);
-          }
-          res.send(loginResponse);
-        } catch (error) {
-          next(error);
-        }
-      },
-      // Error handler
-      Utils.errorHandler("Could not fetch events!"),
-    ];
-  }
 }

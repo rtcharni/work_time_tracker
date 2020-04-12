@@ -4,7 +4,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 
 import { useHistory } from "react-router-dom";
-import { Utils } from "src/utils/utils";
+import { Utils, AxiosUtils } from "../../utils/utils";
 
 const tileData: any[] = [
   {
@@ -50,8 +50,18 @@ const Loginpage = () => {
   /**
    * Handles on login button click
    */
-  const handleLoginClick = () => {
+  const handleLoginClick = async () => {
     console.log(userId, password);
+    const response = await AxiosUtils.loginUser({
+      userId: parseInt(userId),
+      password,
+    });
+    if (response.data.success) {
+      // TODO save logged in info to context
+      routerHistory.push("/frontpage");
+    } else {
+      // Wrong credentials do something!
+    }
   };
 
   return (
@@ -122,6 +132,28 @@ const Loginpage = () => {
           onClick={handleLoginClick}
         >
           Login
+        </Button>
+
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => {
+            AxiosUtils.addWorkEntry({
+              workEntryId: undefined,
+              companyId: 6,
+              userId: 2,
+              title: "Cleaning",
+              details: "Cleaning toilet",
+              customerName: "Katja",
+              breakMIN: 0,
+              startTime: "2020-03-23T14:12:59.716Z",
+              endTime: "2020-03-23T20:56:59.716Z",
+              date: "2020-03-23T14:12:59.716Z",
+              charged: false,
+            });
+          }}
+        >
+          ADD
         </Button>
       </div>
     </React.Fragment>

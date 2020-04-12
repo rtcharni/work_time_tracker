@@ -1,1 +1,2 @@
-export * from "./api.routes";
+export * from "./database.routes";
+export * from "./auth.routes";

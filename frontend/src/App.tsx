@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import FrontpageLayout from "./components/frontpage/Frontpage-layout";
 import AddWorkEntryForm from "./components/worktimepage/AddWorkEntryForm";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { Config } from "../../models";
 import Loginpage from "./components/loginpage/Loginpage";
 
@@ -25,16 +30,20 @@ export default function App() {
     // }
   }, []);
 
+  // TODO user is logged in validation on routes!!!
   return (
     <Router>
       <div>
         <Switch>
+          <Route path="/login" component={() => <Loginpage />} />
+          <Route exact path="/">
+            <Redirect to="/login" />
+          </Route>
+          <Route path="/frontpage" component={() => <FrontpageLayout />} />
           <Route
             path="/addworkentry"
             component={() => <AddWorkEntryForm config={config as Config} />}
           />
-          <Route path="/login" component={() => <Loginpage />} />
-          <Route path="/" component={() => <FrontpageLayout />} />
         </Switch>
       </div>
     </Router>

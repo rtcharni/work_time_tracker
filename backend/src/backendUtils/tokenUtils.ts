@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { User } from "../../../models";
+import { Request, Response, NextFunction } from "express";
 
 export class TokenManagement {
   public static generateToken(user: User): string {
@@ -10,18 +11,33 @@ export class TokenManagement {
         subject: user.email,
       });
     } catch (error) {
-      console.log(`Error while generating token`);
+      console.error(`Error while generating token`);
       console.error(error);
     }
   }
 
-  public static validateToken(token: string): object {
+  public static validateTokenMiddleware(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
     try {
-      return jwt.verify(token, process.env.JWTSECRET) as object;
+      console.log("IN MIDDLEWARE");
+      const token: string = req.cookies.auth;
+      if (!token) {
+        console.error("No existing token");
+        res.send({ redirectToLogin: true });
+        // res.redirect(302, "http://localhost:3000/");
+        return;
+      }
+      jwt.verify(token, process.env.JWTSECRET);
+      next();
     } catch (error) {
-      console.log(`Error while verifying token`);
+      console.error(`Error while verifying token`);
       console.error(error);
-      return undefined;
+      // res.redirect("http://localhost:3000/login");
+      res.send({ redirectToLogin: true });
+      return;
     }
   }
 }
