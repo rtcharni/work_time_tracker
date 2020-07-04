@@ -40,7 +40,7 @@ export class App {
   private initRoutes(): void {
     this.app.use(
       "/api/database",
-      TokenManagement.validateTokenMiddleware,
+      // TokenManagement.validateTokenMiddleware,
       new DatabaseRoutes().router
     );
     this.app.use("/api/auth", new AuthRoutes().router);

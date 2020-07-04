@@ -5,9 +5,17 @@ import bcrypt from "bcrypt";
 import { Constants } from "../backendUtils";
 
 export class UsersService {
-  static async getUsers(userId: number, companyId: number): Promise<User[]> {
+  static async getUsers(
+    userId: number,
+    companyId: number,
+    withCompany?: boolean
+  ): Promise<User[]> {
     if (process.env.INPROD) {
-      return await Queries.getUsers(userId ? [userId] : undefined, companyId);
+      return await Queries.getUsers(
+        userId ? [userId] : undefined,
+        companyId,
+        withCompany
+      );
     } else {
       return mockUsers;
     }

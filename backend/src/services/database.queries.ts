@@ -4,17 +4,31 @@ import { Database } from "./database.init";
 export class Queries {
   static async getUsers(
     usersIds: number[] = [],
-    companyId?: number
+    companyId?: number,
+    withCompany?: boolean
   ): Promise<User[]> {
-    return await Database.db
-      .withSchema("work-time-tracker")
-      .select()
-      .from<User>("users")
-      .where((builder) => {
-        if (usersIds.length === 1) builder.where("userId", usersIds[0]);
-        if (usersIds.length > 1) builder.whereIn("userId", usersIds);
-        if (companyId) builder.where("companyId", companyId);
-      });
+    if (withCompany) {
+      return await Database.db
+        .withSchema("work-time-tracker")
+        .select()
+        .from<User>("users")
+        .where((builder) => {
+          if (usersIds.length === 1) builder.where("userId", usersIds[0]);
+          if (usersIds.length > 1) builder.whereIn("userId", usersIds);
+          if (companyId) builder.where("companyId", companyId);
+        })
+        .join("companies", "users.companyId", "companies.companyId");
+    } else {
+      return await Database.db
+        .withSchema("work-time-tracker")
+        .select()
+        .from<User>("users")
+        .where((builder) => {
+          if (usersIds.length === 1) builder.where("userId", usersIds[0]);
+          if (usersIds.length > 1) builder.whereIn("userId", usersIds);
+          if (companyId) builder.where("companyId", companyId);
+        });
+    }
   }
 
   static async getCompanies(companiesIds: number[] = []): Promise<Company[]> {

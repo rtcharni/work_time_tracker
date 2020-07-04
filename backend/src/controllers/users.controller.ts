@@ -21,6 +21,7 @@ export class UsersController {
       // Request param validators.
       query("userId").isNumeric().toInt().optional(),
       query("companyId").isNumeric().toInt().optional(),
+      query("withCompany").isBoolean().toBoolean().optional(),
       // Error handler for request params
       Utils.validatorHandler(),
       // Actual Request handler
@@ -28,7 +29,8 @@ export class UsersController {
         try {
           const users: User[] = await UsersService.getUsers(
             req.query.userId,
-            req.query.companyId
+            req.query.companyId,
+            req.query.withCompany
           );
           res.send(users);
         } catch (error) {
