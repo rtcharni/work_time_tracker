@@ -1,3 +1,5 @@
+import { Company } from "./company";
+
 export interface User {
   userId: number | undefined; // PK - login name
   password: string; // login password
@@ -17,3 +19,5 @@ export interface LoginResponse {
   user: User | undefined;
   success: boolean;
 }
+
+export type UserAndCompany = User & Company;

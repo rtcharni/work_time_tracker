@@ -8,7 +8,12 @@ import {
 import { query, ValidationChain, body, param } from "express-validator";
 import { Utils, TokenManagement } from "../backendUtils";
 import { UsersService } from "../services";
-import { User, UserCredentials, LoginResponse } from "../../../models";
+import {
+  User,
+  UserCredentials,
+  LoginResponse,
+  UserAndCompany,
+} from "../../../models";
 import { Validation } from "../../../utils";
 
 export class UsersController {
@@ -27,7 +32,7 @@ export class UsersController {
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          const users: User[] = await UsersService.getUsers(
+          const users: User[] | UserAndCompany = await UsersService.getUsers(
             req.query.userId,
             req.query.companyId,
             req.query.withCompany

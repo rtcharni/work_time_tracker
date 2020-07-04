@@ -1,4 +1,4 @@
-import { User, WorkEntry, Company } from "../../../models";
+import { User, WorkEntry, Company, UserAndCompany } from "../../../models";
 import { Database } from "./database.init";
 
 export class Queries {
@@ -6,9 +6,9 @@ export class Queries {
     usersIds: number[] = [],
     companyId?: number,
     withCompany?: boolean
-  ): Promise<User[]> {
+  ): Promise<User[] | UserAndCompany[]> {
     if (withCompany) {
-      return await Database.db
+      return (await Database.db
         .withSchema("work-time-tracker")
         .select()
         .from<User>("users")
@@ -17,9 +17,13 @@ export class Queries {
           if (usersIds.length > 1) builder.whereIn("userId", usersIds);
           if (companyId) builder.where("companyId", companyId);
         })
-        .join("companies", "users.companyId", "companies.companyId");
+        .join(
+          "companies",
+          "users.companyId",
+          "companies.companyId"
+        )) as UserAndCompany[];
     } else {
-      return await Database.db
+      return (await Database.db
         .withSchema("work-time-tracker")
         .select()
         .from<User>("users")
@@ -27,7 +31,7 @@ export class Queries {
           if (usersIds.length === 1) builder.where("userId", usersIds[0]);
           if (usersIds.length > 1) builder.whereIn("userId", usersIds);
           if (companyId) builder.where("companyId", companyId);
-        });
+        })) as User[];
     }
   }
 

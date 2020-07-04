@@ -1,4 +1,9 @@
-import { User, UserCredentials, LoginResponse } from "../../../models";
+import {
+  User,
+  UserCredentials,
+  LoginResponse,
+  UserAndCompany,
+} from "../../../models";
 import { Queries } from "./database.queries";
 import { mockUsers } from "../mockData";
 import bcrypt from "bcrypt";
@@ -9,7 +14,7 @@ export class UsersService {
     userId: number,
     companyId: number,
     withCompany?: boolean
-  ): Promise<User[]> {
+  ): Promise<User[] | UserAndCompany[]> {
     if (process.env.INPROD) {
       return await Queries.getUsers(
         userId ? [userId] : undefined,
