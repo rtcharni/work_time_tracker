@@ -1,1 +1,29 @@
-<p>front-page works!</p>
+<div class="row">
+  <!-- First card -->
+  <mat-card class="col" routerLink="/workentry">
+    <mat-card-header>
+      <mat-card-title>Worktime</mat-card-title>
+      <mat-card-subtitle>Worktime</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      height="125px"
+      mat-card-image
+      src="https://img.favpng.com/13/19/9/time-icon-png-favpng-rhQrgcFrGpBniUBzTXqGxttHd.jpg"
+      alt="Worktime entry"
+    />
+  </mat-card>
+
+  <!-- Second card -->
+  <mat-card class="col" [routerLink]="['/workentry']">
+    <mat-card-header>
+      <mat-card-title>Worktime</mat-card-title>
+      <mat-card-subtitle>Worktime</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      height="125px"
+      mat-card-image
+      src="https://cdn.pixabay.com/photo/2017/02/16/16/01/hours-2071706_960_720.png"
+      alt="Worktime entry"
+    />
+  </mat-card>
+</div>

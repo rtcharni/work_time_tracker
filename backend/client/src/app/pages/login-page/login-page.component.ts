@@ -22,8 +22,10 @@ export class LoginPageComponent implements OnInit {
       password: this.password,
     });
     if (loginResponse.success) {
-      this.router.navigate(['frontpage'], { skipLocationChange: true });
+      this.router.navigate(['frontpage']);
     } else {
+      // Wrong credentials
+      console.log(`Wrong credentials`);
     }
   }
 }
