@@ -24,22 +24,9 @@ export class App {
 
   private initMiddlewares(): void {
     this.app.use(Express.json());
-    // this.app.use(
-    //   cors()
-    //   // {
-    //   // origin: '*', // ["http://localhost:4200", "http://localhost:3000"],
-    //   // credentials: true,
-    //   // allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
-    //   // exposedHeaders: ["Authorization", "Cookie"],
-    //   // }
-    // );
-    // this.app.use(cors());
     this.app.use(cookieParser());
     this.app.disable("x-powered-by");
     // TODO CHECK HELMET PACKAGE
-    // this.app.use((req, res, next) => {
-    //   console.log(req.url);
-    // });
   }
 
   private initRoutes(): void {
