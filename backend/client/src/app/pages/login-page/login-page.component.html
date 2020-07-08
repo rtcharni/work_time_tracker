@@ -1,0 +1,17 @@
+<div class="loginpage">
+  <h1 class="center">Welcome</h1>
+
+  <!-- UserId -->
+  <mat-form-field>
+    <mat-label>User ID *</mat-label>
+    <input matInput type="number" step="1" [(ngModel)]="userId" />
+  </mat-form-field>
+
+  <!-- Password -->
+  <mat-form-field>
+    <mat-label>Password *</mat-label>
+    <input matInput type="text" [(ngModel)]="password" />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="logInUser()">Login</button>
+</div>

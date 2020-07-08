@@ -28,8 +28,10 @@ export class AuthController {
             req.body as UserCredentials
           );
           if (loginResponse.success) {
-            loginResponse.user.password = null;
-            const token = TokenManagement.generateToken(loginResponse.user);
+            loginResponse.userAndCompany.password = null;
+            const token = TokenManagement.generateToken(
+              loginResponse.userAndCompany
+            );
             // TODO, modify cookie to be more secure
             res.cookie("auth", token, { httpOnly: true });
             console.log(`You are logged in!`);

@@ -5,7 +5,7 @@ import {
   UserAndCompany,
 } from "../../../models";
 import { Queries } from "./database.queries";
-import { mockUsers } from "../mockData";
+import { mockUsers, mockCompanies } from "../mockData";
 import bcrypt from "bcrypt";
 import { Constants } from "../backendUtils";
 
@@ -78,16 +78,29 @@ export class UsersService {
   ): Promise<LoginResponse> {
     if (process.env.INPROD) {
       // Fetch user and compare
-      const user = await this.getUsers(userCredentials.userId, undefined);
+      const userAndCompany = await this.getUsers(
+        userCredentials.userId,
+        undefined,
+        true
+      );
       if (
-        user.length === 1 &&
-        (await bcrypt.compare(userCredentials.password, user[0].password))
+        userAndCompany.length === 1 &&
+        (await bcrypt.compare(
+          userCredentials.password,
+          userAndCompany[0].password
+        ))
       ) {
-        return { success: true, user: user[0] };
+        return {
+          success: true,
+          userAndCompany: userAndCompany[0] as UserAndCompany,
+        };
       }
-      return { success: false, user: undefined };
+      return { success: false, userAndCompany: undefined };
     } else {
-      return { success: true, user: mockUsers[0] };
+      return {
+        success: true,
+        userAndCompany: Object.assign({}, mockUsers[0], mockCompanies[0]),
+      };
     }
   }
 }

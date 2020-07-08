@@ -16,7 +16,7 @@ export interface UserCredentials {
 }
 
 export interface LoginResponse {
-  user: User | undefined;
+  userAndCompany: UserAndCompany | undefined;
   success: boolean;
 }
 
