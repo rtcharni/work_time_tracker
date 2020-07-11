@@ -1,0 +1,91 @@
+<form [formGroup]="addWorkEntryForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Title:</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Enter here..."
+      formControlName="title"
+    />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <!-- <mat-hint>Hint</mat-hint> -->
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Details:</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Enter here..."
+      formControlName="details"
+    />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Customer:</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Enter here..."
+      formControlName="customerName"
+    />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Date:</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Enter here..."
+      formControlName="date"
+    />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Start time:</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Enter here..."
+      formControlName="startTime"
+    />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>End time:</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Enter here..."
+      formControlName="endTime"
+    />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Break (min):</mat-label>
+    <input
+      matInput
+      type="number"
+      step="1"
+      placeholder="Enter here..."
+      formControlName="breakMIN"
+    />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Charged:</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Enter here..."
+      formControlName="charged"
+    />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+</form>
