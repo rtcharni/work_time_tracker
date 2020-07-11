@@ -17,8 +17,6 @@ export class WorkEntriesService {
     to: string
   ): Promise<WorkEntry[]> {
     if (process.env.INPROD) {
-      // fetch from database with corrent params
-      // console.log(companyId, userId);
       return await Queries.getWorkEntries(
         userId ? [userId] : undefined,
         workEntryId,
@@ -32,7 +30,6 @@ export class WorkEntriesService {
   }
 
   static async addWorkEntry(workEntry: WorkEntry): Promise<WorkEntry[]> {
-    // use service to add to database
     if (process.env.INPROD) {
       return await Queries.addGenericEntry(workEntry, "work_entries");
     } else {
@@ -42,7 +39,6 @@ export class WorkEntriesService {
           workEntryId: Math.floor(Math.random() * Math.floor(1000)) + 1,
         },
       ];
-      // Return added Mockentry of given parameted entry
     }
   }
 
@@ -56,7 +52,6 @@ export class WorkEntriesService {
       );
     } else {
       return [workEntry];
-      // Return added Mockentry of given parameted entry
     }
   }
 
@@ -69,7 +64,6 @@ export class WorkEntriesService {
       );
     } else {
       return [mockWorkEntries[0]];
-      // Return added Mockentry of given parameted entry
     }
   }
 }
