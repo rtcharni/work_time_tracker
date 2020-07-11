@@ -3,10 +3,10 @@ import {
   Response,
   NextFunction,
   RequestHandler,
-  ErrorRequestHandler
+  ErrorRequestHandler,
 } from "express";
 import { query, ValidationChain } from "express-validator";
-import { Utils } from "../backendUtils";
+import { BackendUtils } from "../backendUtils";
 import { CompaniesService } from "../services/companies.service";
 import { Company } from "../../../models";
 
@@ -18,12 +18,9 @@ export class CompaniesController {
   )[] {
     return [
       // Request param validators.
-      query("companyId")
-        .isNumeric()
-        .toInt()
-        .optional(),
+      query("companyId").isNumeric().toInt().optional(),
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -36,7 +33,7 @@ export class CompaniesController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!")
+      BackendUtils.errorHandler("Could not fetch events!"),
     ];
   }
 }

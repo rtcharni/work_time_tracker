@@ -6,7 +6,7 @@ import {
   ErrorRequestHandler,
 } from "express";
 import { query, ValidationChain, body, param } from "express-validator";
-import { Utils, TokenManagement } from "../backendUtils";
+import { BackendUtils, TokenManagement } from "../backendUtils";
 import { UsersService } from "../services";
 import {
   User,
@@ -28,7 +28,7 @@ export class UsersController {
       query("companyId").isNumeric().toInt().optional(),
       query("withCompany").isBoolean().toBoolean().optional(),
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -43,7 +43,7 @@ export class UsersController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -66,7 +66,7 @@ export class UsersController {
         // throw new Error("User is not valid");
       }),
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -77,7 +77,7 @@ export class UsersController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -105,7 +105,7 @@ export class UsersController {
         // throw new Error("User is not valid");
       }),
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -119,7 +119,7 @@ export class UsersController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -132,7 +132,7 @@ export class UsersController {
       // Request param validators.
       param("userId").isNumeric().toInt(),
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -145,7 +145,7 @@ export class UsersController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler("Could not fetch events!"),
     ];
   }
 }

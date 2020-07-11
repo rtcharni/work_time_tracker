@@ -3,12 +3,12 @@ import {
   Response,
   NextFunction,
   RequestHandler,
-  ErrorRequestHandler
+  ErrorRequestHandler,
 } from "express";
 import { validationResult } from "express-validator";
 import { AxiosResponse, AxiosError } from "axios";
 
-export class Utils {
+export class BackendUtils {
   /**
    * Handles request's validation errors.
    */
@@ -40,16 +40,30 @@ export class Utils {
         console.error({
           message,
           config: response.config,
-          data: response.data
+          data: response.data,
         });
         res.status(response.status).send({ message, data: response.data });
       } else {
         console.error(err);
         res.status(500).send({
           message: "Internal server error!",
-          data: (err as Error).message
+          data: (err as Error).message,
         });
       }
     };
+  }
+
+  /**
+   * Converts objects empty string values to nulls
+   * @param obj object to check and convert
+   */
+  public static convertObjectEmptyStringPropsToNull<T>(obj: T): T {
+    const temp = (obj as unknown) as any;
+    for (const k of Object.keys(temp)) {
+      if (temp[k] === "") {
+        temp[k] = null;
+      }
+    }
+    return temp as T;
   }
 }

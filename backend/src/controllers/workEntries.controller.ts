@@ -6,7 +6,7 @@ import {
   ErrorRequestHandler,
 } from "express";
 import { query, ValidationChain, param, body } from "express-validator";
-import { Utils } from "../backendUtils";
+import { BackendUtils } from "../backendUtils";
 import { mockWorkEntries } from "../mockData";
 import { WorkEntriesService } from "../services/workEntries.service";
 import { WorkEntry } from "../../../models";
@@ -27,7 +27,7 @@ export class WorkEntriesController {
       query("to").isISO8601().optional(),
 
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -44,7 +44,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -63,29 +63,26 @@ export class WorkEntriesController {
         throw new Error("Work entry not valid");
       }),
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          console.log("HERE");
           console.log(req.cookies.auth);
           // console.log(req.cookies);
           // console.log(req.signedCookies);
           // console.log(req.headers);
           // console.log(req.headers.authorization);
           // console.log(req.headers);
-          // res.send(req.body);
-          // console.log(req.body);
-          // const result: WorkEntry[] = await WorkEntriesService.addWorkEntry(
-          //   req.body as WorkEntry
-          // );
-          // res.send(result);
+          const result: WorkEntry[] = await WorkEntriesService.addWorkEntry(
+            req.body as WorkEntry
+          );
+          res.send(result);
         } catch (error) {
           next(error);
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -105,7 +102,7 @@ export class WorkEntriesController {
         throw new Error("Work entry not valid");
       }),
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -120,7 +117,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler("Could not fetch events!"),
     ];
   }
 
@@ -133,7 +130,7 @@ export class WorkEntriesController {
       // Request param validators.
       param("workEntryId").isNumeric().toInt(),
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -147,7 +144,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler("Could not fetch events!"),
     ];
   }
 }

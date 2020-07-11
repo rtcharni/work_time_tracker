@@ -1,5 +1,6 @@
 import { User, WorkEntry, Company, UserAndCompany } from "../../../models";
 import { Database } from "./database.init";
+import { BackendUtils } from "../backendUtils";
 
 export class Queries {
   static async getUsers(
@@ -73,17 +74,21 @@ export class Queries {
   }
 
   static async addGenericEntry<T>(entry: T, tableName: string): Promise<T[]> {
+    const cleanedEntry = BackendUtils.convertObjectEmptyStringPropsToNull(
+      entry
+    );
+
     try {
       return Database.db.transaction(async (trx) => {
         return (await trx
           .withSchema("work-time-tracker")
-          .insert(entry, "*")
+          .insert(cleanedEntry, "*")
           .into(tableName)) as T[];
       });
     } catch (error) {
       console.error(
         `Error while adding generic entry to table ${tableName}.`,
-        entry
+        cleanedEntry
       );
       console.error(error);
     }

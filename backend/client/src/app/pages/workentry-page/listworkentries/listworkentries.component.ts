@@ -19,6 +19,7 @@ export class ListworkentriesComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    console.log(`list work entries IN INIT`);
     this.user = this.userService.getUser();
     if (this.user?.userId) {
       this.workEntries = await this.getWorkEntries(this.user.userId);

@@ -6,7 +6,7 @@ import {
   ErrorRequestHandler,
 } from "express";
 import { ValidationChain, body } from "express-validator";
-import { Utils, TokenManagement } from "../backendUtils";
+import { BackendUtils, TokenManagement } from "../backendUtils";
 import { UsersService } from "../services";
 import { UserCredentials, LoginResponse } from "../../../models";
 
@@ -20,7 +20,7 @@ export class AuthController {
       // Request param validators.
       body(["userId", "password"]).exists(),
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -42,7 +42,7 @@ export class AuthController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not login user!"),
+      BackendUtils.errorHandler("Could not login user!"),
     ];
   }
 
@@ -55,7 +55,7 @@ export class AuthController {
       // Request param validators.
       //   body(["userId", "password"]).exists(),
       // Error handler for request params
-      Utils.validatorHandler(),
+      BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -67,7 +67,7 @@ export class AuthController {
         }
       },
       // Error handler
-      Utils.errorHandler("Could not logout user!"),
+      BackendUtils.errorHandler("Could not logout user!"),
     ];
   }
 }
