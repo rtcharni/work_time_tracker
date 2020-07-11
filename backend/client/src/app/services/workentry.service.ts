@@ -36,7 +36,7 @@ export class WorkEntryService {
       to
     );
     const res = await this.http
-      .get<WorkEntry[]>(`/api/database/workentries`)
+      .get<WorkEntry[]>(`/api/database/workentries`, { params })
       .toPromise();
     return res;
   }

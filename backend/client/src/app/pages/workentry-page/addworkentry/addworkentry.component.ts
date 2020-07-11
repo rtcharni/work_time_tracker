@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { WorkEntryService } from '../../../services/workentry.service';
 
 @Component({
   selector: 'app-addworkentry',
@@ -18,12 +19,16 @@ export class AddworkentryComponent implements OnInit {
     charged: new FormControl(null),
   });
 
-  constructor() {}
+  constructor(private workEntryService: WorkEntryService) {}
 
   ngOnInit(): void {}
 
-  handleSaveButtonClick(): void {
+  async handleSaveButtonClick(): Promise<void> {
     console.log(this.addWorkEntryForm.value);
+    // TODO validation
+    const res = await this.workEntryService.addWorkEntry({
+      ...this.addWorkEntryForm.value,
+    });
   }
 
   handleClearButtonClick(): void {

@@ -13,6 +13,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { FrontPageComponent } from './pages/front-page/front-page.component';
 import { WorkEntryPageComponent } from './pages/workentry-page/workentry-page.component';
 import { AddworkentryComponent } from './pages/workentry-page/addworkentry/addworkentry.component';
+import { ListworkentriesComponent } from './pages/workentry-page/listworkentries/listworkentries.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AddworkentryComponent } from './pages/workentry-page/addworkentry/addwo
     FrontPageComponent,
     WorkEntryPageComponent,
     AddworkentryComponent,
+    ListworkentriesComponent,
   ],
   imports: [
     BrowserModule,

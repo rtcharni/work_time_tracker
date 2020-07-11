@@ -6,6 +6,7 @@ import {
   UserCredentials,
   LoginResponse,
   User,
+  UserAndCompany,
 } from '../../../../../models';
 
 @Injectable({
@@ -13,8 +14,8 @@ import {
 })
 export class UserService {
   private baseUrl = 'http://localhost:3000';
-  private config: Config | null;
-  private loggedInUser: User | null;
+  private config: Config | null = null;
+  private user: UserAndCompany | null = null;
 
   private mockConfig: Config = {
     workFormFields: ['title', 'details', 'customerName'],
@@ -27,6 +28,10 @@ export class UserService {
   public async getConfig(): Promise<Config> {
     // return this.http.get<Config>(this.baseUrl + 'FETCHCONFIG').toPromise();
     return this.mockConfig;
+  }
+
+  public getUser(): UserAndCompany {
+    return this.user;
   }
 
   public async logInUser(
@@ -42,9 +47,7 @@ export class UserService {
       })
       .toPromise();
 
-    this.loggedInUser = loginResponse?.success
-      ? loginResponse.userAndCompany
-      : null;
+    this.user = loginResponse?.success ? loginResponse.userAndCompany : null;
     return loginResponse;
   }
 
