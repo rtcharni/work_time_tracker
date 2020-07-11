@@ -17,18 +17,7 @@ export class UserService {
   private config: Config | null = null;
   private user: UserAndCompany | null = null;
 
-  private mockConfig: Config = {
-    workFormFields: ['title', 'details', 'customerName'],
-    testNumber: 22,
-    testString: 'test string',
-  };
-
   constructor(private http: HttpClient) {}
-
-  public async getConfig(): Promise<Config> {
-    // return this.http.get<Config>(this.baseUrl + 'FETCHCONFIG').toPromise();
-    return this.mockConfig;
-  }
 
   public getUser(): UserAndCompany {
     return this.user;

@@ -20,10 +20,14 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./listworkentries.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
       transition(
         'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+      transition(
+        'expanded <=> void',
         animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
       ),
     ]),
@@ -45,10 +49,9 @@ export class ListworkentriesComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    console.log(`list work entries IN INIT`);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
-    console.log(`list work entries IN INIT`);
     this.user = this.userService.getUser();
     if (this.user?.userId) {
       this.dataSource.data = await this.getWorkEntries(this.user.userId);
