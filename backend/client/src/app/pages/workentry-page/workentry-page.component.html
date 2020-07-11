@@ -1,1 +1,23 @@
-<p>workentry-page works!</p>
+<div class="workentrypage">
+  <mat-tab-group mat-stretch-tabs class="mat-elevation-z3">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>add_circle_outline</mat-icon>
+        New entry
+      </ng-template>
+
+      <ng-template matTabContent>
+        Content 1
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>date_range</mat-icon>
+        List entries
+      </ng-template>
+      <ng-template matTabContent>
+        Content 2
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>
