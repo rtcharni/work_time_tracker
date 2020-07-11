@@ -1,5 +1,5 @@
 <form [formGroup]="addWorkEntryForm">
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Title:</mat-label>
     <input
       matInput
@@ -19,10 +19,17 @@
       placeholder="Enter here..."
       formControlName="details"
     />
+    <!-- <textarea
+      rows="2"
+      matInput
+      type="text"
+      placeholder="Enter here..."
+      formControlName="details"
+    ></textarea> -->
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
   </mat-form-field>
 
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>Customer:</mat-label>
     <input
       matInput
@@ -33,7 +40,7 @@
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
   </mat-form-field>
 
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>Date:</mat-label>
     <input
       matInput
@@ -44,7 +51,7 @@
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
   </mat-form-field>
 
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>Start time:</mat-label>
     <input
       matInput
@@ -55,7 +62,7 @@
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
   </mat-form-field>
 
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>End time:</mat-label>
     <input
       matInput
@@ -66,7 +73,7 @@
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
   </mat-form-field>
 
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>Break (min):</mat-label>
     <input
       matInput
@@ -74,18 +81,14 @@
       step="1"
       placeholder="Enter here..."
       formControlName="breakMIN"
+      inputmode="numeric"
     />
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
   </mat-form-field>
-
-  <mat-form-field appearance="standard">
-    <mat-label>Charged:</mat-label>
-    <input
-      matInput
-      type="text"
-      placeholder="Enter here..."
-      formControlName="charged"
-    />
-    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-  </mat-form-field>
+  <br />
+  <mat-label>Charged:</mat-label>
+  <mat-slide-toggle formControlName="charged"></mat-slide-toggle>
+  <br />
+  <button mat-raised-button (click)="handleSaveButtonClick()">Save</button
+  ><button mat-raised-button (click)="handleClearButtonClick()">Clear</button>
 </form>

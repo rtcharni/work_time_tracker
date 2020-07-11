@@ -17,7 +17,16 @@ export class AddworkentryComponent implements OnInit {
     breakMIN: new FormControl(null),
     charged: new FormControl(null),
   });
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  handleSaveButtonClick(): void {
+    console.log(this.addWorkEntryForm.value);
+  }
+
+  handleClearButtonClick(): void {
+    this.addWorkEntryForm.reset();
+  }
 }
