@@ -1,6 +1,6 @@
 <div class="addworkentry">
   <form [formGroup]="addWorkEntryForm">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center no-gutters">
       <mat-form-field appearance="outline" *ngIf="showFormField('title')">
         <mat-label>Title:</mat-label>
         <input
@@ -14,90 +14,112 @@
       </mat-form-field>
     </div>
 
-    <mat-form-field appearance="outline" *ngIf="showFormField('details')">
-      <mat-label>Details:</mat-label>
-      <input
+    <div class="row justify-content-center no-gutters">
+      <mat-form-field appearance="outline" *ngIf="showFormField('details')">
+        <mat-label>Details:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Enter here..."
+          formControlName="details"
+        />
+        <!-- <textarea
+        rows="2"
         matInput
         type="text"
         placeholder="Enter here..."
         formControlName="details"
-      />
-      <!-- <textarea
-      rows="2"
-      matInput
-      type="text"
-      placeholder="Enter here..."
-      formControlName="details"
-    ></textarea> -->
-      <mat-icon matSuffix>description</mat-icon>
-    </mat-form-field>
+      ></textarea> -->
+        <mat-icon matSuffix>description</mat-icon>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline" *ngIf="showFormField('customerName')">
-      <mat-label>Customer:</mat-label>
-      <input
-        matInput
-        type="text"
-        placeholder="Enter here..."
-        formControlName="customerName"
-      />
-      <mat-icon matSuffix>account_box</mat-icon>
-    </mat-form-field>
+    <div class="row justify-content-center no-gutters">
+      <mat-form-field
+        appearance="outline"
+        *ngIf="showFormField('customerName')"
+      >
+        <mat-label>Customer:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Enter here..."
+          formControlName="customerName"
+        />
+        <mat-icon matSuffix>account_box</mat-icon>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline" *ngIf="showFormField('date')">
-      <mat-label>Date:</mat-label>
-      <input
-        matInput
-        type="text"
-        placeholder="Enter here..."
-        formControlName="date"
-      />
-      <mat-icon matSuffix>event</mat-icon>
-    </mat-form-field>
+    <div class="row justify-content-center no-gutters">
+      <mat-form-field appearance="outline" *ngIf="showFormField('date')">
+        <mat-label>Date:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Enter here..."
+          formControlName="date"
+        />
+        <mat-icon matSuffix>event</mat-icon>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline" *ngIf="showFormField('startTime')">
-      <mat-label>Start time:</mat-label>
-      <input
-        matInput
-        type="text"
-        placeholder="Enter here..."
-        formControlName="startTime"
-      />
-      <mat-icon matSuffix>access_time</mat-icon>
-    </mat-form-field>
+    <div class="row justify-content-center no-gutters">
+      <mat-form-field appearance="outline" *ngIf="showFormField('startTime')">
+        <mat-label>Start time:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Enter here..."
+          formControlName="startTime"
+        />
+        <mat-icon matSuffix>access_time</mat-icon>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline" *ngIf="showFormField('endTime')">
-      <mat-label>End time:</mat-label>
-      <input
-        matInput
-        type="text"
-        placeholder="Enter here..."
-        formControlName="endTime"
-      />
-      <mat-icon matSuffix>access_time</mat-icon>
-    </mat-form-field>
+    <div class="row justify-content-center no-gutters">
+      <mat-form-field appearance="outline" *ngIf="showFormField('endTime')">
+        <mat-label>End time:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Enter here..."
+          formControlName="endTime"
+        />
+        <mat-icon matSuffix>access_time</mat-icon>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="outline" *ngIf="showFormField('breakMIN')">
-      <mat-label>Break (min):</mat-label>
-      <input
-        matInput
-        type="number"
-        step="1"
-        placeholder="Enter here..."
-        formControlName="breakMIN"
-        inputmode="numeric"
-      />
-      <mat-icon matSuffix>free_breakfast</mat-icon>
-    </mat-form-field>
-    <br />
+    <div class="row justify-content-center no-gutters">
+      <mat-form-field appearance="outline" *ngIf="showFormField('breakMIN')">
+        <mat-label>Break (min):</mat-label>
+        <input
+          matInput
+          type="number"
+          step="1"
+          placeholder="Enter here..."
+          formControlName="breakMIN"
+          inputmode="numeric"
+        />
+        <mat-icon matSuffix>free_breakfast</mat-icon>
+      </mat-form-field>
+      <br />
+    </div>
 
-    <div *ngIf="showFormField('charged')">
+    <div
+      class="row justify-content-center no-gutters"
+      *ngIf="showFormField('charged')"
+    >
       <mat-label>Charged:</mat-label>
       <mat-slide-toggle formControlName="charged"></mat-slide-toggle>
       <mat-icon matSuffix>attach_money</mat-icon>
       <br />
     </div>
 
-    <button mat-raised-button (click)="handleSaveButtonClick()">Save</button
-    ><button mat-raised-button (click)="handleClearButtonClick()">Clear</button>
+    <div class="row justify-content-center no-gutters">
+      <button mat-raised-button (click)="handleSaveButtonClick()">Save</button
+      ><button mat-raised-button (click)="handleClearButtonClick()">
+        Clear
+      </button>
+    </div>
   </form>
 </div>
