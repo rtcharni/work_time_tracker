@@ -37,7 +37,7 @@ export class ListworkentriesComponent implements OnInit {
   private user: UserAndCompany = null;
   // workEntries: WorkEntry[] = [];
   dataSource = new MatTableDataSource<WorkEntry>([]);
-  columnsToDisplay = ['title', 'details', 'date'];
+  columnsToDisplay = []; // ['title', 'details', 'date', 'charged']
   expandedElement: WorkEntry | null;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -50,11 +50,13 @@ export class ListworkentriesComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     console.log(`list work entries IN INIT`);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
     this.user = this.userService.getUser();
     if (this.user?.userId) {
+      this.columnsToDisplay = this.user?.config.listWorkEntriesTableHeaderFields;
       this.dataSource.data = await this.getWorkEntries(this.user.userId);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 
