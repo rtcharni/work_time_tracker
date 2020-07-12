@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddworkentryComponent implements OnInit {
   private user: UserAndCompany = null;
+  // addWorkEntryForm: FormGroup;
   addWorkEntryForm = new FormGroup({
     title: new FormControl(''),
     details: new FormControl(''),
@@ -28,8 +29,42 @@ export class AddworkentryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user = this.userService.getUser();
     console.log(`add work entry IN INIT`);
+    this.user = this.userService.getUser();
+    // this.addWorkEntryForm = this.initForm(this.user);
+  }
+
+  initForm(user: UserAndCompany): FormGroup {
+    const form = new FormGroup({});
+    for (const field of user.config.workEntryFields) {
+      switch (field) {
+        case 'title':
+          form.addControl('title', new FormControl(null));
+          break;
+        case 'details':
+          form.addControl('details', new FormControl(null));
+          break;
+        case 'customerName':
+          form.addControl('customerName', new FormControl(null));
+          break;
+        case 'date':
+          form.addControl('date', new FormControl(null));
+          break;
+        case 'startTime':
+          form.addControl('startTime', new FormControl(null));
+          break;
+        case 'endTime':
+          form.addControl('endTime', new FormControl(null));
+          break;
+        case 'breakMIN':
+          form.addControl('breakMIN', new FormControl(null));
+          break;
+        case 'charged':
+          form.addControl('charged', new FormControl(null));
+          break;
+      }
+    }
+    return form;
   }
 
   async handleSaveButtonClick(): Promise<void> {
@@ -42,6 +77,11 @@ export class AddworkentryComponent implements OnInit {
     };
     const res = await this.workEntryService.addWorkEntry(workEntry);
     console.log(`Result`, res);
+  }
+
+  showFormField(fieldName: string): boolean {
+    return true; // REMOVE
+    return this.user.config.workEntryFields.includes(fieldName);
   }
 
   handleClearButtonClick(): void {

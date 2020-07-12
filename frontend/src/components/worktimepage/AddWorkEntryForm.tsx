@@ -25,7 +25,7 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
   useEffect((): void => {
     if (config) {
       const formFields: any = {};
-      for (const k of config.workFormFields) {
+      for (const k of config.workEntryFields) {
         formFields[k] = " ";
       }
       setFields(formFields);
@@ -85,7 +85,7 @@ const AddWorkEntryForm = ({ config }: AppProps) => {
         autoHideDuration={3000}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "center"
+          horizontal: "center",
         }}
         message="Please correct fields :)"
       >

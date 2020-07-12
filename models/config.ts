@@ -1,5 +1,5 @@
 export interface Config {
-  workFormFields: string[];
+  workEntryFields: string[];
   listWorkEntriesTableHeaderFields: string[];
   testString: string;
   testNumber: number;

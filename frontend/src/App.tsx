@@ -12,7 +12,7 @@ import { Config } from "../../models";
 import Loginpage from "./components/loginpage/Loginpage";
 
 const mockConfig: Config = {
-  workFormFields: ["title", "details", "customerName"],
+  workEntryFields: ["title", "details", "customerName"],
   testNumber: 22,
   testString: "test string",
 };
