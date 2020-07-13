@@ -7,7 +7,7 @@ import {
 import { Queries } from "./database.queries";
 import { mockUsers, mockCompanies } from "../mockData";
 import bcrypt from "bcrypt";
-import { Constants } from "../backendUtils";
+import { Constants } from "../../../utils";
 
 export class UsersService {
   static async getUsers(
