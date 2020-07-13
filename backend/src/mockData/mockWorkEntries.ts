@@ -3,7 +3,7 @@ import { WorkEntry } from "../../../models";
 export const mockWorkEntries: WorkEntry[] = [
   {
     workEntryId: 1,
-    companyId: 5,
+    companyId: 1,
     userId: 1,
     title: "App development",
     details: "Frontend app stater",
@@ -12,11 +12,11 @@ export const mockWorkEntries: WorkEntry[] = [
     startTime: "2020-03-21T08:34:59.716Z",
     endTime: "2020-03-21T10:34:59.716Z",
     date: "2020-03-21T08:34:59.716Z",
-    charged: true,
+    charged: null,
   },
   {
     workEntryId: 2,
-    companyId: 5,
+    companyId: 1,
     userId: 1,
     title: "Sell monitors",
     details: "Dell monitors",
@@ -29,7 +29,7 @@ export const mockWorkEntries: WorkEntry[] = [
   },
   {
     workEntryId: 3,
-    companyId: 5,
+    companyId: 1,
     userId: 1,
     title: "App development",
     details: "Backend fixing bugs",
@@ -42,8 +42,8 @@ export const mockWorkEntries: WorkEntry[] = [
   },
   {
     workEntryId: 4,
-    companyId: 6,
-    userId: 2,
+    companyId: 1,
+    userId: 1,
     title: "Fixing",
     details: "Fixing computers",
     customerName: "Toshiba",
@@ -55,12 +55,12 @@ export const mockWorkEntries: WorkEntry[] = [
   },
   {
     workEntryId: 5,
-    companyId: 6,
-    userId: 2,
+    companyId: 1,
+    userId: 1,
     title: "Cleaning",
     details: "Cleaning toilet",
     customerName: "Katja",
-    breakMIN: 0,
+    breakMIN: null,
     startTime: "2020-03-23T14:12:59.716Z",
     endTime: "2020-03-23T20:56:59.716Z",
     date: "2020-03-23T14:12:59.716Z",
