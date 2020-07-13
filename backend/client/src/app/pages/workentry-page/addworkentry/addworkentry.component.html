@@ -64,6 +64,15 @@
     </div>
 
     <div class="row justify-content-center no-gutters">
+      <mat-form-field appearance="outline">
+        <mat-label>Date:</mat-label>
+        <input matInput [matDatepicker]="picker" (focus)="picker.open()" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="row justify-content-center no-gutters">
       <mat-form-field appearance="outline" *ngIf="showFormField('startTime')">
         <mat-label>Start time:</mat-label>
         <input

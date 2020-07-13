@@ -1,5 +1,5 @@
 <div class="listworkentries">
-  <mat-form-field appearance="standard">
+  <mat-form-field class="searchField" appearance="standard">
     <mat-label>Search</mat-label>
     <input
       matInput
@@ -36,7 +36,7 @@
         [attr.colspan]="columnsToDisplay.length"
       >
         <div
-          class="example-element-detail"
+          class="element-detail"
           [@detailExpand]="
             element == expandedElement ? 'expanded' : 'collapsed'
           "
@@ -44,18 +44,6 @@
           <div *ngFor="let field of user.config.workEntryFields">
             {{ displayExpandedData(element, field) }}
           </div>
-          <!-- <div class="example-element-diagram">
-            <div class="example-element-position">LOL</div>
-            <div class="example-element-symbol">hooop</div>
-            <div class="example-element-name">voivoi</div>
-            <div class="example-element-weight">olispa kaljaa</div>
-          </div>
-          <div class="example-element-description">
-            tässä description
-            <span class="example-element-description-attribution">
-              -- Wikipedia
-            </span>
-          </div> -->
         </div>
       </td>
     </ng-container>
@@ -64,14 +52,14 @@
     <tr
       mat-row
       *matRowDef="let element; columns: columnsToDisplay"
-      class="example-element-row"
-      [class.example-expanded-row]="expandedElement === element"
+      class="element-row"
+      [class.expanded-row]="expandedElement === element"
       (click)="expandedElement = expandedElement === element ? null : element"
     ></tr>
     <tr
       mat-row
       *matRowDef="let row; columns: ['expandedDetail']"
-      class="example-detail-row"
+      class="detail-row"
     ></tr>
 
     <!-- Row shown when there is no matching data. -->
