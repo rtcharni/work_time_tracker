@@ -13,6 +13,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-listworkentries',
@@ -57,6 +58,48 @@ export class ListworkentriesComponent implements OnInit {
       this.dataSource.data = await this.getWorkEntries(this.user.userId);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+    }
+  }
+
+  displayTableHeader(column: string): string {
+    switch (column) {
+      case 'title':
+        return 'Title';
+      case 'details':
+        return 'Details';
+      case 'customerName':
+        return 'Customer';
+      case 'date':
+        return 'Date';
+      case 'startTime':
+        return 'Start';
+      case 'endTime':
+        return 'End';
+      case 'breakMIN':
+        return 'Break';
+      case 'charged':
+        return 'Charged';
+    }
+  }
+
+  displayTableData(data: string | number | boolean, column: string): any {
+    switch (column) {
+      case 'title':
+        return data;
+      case 'details':
+        return data;
+      case 'customerName':
+        return data;
+      case 'date':
+        return moment(data as string).format('DD.MM.YYYY');
+      case 'startTime':
+        return moment(data as string).format('DD.MM.YYYY hh:mm');
+      case 'endTime':
+        return moment(data as string).format('DD.MM.YYYY');
+      case 'breakMIN':
+        return data;
+      case 'charged':
+        return data === true ? 'Yes' : 'No';
     }
   }
 
