@@ -14,6 +14,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import * as moment from 'moment';
+import { Constants } from '../../../../../../../utils';
 
 @Component({
   selector: 'app-listworkentries',
@@ -58,11 +59,17 @@ export class ListworkentriesComponent implements OnInit {
       this.dataSource.data = await this.getWorkEntries(this.user.userId);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.user.config.workEntryFields;
     }
   }
 
-  displayTableHeader(column: string): string {
-    switch (column) {
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  displayTableHeader(field: string): string {
+    switch (field) {
       case 'title':
         return 'Title';
       case 'details':
@@ -82,8 +89,8 @@ export class ListworkentriesComponent implements OnInit {
     }
   }
 
-  displayTableData(data: string | number | boolean, column: string): any {
-    switch (column) {
+  displayTableData(data: string | number | boolean, field: string): any {
+    switch (field) {
       case 'title':
         return data;
       case 'details':
@@ -91,15 +98,42 @@ export class ListworkentriesComponent implements OnInit {
       case 'customerName':
         return data;
       case 'date':
-        return moment(data as string).format('DD.MM.YYYY');
+        return moment(data as string).format(Constants.DATEFORMAT);
       case 'startTime':
-        return moment(data as string).format('DD.MM.YYYY hh:mm');
+        return moment(data as string).format(Constants.DATEANDTIMEFORMAT);
       case 'endTime':
-        return moment(data as string).format('DD.MM.YYYY');
+        return moment(data as string).format(Constants.DATEANDTIMEFORMAT);
       case 'breakMIN':
         return data;
       case 'charged':
         return data === true ? 'Yes' : 'No';
+    }
+  }
+
+  displayExpandedData(element: WorkEntry, field: string): string {
+    if (!this.user.config.listWorkEntriesTableHeaderFields.includes(field)) {
+      switch (field) {
+        case `title`:
+          return `Title: ${element.title}`;
+        case `details`:
+          return `Details: ${element.details}`;
+        case `customerName`:
+          return `Customer: ${element.customerName}`;
+        case `date`:
+          return `Date: ${moment(element.date).format(Constants.DATEFORMAT)}`;
+        case `startTime`:
+          return `Start: ${moment(element.startTime).format(
+            Constants.DATEANDTIMEFORMAT
+          )}`;
+        case `endTime`:
+          return `End: ${moment(element.endTime).format(
+            Constants.DATEANDTIMEFORMAT
+          )}`;
+        case `breakMIN`:
+          return `Break: ${element.breakMIN}`;
+        case `charged`:
+          return `Charged: ${element.charged ? 'Yes' : 'No'}`;
+      }
     }
   }
 

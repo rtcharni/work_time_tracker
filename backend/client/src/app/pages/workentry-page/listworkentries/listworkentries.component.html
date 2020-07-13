@@ -1,4 +1,14 @@
 <div class="listworkentries">
+  <mat-form-field appearance="standard">
+    <mat-label>Search</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Enter here..."
+      #input
+    />
+  </mat-form-field>
+
   <table
     mat-table
     [dataSource]="dataSource"
@@ -31,7 +41,10 @@
             element == expandedElement ? 'expanded' : 'collapsed'
           "
         >
-          <div class="example-element-diagram">
+          <div *ngFor="let field of user.config.workEntryFields">
+            {{ displayExpandedData(element, field) }}
+          </div>
+          <!-- <div class="example-element-diagram">
             <div class="example-element-position">LOL</div>
             <div class="example-element-symbol">hooop</div>
             <div class="example-element-name">voivoi</div>
@@ -42,7 +55,7 @@
             <span class="example-element-description-attribution">
               -- Wikipedia
             </span>
-          </div>
+          </div> -->
         </div>
       </td>
     </ng-container>
@@ -60,6 +73,13 @@
       *matRowDef="let row; columns: ['expandedDetail']"
       class="example-detail-row"
     ></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No data matching the filter "{{ input.value }}"
+      </td>
+    </tr>
   </table>
 
   <mat-paginator
