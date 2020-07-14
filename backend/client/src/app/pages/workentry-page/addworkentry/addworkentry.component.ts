@@ -73,14 +73,18 @@ export class AddworkentryComponent implements OnInit {
 
   async handleSaveButtonClick(): Promise<void> {
     console.log(`Saving...`, this.addWorkEntryForm.value);
-    // TODO validation
-    const workEntry: WorkEntry = {
-      ...this.addWorkEntryForm.value,
-      userId: this.user.userId,
-      companyId: this.user.companyId,
-    };
-    const res = await this.workEntryService.addWorkEntry(workEntry);
-    console.log(`Result`, res);
+    // TODO validation. empty fields...? required..?
+    if (this.addWorkEntryForm.valid) {
+      const workEntry: WorkEntry = {
+        ...this.addWorkEntryForm.value,
+        userId: this.user.userId,
+        companyId: this.user.companyId,
+      };
+      const res = await this.workEntryService.addWorkEntry(workEntry);
+      console.log(`Result`, res);
+    } else {
+      alert('Form not valid');
+    }
   }
 
   showFormField(fieldName: string): boolean {
