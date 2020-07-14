@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WorkEntryService } from '../../../services/workentry.service';
 import { WorkEntry, UserAndCompany } from '../../../../../../../models';
 import { UserService } from 'src/app/services/user.service';
@@ -19,7 +19,11 @@ export class AddworkentryComponent implements OnInit {
     date: new FormControl(''),
     startTime: new FormControl(''),
     endTime: new FormControl(''),
-    breakMIN: new FormControl(null),
+    breakMIN: new FormControl(null, [
+      Validators.min(0),
+      Validators.max(1000),
+      Validators.pattern('[0-9]*'),
+    ]),
     charged: new FormControl(null),
   });
 

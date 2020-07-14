@@ -1,7 +1,10 @@
 <div class="addworkentry">
   <form [formGroup]="addWorkEntryForm">
-    <div class="row justify-content-center no-gutters">
-      <mat-form-field appearance="outline" *ngIf="showFormField('title')">
+    <div
+      class="row justify-content-center no-gutters"
+      *ngIf="showFormField('title')"
+    >
+      <mat-form-field appearance="outline">
         <mat-label>Title:</mat-label>
         <input
           matInput
@@ -10,12 +13,14 @@
           formControlName="title"
         />
         <mat-icon matSuffix>subject</mat-icon>
-        <!-- <mat-hint>Hint</mat-hint> -->
       </mat-form-field>
     </div>
 
-    <div class="row justify-content-center no-gutters">
-      <mat-form-field appearance="outline" *ngIf="showFormField('details')">
+    <div
+      class="row justify-content-center no-gutters"
+      *ngIf="showFormField('details')"
+    >
+      <mat-form-field appearance="outline">
         <mat-label>Details:</mat-label>
         <input
           matInput
@@ -34,11 +39,11 @@
       </mat-form-field>
     </div>
 
-    <div class="row justify-content-center no-gutters">
-      <mat-form-field
-        appearance="outline"
-        *ngIf="showFormField('customerName')"
-      >
+    <div
+      class="row justify-content-center no-gutters"
+      *ngIf="showFormField('customerName')"
+    >
+      <mat-form-field appearance="outline">
         <mat-label>Customer:</mat-label>
         <input
           matInput
@@ -50,34 +55,34 @@
       </mat-form-field>
     </div>
 
-    <div class="row justify-content-center no-gutters">
-      <mat-form-field appearance="outline" *ngIf="showFormField('date')">
+    <div
+      class="row justify-content-center no-gutters"
+      *ngIf="showFormField('date')"
+    >
+      <mat-form-field appearance="outline">
         <mat-label>Date:</mat-label>
         <input
           matInput
-          type="text"
-          placeholder="Enter here..."
+          [matDatepicker]="picker"
+          (focus)="picker.open()"
           formControlName="date"
         />
         <mat-icon matSuffix>event</mat-icon>
-      </mat-form-field>
-    </div>
-
-    <div class="row justify-content-center no-gutters">
-      <mat-form-field appearance="outline">
-        <mat-label>Date:</mat-label>
-        <input matInput [matDatepicker]="picker" (focus)="picker.open()" />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
         <mat-datepicker touchUi #picker></mat-datepicker>
       </mat-form-field>
     </div>
 
-    <div class="row justify-content-center no-gutters">
-      <mat-form-field appearance="outline" *ngIf="showFormField('startTime')">
+    <div
+      class="row justify-content-center no-gutters"
+      *ngIf="showFormField('startTime')"
+    >
+      <mat-form-field appearance="outline">
         <mat-label>Start time:</mat-label>
         <input
           matInput
-          type="text"
+          type="time"
+          step="60"
           placeholder="Enter here..."
           formControlName="startTime"
         />
@@ -85,12 +90,16 @@
       </mat-form-field>
     </div>
 
-    <div class="row justify-content-center no-gutters">
-      <mat-form-field appearance="outline" *ngIf="showFormField('endTime')">
+    <div
+      class="row justify-content-center no-gutters"
+      *ngIf="showFormField('endTime')"
+    >
+      <mat-form-field appearance="outline">
         <mat-label>End time:</mat-label>
         <input
           matInput
-          type="text"
+          type="time"
+          step="60"
           placeholder="Enter here..."
           formControlName="endTime"
         />
@@ -98,18 +107,24 @@
       </mat-form-field>
     </div>
 
-    <div class="row justify-content-center no-gutters">
-      <mat-form-field appearance="outline" *ngIf="showFormField('breakMIN')">
+    <div
+      class="row justify-content-center no-gutters"
+      *ngIf="showFormField('breakMIN')"
+    >
+      <mat-form-field appearance="outline">
         <mat-label>Break (min):</mat-label>
         <input
           matInput
-          type="number"
+          type="text"
           step="1"
           placeholder="Enter here..."
           formControlName="breakMIN"
           inputmode="numeric"
         />
         <mat-icon matSuffix>free_breakfast</mat-icon>
+        <mat-error *ngIf="addWorkEntryForm.get('breakMIN').invalid"
+          >Only numbers up to 1000 and no decimals</mat-error
+        >
       </mat-form-field>
       <br />
     </div>
