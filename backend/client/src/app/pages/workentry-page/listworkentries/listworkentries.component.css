@@ -25,3 +25,8 @@ tr.element-row:not(.expanded-row):active {
 .searchField {
   margin-left: 5%;
 }
+
+.moreIcon {
+  float: right;
+  cursor: pointer;
+}

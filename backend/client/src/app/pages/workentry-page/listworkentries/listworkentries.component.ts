@@ -59,13 +59,16 @@ export class ListworkentriesComponent implements OnInit {
       this.dataSource.data = await this.getWorkEntries(this.user.userId);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.user.config.workEntryFields;
     }
   }
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  handleMoreIconClick(workEntry: WorkEntry): void {
+    console.log(workEntry);
   }
 
   displayTableHeader(field: string): string {
