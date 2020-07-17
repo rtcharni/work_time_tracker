@@ -63,7 +63,7 @@ export class WorkEntriesService {
         workEntryId
       );
     } else {
-      return [mockWorkEntries[0]];
+      return [Object.assign({}, mockWorkEntries[0], { workEntryId })];
     }
   }
 }

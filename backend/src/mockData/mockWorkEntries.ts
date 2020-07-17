@@ -13,6 +13,9 @@ export const mockWorkEntries: WorkEntry[] = [
     endTime: "2020-03-21T10:34:59.716Z",
     date: "2020-03-21T08:34:59.716Z",
     charged: null,
+    locked: false,
+    costCents: 0,
+    comments: [],
   },
   {
     workEntryId: 2,
@@ -26,6 +29,9 @@ export const mockWorkEntries: WorkEntry[] = [
     endTime: "2020-03-22T10:00:59.716Z",
     date: "2020-03-22T06:00:59.716Z",
     charged: true,
+    locked: false,
+    costCents: 300012,
+    comments: [],
   },
   {
     workEntryId: 3,
@@ -39,6 +45,9 @@ export const mockWorkEntries: WorkEntry[] = [
     endTime: "2020-03-22T14:34:59.716Z",
     date: "2020-03-22T12:34:59.716Z",
     charged: false,
+    locked: false,
+    costCents: null,
+    comments: [],
   },
   {
     workEntryId: 4,
@@ -52,6 +61,9 @@ export const mockWorkEntries: WorkEntry[] = [
     endTime: "2020-03-23T10:34:59.716Z",
     date: "2020-03-23T08:34:59.716Z",
     charged: false,
+    locked: false,
+    costCents: 10000,
+    comments: [],
   },
   {
     workEntryId: 5,
@@ -65,5 +77,8 @@ export const mockWorkEntries: WorkEntry[] = [
     endTime: "2020-03-23T20:56:59.716Z",
     date: "2020-03-23T14:12:59.716Z",
     charged: false,
+    locked: false,
+    costCents: 22000,
+    comments: [],
   },
 ];

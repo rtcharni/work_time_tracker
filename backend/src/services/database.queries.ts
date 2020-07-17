@@ -102,11 +102,18 @@ export class Queries {
   ): Promise<T[]> {
     try {
       return Database.db.transaction(async (trx) => {
-        return (await trx
-          .withSchema("work-time-tracker")
-          .where(idColumnName, id)
-          .update(entry, "*")
-          .into(tableName)) as T[];
+        return (
+          (await trx
+            .withSchema("work-time-tracker")
+            // .where(idColumnName, id)
+            .where((builder) => {
+              builder.where(idColumnName, id);
+              // check that work entry is not locked
+              if (tableName === "work_entries") builder.where("locked", false);
+            })
+            .update(entry, "*")
+            .into(tableName)) as T[]
+        );
       });
     } catch (error) {
       console.error(
@@ -124,11 +131,18 @@ export class Queries {
   ): Promise<T> {
     try {
       return Database.db.transaction(async (trx) => {
-        return ((await trx
-          .withSchema("work-time-tracker")
-          .from(tableName)
-          .where(idColumnName, id)
-          .del("*")) as unknown) as T;
+        return (
+          ((await trx
+            .withSchema("work-time-tracker")
+            .from(tableName)
+            // .where(idColumnName, id)
+            .where((builder) => {
+              builder.where(idColumnName, id);
+              // check that work entry is not locked
+              if (tableName === "work_entries") builder.where("locked", false);
+            })
+            .del("*")) as unknown) as T
+        );
       });
     } catch (error) {
       console.error(
