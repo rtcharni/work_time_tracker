@@ -1,0 +1,30 @@
+<mat-nav-list>
+  <mat-form-field *ngIf="showComment" appearance="outline">
+    <mat-label>Enter comment:</mat-label>
+    <input matInput type="text" [(ngModel)]="comment" />
+    <button
+      mat-button
+      *ngIf="comment.length"
+      matSuffix
+      mat-icon-button
+      (click)="saveComment(comment)"
+    >
+      <mat-icon>add_comment</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <a mat-list-item (click)="onOptionClick('addComment')">
+    <span mat-line>Add comment</span>
+    <span mat-line></span>
+  </a>
+
+  <a mat-list-item (click)="onOptionClick('editEntry')">
+    <span mat-line>Edit entry</span>
+    <span mat-line></span>
+  </a>
+
+  <a mat-list-item (click)="onOptionClick('deleteEntry')">
+    <span mat-line>Delete entry</span>
+    <span mat-line></span>
+  </a>
+</mat-nav-list>

@@ -13,17 +13,21 @@ export class AddworkentryComponent implements OnInit {
   private user: UserAndCompany = null;
   // addWorkEntryForm: FormGroup;
   addWorkEntryForm = new FormGroup({
-    title: new FormControl(''),
-    details: new FormControl(''),
-    customerName: new FormControl(''),
-    date: new FormControl(''),
-    startTime: new FormControl(''),
-    endTime: new FormControl(''),
+    title: new FormControl(null),
+    details: new FormControl(null),
+    customerName: new FormControl(null),
+    costCents: new FormControl(null, [
+      Validators.pattern('^\\d+,{0,1}\\d{0,2}$'),
+    ]),
+    date: new FormControl(null),
+    startTime: new FormControl(null),
+    endTime: new FormControl(null),
     breakMIN: new FormControl(null, [
       Validators.min(0),
       Validators.max(1000),
       Validators.pattern('[0-9]*'),
     ]),
+    comments: new FormControl(null),
     charged: new FormControl(null),
   });
 
@@ -51,6 +55,9 @@ export class AddworkentryComponent implements OnInit {
         case 'customerName':
           form.addControl('customerName', new FormControl(null));
           break;
+        case 'costCents':
+          form.addControl('costCents', new FormControl(null));
+          break;
         case 'date':
           form.addControl('date', new FormControl(null));
           break;
@@ -63,6 +70,9 @@ export class AddworkentryComponent implements OnInit {
         case 'breakMIN':
           form.addControl('breakMIN', new FormControl(null));
           break;
+        case 'comments':
+          form.addControl('comments', new FormControl(null));
+          break;
         case 'charged':
           form.addControl('charged', new FormControl(null));
           break;
@@ -72,14 +82,15 @@ export class AddworkentryComponent implements OnInit {
   }
 
   async handleSaveButtonClick(): Promise<void> {
-    console.log(`Saving...`, this.addWorkEntryForm.value);
+    const values = this.addWorkEntryForm.value;
+    console.log(`Saving...`, values);
     // TODO validation. empty fields...? required..?
     if (this.addWorkEntryForm.valid) {
-      const workEntry: WorkEntry = {
-        ...this.addWorkEntryForm.value,
-        userId: this.user.userId,
-        companyId: this.user.companyId,
-      };
+      const workEntry: WorkEntry = this.convertToWorkEntry(
+        values,
+        this.user.userId,
+        this.user.companyId
+      );
       const res = await this.workEntryService.addWorkEntry(workEntry);
       console.log(`Result`, res);
     } else {
@@ -90,6 +101,28 @@ export class AddworkentryComponent implements OnInit {
   showFormField(fieldName: string): boolean {
     return true; // REMOVE
     return this.user.config.workEntryFields.includes(fieldName);
+  }
+
+  convertToWorkEntry(
+    formValues: any,
+    userId: number,
+    companyId: number
+  ): WorkEntry {
+    const workEntry: WorkEntry = {
+      ...formValues,
+      userId,
+      companyId,
+    };
+    if (formValues.comments) {
+      Object.assign(workEntry, { comments: [formValues.comments] });
+    }
+    if (formValues.costCents) {
+      const noComma: number = (formValues.costCents as string).includes(',')
+        ? +(formValues.costCents as string).replace(',', '.')
+        : +formValues.costCents;
+      Object.assign(workEntry, { costCents: noComma * 100 });
+    }
+    return workEntry;
   }
 
   handleClearButtonClick(): void {

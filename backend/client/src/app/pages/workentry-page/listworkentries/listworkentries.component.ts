@@ -15,6 +15,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { Constants } from '../../../../../../../utils';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { EditworkentrybottomsheetComponent } from './editworkentrybottomsheet/editworkentrybottomsheet.component';
+import { BottomSheetActionResult } from 'src/app/frontend-models/frontend.models';
 
 @Component({
   selector: 'app-listworkentries',
@@ -47,7 +50,8 @@ export class ListworkentriesComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private workEntryService: WorkEntryService
+    private workEntryService: WorkEntryService,
+    private bottomSheet: MatBottomSheet
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -69,6 +73,27 @@ export class ListworkentriesComponent implements OnInit {
 
   handleMoreIconClick(workEntry: WorkEntry): void {
     console.log(workEntry);
+    this.bottomSheet
+      .open(EditworkentrybottomsheetComponent, { data: workEntry })
+      .afterDismissed()
+      .subscribe(async (result: BottomSheetActionResult) => {
+        console.log(result);
+        switch (result.action) {
+          case 'addComment':
+            break;
+          case 'editEntry':
+            break;
+          case 'deleteEntry':
+            if (result.workEntry?.workEntryId) {
+              const index = this.dataSource.data.findIndex(
+                (entry) => entry.workEntryId === result.workEntry?.workEntryId
+              );
+              this.dataSource.data.splice(index, 1);
+              this.dataSource._updateChangeSubscription(); // <-- Refresh the datasource
+            }
+            break;
+        }
+      });
   }
 
   displayTableHeader(field: string): string {
@@ -79,6 +104,8 @@ export class ListworkentriesComponent implements OnInit {
         return 'Details';
       case 'customerName':
         return 'Customer';
+      case 'costCents':
+        return 'Cost';
       case 'date':
         return 'Date';
       case 'startTime':
@@ -89,10 +116,15 @@ export class ListworkentriesComponent implements OnInit {
         return 'Break';
       case 'charged':
         return 'Charged';
+      case 'comments':
+        return 'Comments';
     }
   }
 
-  displayTableData(data: string | number | boolean, field: string): any {
+  displayTableData(
+    data: string | string[] | number | boolean,
+    field: string
+  ): any {
     switch (field) {
       case 'title':
         return data;
@@ -100,16 +132,28 @@ export class ListworkentriesComponent implements OnInit {
         return data;
       case 'customerName':
         return data;
+      case 'costCents':
+        return (data as number) / 100;
       case 'date':
-        return moment(data as string).format(Constants.DATEFORMAT);
+        return data
+          ? moment(data as string).format(Constants.DATEFORMAT)
+          : null;
       case 'startTime':
-        return moment(data as string).format(Constants.DATEANDTIMEFORMAT);
+        return data
+          ? moment(data as string).format(Constants.DATEANDTIMEFORMAT)
+          : null;
       case 'endTime':
-        return moment(data as string).format(Constants.DATEANDTIMEFORMAT);
+        return data
+          ? moment(data as string).format(Constants.DATEANDTIMEFORMAT)
+          : null;
       case 'breakMIN':
         return data;
       case 'charged':
         return data === true ? 'Yes' : 'No';
+      case 'comments':
+        // How to display array of comment in one line !?
+        // Show last comment
+        return data ? data[(data as string[]).length - 1] : null;
     }
   }
 
@@ -122,20 +166,32 @@ export class ListworkentriesComponent implements OnInit {
           return `Details: ${element.details}`;
         case `customerName`:
           return `Customer: ${element.customerName}`;
+        case `costCents`:
+          return `Cost: ${element.costCents / 100}`;
         case `date`:
-          return `Date: ${moment(element.date).format(Constants.DATEFORMAT)}`;
+          return `Date: ${
+            element.date
+              ? moment(element.date).format(Constants.DATEFORMAT)
+              : null
+          }`;
         case `startTime`:
-          return `Start: ${moment(element.startTime).format(
-            Constants.DATEANDTIMEFORMAT
-          )}`;
+          return `Start: ${
+            element.startTime
+              ? moment(element.startTime).format(Constants.DATEANDTIMEFORMAT)
+              : null
+          }`;
         case `endTime`:
-          return `End: ${moment(element.endTime).format(
-            Constants.DATEANDTIMEFORMAT
-          )}`;
+          return `End: ${
+            element.endTime
+              ? moment(element.endTime).format(Constants.DATEANDTIMEFORMAT)
+              : null
+          }`;
         case `breakMIN`:
           return `Break: ${element.breakMIN}`;
         case `charged`:
           return `Charged: ${element.charged ? 'Yes' : 'No'}`;
+        case 'comments':
+          return element.comments ? element.comments.join('\n') : null;
       }
     }
   }

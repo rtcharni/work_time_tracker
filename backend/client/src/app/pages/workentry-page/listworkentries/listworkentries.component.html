@@ -45,7 +45,10 @@
             >more_vert</mat-icon
           >
 
-          <div *ngFor="let field of user.config.workEntryFields">
+          <div
+            class="expandedDataDiv"
+            *ngFor="let field of user.config.workEntryFields"
+          >
             {{ displayExpandedData(element, field) }}
           </div>
         </div>

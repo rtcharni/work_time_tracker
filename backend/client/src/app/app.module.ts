@@ -14,6 +14,7 @@ import { FrontPageComponent } from './pages/front-page/front-page.component';
 import { WorkEntryPageComponent } from './pages/workentry-page/workentry-page.component';
 import { AddworkentryComponent } from './pages/workentry-page/addworkentry/addworkentry.component';
 import { ListworkentriesComponent } from './pages/workentry-page/listworkentries/listworkentries.component';
+import { EditworkentrybottomsheetComponent } from './pages/workentry-page/listworkentries/editworkentrybottomsheet/editworkentrybottomsheet.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ListworkentriesComponent } from './pages/workentry-page/listworkentries
     WorkEntryPageComponent,
     AddworkentryComponent,
     ListworkentriesComponent,
+    EditworkentrybottomsheetComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,5 +37,6 @@ import { ListworkentriesComponent } from './pages/workentry-page/listworkentries
   ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [EditworkentrybottomsheetComponent],
 })
 export class AppModule {}

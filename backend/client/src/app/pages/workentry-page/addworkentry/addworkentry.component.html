@@ -57,6 +57,25 @@
 
     <div
       class="row justify-content-center no-gutters"
+      *ngIf="showFormField('costCents')"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Cost:</mat-label>
+        <input
+          matInput
+          placeholder="Enter here..."
+          formControlName="costCents"
+          inputmode="numeric"
+        />
+        <mat-icon matSuffix>money</mat-icon>
+        <mat-error *ngIf="addWorkEntryForm.get('costCents').invalid"
+          >Allowed numbers, one comma, and max two decimal points</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div
+      class="row justify-content-center no-gutters"
       *ngIf="showFormField('date')"
     >
       <mat-form-field appearance="outline">
@@ -115,7 +134,6 @@
         <mat-label>Break (min):</mat-label>
         <input
           matInput
-          type="text"
           step="1"
           placeholder="Enter here..."
           formControlName="breakMIN"
@@ -126,7 +144,22 @@
           >Only numbers up to 1000 and no decimals</mat-error
         >
       </mat-form-field>
-      <br />
+    </div>
+
+    <div
+      class="row justify-content-center no-gutters"
+      *ngIf="showFormField('comments')"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Comment:</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Enter here..."
+          formControlName="comments"
+        />
+        <mat-icon matSuffix>comment</mat-icon>
+      </mat-form-field>
     </div>
 
     <div
