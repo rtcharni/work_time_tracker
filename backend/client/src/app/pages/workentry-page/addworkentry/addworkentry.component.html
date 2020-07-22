@@ -148,22 +148,6 @@
 
     <div
       class="row justify-content-center no-gutters"
-      *ngIf="showFormField('comments')"
-    >
-      <mat-form-field appearance="outline">
-        <mat-label>Comment:</mat-label>
-        <input
-          matInput
-          type="text"
-          placeholder="Enter here..."
-          formControlName="comments"
-        />
-        <mat-icon matSuffix>comment</mat-icon>
-      </mat-form-field>
-    </div>
-
-    <div
-      class="row justify-content-center no-gutters"
       *ngIf="showFormField('charged')"
     >
       <mat-label>Charged:</mat-label>

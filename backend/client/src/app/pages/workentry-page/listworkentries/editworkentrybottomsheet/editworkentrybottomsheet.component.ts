@@ -4,6 +4,7 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { BottomSheetActionResult } from '../../../../frontend-models/frontend.models';
 import { WorkEntry } from '../../../../../../../../models';
 import { WorkEntryService } from 'src/app/services/workentry.service';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-editworkentrybottomsheet',
@@ -19,7 +20,8 @@ export class EditworkentrybottomsheetComponent implements OnInit {
       EditworkentrybottomsheetComponent
     >,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: WorkEntry,
-    private workEntryService: WorkEntryService
+    private workEntryService: WorkEntryService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
@@ -38,10 +40,9 @@ export class EditworkentrybottomsheetComponent implements OnInit {
 
   async saveComment(comment: string): Promise<void> {
     console.log(`SAving comment: `, comment);
-    // save comment really on DB with servcie!!
     this.data.comments
-      ? this.data.comments.push(comment)
-      : (this.data.comments = [comment]);
+      ? this.data.comments.push(`${new Date().toISOString()};${comment}`)
+      : (this.data.comments = [`${new Date().toISOString()};${comment}`]);
     const res = await this.workEntryService.editWorkEntry(this.data);
     const actionResult: BottomSheetActionResult = {
       action: 'addComment',

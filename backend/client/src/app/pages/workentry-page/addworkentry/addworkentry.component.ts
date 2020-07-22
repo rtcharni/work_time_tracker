@@ -27,7 +27,6 @@ export class AddworkentryComponent implements OnInit {
       Validators.max(1000),
       Validators.pattern('[0-9]*'),
     ]),
-    comments: new FormControl(null),
     charged: new FormControl(null),
   });
 
@@ -70,9 +69,6 @@ export class AddworkentryComponent implements OnInit {
         case 'breakMIN':
           form.addControl('breakMIN', new FormControl(null));
           break;
-        case 'comments':
-          form.addControl('comments', new FormControl(null));
-          break;
         case 'charged':
           form.addControl('charged', new FormControl(null));
           break;
@@ -113,9 +109,7 @@ export class AddworkentryComponent implements OnInit {
       userId,
       companyId,
     };
-    if (formValues.comments) {
-      Object.assign(workEntry, { comments: [formValues.comments] });
-    }
+
     if (formValues.costCents) {
       const noComma: number = (formValues.costCents as string).includes(',')
         ? +(formValues.costCents as string).replace(',', '.')

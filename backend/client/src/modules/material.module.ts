@@ -14,6 +14,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 
+import { MatDialogModule } from '@angular/material/dialog';
+
 @NgModule({
   imports: [
     MatButtonModule,
@@ -30,6 +32,7 @@ import { MatListModule } from '@angular/material/list';
     MatNativeDateModule,
     MatBottomSheetModule,
     MatListModule,
+    MatDialogModule,
   ],
   exports: [
     MatButtonModule,
@@ -46,6 +49,7 @@ import { MatListModule } from '@angular/material/list';
     MatNativeDateModule,
     MatBottomSheetModule,
     MatListModule,
+    MatDialogModule,
   ],
 })
 export class MaterialModule {}

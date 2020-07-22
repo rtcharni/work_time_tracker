@@ -191,7 +191,13 @@ export class ListworkentriesComponent implements OnInit {
         case `charged`:
           return `Charged: ${element.charged ? 'Yes' : 'No'}`;
         case 'comments':
-          return element.comments ? element.comments.join('\n') : null;
+          const formattedComments = element.comments?.map((comment) => {
+            const time = moment(comment.substr(0, 24)).format(
+              Constants.DATEANDTIMEFORMAT
+            );
+            return `${time}: ${comment.substr(25)}`;
+          });
+          return formattedComments ? formattedComments.join('\n') : null;
       }
     }
   }
