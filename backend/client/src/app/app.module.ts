@@ -15,6 +15,7 @@ import { WorkEntryPageComponent } from './pages/workentry-page/workentry-page.co
 import { AddworkentryComponent } from './pages/workentry-page/addworkentry/addworkentry.component';
 import { ListworkentriesComponent } from './pages/workentry-page/listworkentries/listworkentries.component';
 import { EditworkentrybottomsheetComponent } from './pages/workentry-page/listworkentries/editworkentrybottomsheet/editworkentrybottomsheet.component';
+import { EditworkentryformComponent } from './pages/workentry-page/listworkentries/editworkentryform/editworkentryform.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { EditworkentrybottomsheetComponent } from './pages/workentry-page/listwo
     AddworkentryComponent,
     ListworkentriesComponent,
     EditworkentrybottomsheetComponent,
+    EditworkentryformComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +39,9 @@ import { EditworkentrybottomsheetComponent } from './pages/workentry-page/listwo
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [EditworkentrybottomsheetComponent],
+  entryComponents: [
+    EditworkentrybottomsheetComponent,
+    EditworkentryformComponent,
+  ],
 })
 export class AppModule {}

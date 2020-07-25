@@ -8,7 +8,7 @@ import { WorkEntry } from '../../../../../models';
 })
 export class WorkEntryService {
   //   private workEntries = null;
-  private lastAddedOrEditedEntry = null;
+  private lastAddedOrEditedEntry: WorkEntry = null;
   private contentTypeHeader = new HttpHeaders({
     'Content-Type': 'application/json',
   });
@@ -43,7 +43,7 @@ export class WorkEntryService {
       )
       .toPromise();
     this.lastAddedOrEditedEntry = res.length ? res[0] : null;
-    return res.length ? res[0] : null;
+    return this.lastAddedOrEditedEntry;
   }
 
   public async addWorkEntry(workEntry: WorkEntry): Promise<WorkEntry> {
@@ -51,7 +51,7 @@ export class WorkEntryService {
       .post<WorkEntry[]>(`/api/database/workentries`, workEntry)
       .toPromise();
     this.lastAddedOrEditedEntry = res.length ? res[0] : null;
-    return res.length ? res[0] : null;
+    return this.lastAddedOrEditedEntry;
   }
 
   public async deleteWorkEntry(workEntryId: number): Promise<WorkEntry> {

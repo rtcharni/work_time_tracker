@@ -74,7 +74,13 @@ export class ListworkentriesComponent implements OnInit {
   handleMoreIconClick(workEntry: WorkEntry): void {
     console.log(workEntry);
     this.bottomSheet
-      .open(EditworkentrybottomsheetComponent, { data: workEntry })
+      .open(EditworkentrybottomsheetComponent, {
+        data: {
+          workEntry,
+          workFormFields: this.user.config.workEntryFields,
+          userAndCompany: this.user,
+        },
+      })
       .afterDismissed()
       .subscribe(async (result: BottomSheetActionResult) => {
         console.log(result);
@@ -82,6 +88,8 @@ export class ListworkentriesComponent implements OnInit {
           case 'addComment':
             break;
           case 'editEntry':
+            if (result.workEntry) {
+            }
             break;
           case 'deleteEntry':
             if (result.workEntry?.workEntryId) {
@@ -153,52 +161,51 @@ export class ListworkentriesComponent implements OnInit {
       case 'comments':
         // How to display array of comment in one line !?
         // Show last comment
-        return data ? data[(data as string[]).length - 1] : null;
+        // Refactor, ugly as hell ...
+        return data ? data[(data as string[]).length - 1].split(';')[2] : null;
     }
   }
 
   displayExpandedData(element: WorkEntry, field: string): string {
-    if (!this.user.config.listWorkEntriesTableHeaderFields.includes(field)) {
-      switch (field) {
-        case `title`:
-          return `Title: ${element.title}`;
-        case `details`:
-          return `Details: ${element.details}`;
-        case `customerName`:
-          return `Customer: ${element.customerName}`;
-        case `costCents`:
-          return `Cost: ${element.costCents / 100}`;
-        case `date`:
-          return `Date: ${
-            element.date
-              ? moment(element.date).format(Constants.DATEFORMAT)
-              : null
-          }`;
-        case `startTime`:
-          return `Start: ${
-            element.startTime
-              ? moment(element.startTime).format(Constants.DATEANDTIMEFORMAT)
-              : null
-          }`;
-        case `endTime`:
-          return `End: ${
-            element.endTime
-              ? moment(element.endTime).format(Constants.DATEANDTIMEFORMAT)
-              : null
-          }`;
-        case `breakMIN`:
-          return `Break: ${element.breakMIN}`;
-        case `charged`:
-          return `Charged: ${element.charged ? 'Yes' : 'No'}`;
-        case 'comments':
-          const formattedComments = element.comments?.map((comment) => {
-            const time = moment(comment.substr(0, 24)).format(
-              Constants.DATEANDTIMEFORMAT
-            );
-            return `${time}: ${comment.substr(25)}`;
-          });
-          return formattedComments ? formattedComments.join('\n') : null;
-      }
+    switch (field) {
+      case `title`:
+        return `Title: ${element.title}`;
+      case `details`:
+        return `Details: ${element.details}`;
+      case `customerName`:
+        return `Customer: ${element.customerName}`;
+      case `costCents`:
+        return `Cost: ${element.costCents / 100}`;
+      case `date`:
+        return `Date: ${
+          element.date
+            ? moment(element.date).format(Constants.DATEFORMAT)
+            : null
+        }`;
+      case `startTime`:
+        return `Start: ${
+          element.startTime
+            ? moment(element.startTime).format(Constants.DATEANDTIMEFORMAT)
+            : null
+        }`;
+      case `endTime`:
+        return `End: ${
+          element.endTime
+            ? moment(element.endTime).format(Constants.DATEANDTIMEFORMAT)
+            : null
+        }`;
+      case `breakMIN`:
+        return `Break: ${element.breakMIN}`;
+      case `charged`:
+        return `Charged: ${element.charged ? 'Yes' : 'No'}`;
+      case 'comments':
+        const comm = `\nComments:\n`;
+        const formattedComments = element.comments?.map((comment) => {
+          const split = comment.split(';');
+          const time = moment(split[0]).format(Constants.DATEANDTIMEFORMAT);
+          return `${time} - ${split[1]}: ${split[2]}`;
+        });
+        return formattedComments ? comm + formattedComments.join('\n') : comm;
     }
   }
 

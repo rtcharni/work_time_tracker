@@ -1,10 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { BottomSheetActionResult } from '../../../../frontend-models/frontend.models';
+import {
+  BottomSheetActionResult,
+  BottomSheetAndDialogData,
+} from '../../../../frontend-models/frontend.models';
 import { WorkEntry } from '../../../../../../../../models';
 import { WorkEntryService } from 'src/app/services/workentry.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EditworkentryformComponent } from '../editworkentryform/editworkentryform.component';
 
 @Component({
   selector: 'app-editworkentrybottomsheet',
@@ -19,7 +23,7 @@ export class EditworkentrybottomsheetComponent implements OnInit {
     private bottomSheetRef: MatBottomSheetRef<
       EditworkentrybottomsheetComponent
     >,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: WorkEntry,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetAndDialogData,
     private workEntryService: WorkEntryService,
     public dialog: MatDialog
   ) {}
@@ -31,19 +35,35 @@ export class EditworkentrybottomsheetComponent implements OnInit {
       this.showComment = true;
     } else if (action === 'deleteEntry') {
       // Show alert or simillar??
-      this.deleteEntry(this.data);
+      this.deleteEntry(this.data.workEntry);
     } else if (action === 'editEntry') {
-      //
+      this.dialog
+        .open(EditworkentryformComponent, {
+          data: this.data,
+        })
+        .afterClosed()
+        .subscribe((res: WorkEntry) => {
+          const actionResult: BottomSheetActionResult = {
+            action: 'editEntry',
+            workEntry: res,
+          };
+          this.bottomSheetRef.dismiss(actionResult);
+        });
     }
     // this.bottomSheetRef.dismiss(action);
   }
 
   async saveComment(comment: string): Promise<void> {
     console.log(`SAving comment: `, comment);
-    this.data.comments
-      ? this.data.comments.push(`${new Date().toISOString()};${comment}`)
-      : (this.data.comments = [`${new Date().toISOString()};${comment}`]);
-    const res = await this.workEntryService.editWorkEntry(this.data);
+    const name = `${this.data.userAndCompany.lastName} ${this.data.userAndCompany.firstName} (${this.data.userAndCompany.name})`;
+    this.data.workEntry.comments
+      ? this.data.workEntry.comments.push(
+          `${new Date().toISOString()};${name};${comment}`
+        )
+      : (this.data.workEntry.comments = [
+          `${new Date().toISOString()};${name};${comment}`,
+        ]);
+    const res = await this.workEntryService.editWorkEntry(this.data.workEntry);
     const actionResult: BottomSheetActionResult = {
       action: 'addComment',
       comment,

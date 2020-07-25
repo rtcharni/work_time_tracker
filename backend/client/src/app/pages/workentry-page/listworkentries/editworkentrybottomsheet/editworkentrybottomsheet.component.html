@@ -2,6 +2,9 @@
   <mat-form-field *ngIf="showComment" appearance="outline">
     <mat-label>Enter comment:</mat-label>
     <input matInput type="text" [(ngModel)]="comment" />
+    <mat-hint *ngIf="comment.includes(';')">
+      Don't use character ; It will mess up things...
+    </mat-hint>
     <button
       mat-button
       *ngIf="comment.length"

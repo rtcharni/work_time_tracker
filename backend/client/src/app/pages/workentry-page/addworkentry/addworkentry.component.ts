@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WorkEntryService } from '../../../services/workentry.service';
 import { WorkEntry, UserAndCompany } from '../../../../../../../models';
 import { UserService } from 'src/app/services/user.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-addworkentry',
@@ -55,7 +56,10 @@ export class AddworkentryComponent implements OnInit {
           form.addControl('customerName', new FormControl(null));
           break;
         case 'costCents':
-          form.addControl('costCents', new FormControl(null));
+          form.addControl(
+            'costCents',
+            new FormControl(null, [Validators.pattern('^\\d+,{0,1}\\d{0,2}$')])
+          );
           break;
         case 'date':
           form.addControl('date', new FormControl(null));
@@ -67,7 +71,14 @@ export class AddworkentryComponent implements OnInit {
           form.addControl('endTime', new FormControl(null));
           break;
         case 'breakMIN':
-          form.addControl('breakMIN', new FormControl(null));
+          form.addControl(
+            'breakMIN',
+            new FormControl(null, [
+              Validators.min(0),
+              Validators.max(1000),
+              Validators.pattern('[0-9]*'),
+            ])
+          );
           break;
         case 'charged':
           form.addControl('charged', new FormControl(null));
@@ -80,14 +91,20 @@ export class AddworkentryComponent implements OnInit {
   async handleSaveButtonClick(): Promise<void> {
     const values = this.addWorkEntryForm.value;
     console.log(`Saving...`, values);
-    // TODO validation. empty fields...? required..?
+
     if (this.addWorkEntryForm.valid) {
       const workEntry: WorkEntry = this.convertToWorkEntry(
         values,
         this.user.userId,
         this.user.companyId
       );
+      console.log(workEntry);
       const res = await this.workEntryService.addWorkEntry(workEntry);
+      if (res) {
+        // success
+      } else {
+        // error
+      }
       console.log(`Result`, res);
     } else {
       alert('Form not valid');
@@ -110,12 +127,42 @@ export class AddworkentryComponent implements OnInit {
       companyId,
     };
 
+    if (formValues.date) {
+      workEntry.date = moment(formValues.date).add(12, 'hour').toISOString();
+    }
+    if (formValues.startTime) {
+      const time = formValues.startTime.split(':');
+      if (formValues.date) {
+        workEntry.startTime = moment(formValues.date)
+          .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
+          .toISOString();
+      } else {
+        workEntry.startTime = moment()
+          .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
+          .toISOString();
+      }
+    }
+
+    if (formValues.endTime) {
+      const time = formValues.endTime.split(':');
+      if (formValues.date) {
+        workEntry.endTime = moment(formValues.date)
+          .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
+          .toISOString();
+      } else {
+        workEntry.endTime = moment()
+          .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
+          .toISOString();
+      }
+    }
+
     if (formValues.costCents) {
       const noComma: number = (formValues.costCents as string).includes(',')
         ? +(formValues.costCents as string).replace(',', '.')
         : +formValues.costCents;
-      Object.assign(workEntry, { costCents: noComma * 100 });
+      workEntry.costCents = noComma * 100;
     }
+
     return workEntry;
   }
 

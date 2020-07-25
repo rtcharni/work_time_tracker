@@ -1,5 +1,5 @@
-<div class="addworkentry">
-  <form [formGroup]="addWorkEntryForm">
+<div class="editworkentry">
+  <form [formGroup]="editWorkEntryForm">
     <div
       class="row justify-content-center no-gutters"
       *ngIf="showFormField('title')"
@@ -29,12 +29,12 @@
           formControlName="details"
         />
         <!-- <textarea
-        rows="2"
-        matInput
-        type="text"
-        placeholder="Enter here..."
-        formControlName="details"
-      ></textarea> -->
+          rows="2"
+          matInput
+          type="text"
+          placeholder="Enter here..."
+          formControlName="details"
+        ></textarea> -->
         <mat-icon matSuffix>description</mat-icon>
       </mat-form-field>
     </div>
@@ -68,7 +68,7 @@
           inputmode="numeric"
         />
         <mat-icon matSuffix>money</mat-icon>
-        <mat-error *ngIf="addWorkEntryForm.get('costCents').invalid"
+        <mat-error *ngIf="editWorkEntryForm.get('costCents').invalid"
           >Allowed numbers, one comma, and max two decimal points</mat-error
         >
       </mat-form-field>
@@ -86,7 +86,6 @@
           (focus)="picker.open()"
           formControlName="date"
         />
-        <!-- <mat-icon *ngIf="addWorkEntryForm.get('date').value">close</mat-icon> -->
         <mat-icon matSuffix>event</mat-icon>
         <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
         <mat-datepicker touchUi #picker></mat-datepicker>
@@ -141,7 +140,7 @@
           inputmode="numeric"
         />
         <mat-icon matSuffix>free_breakfast</mat-icon>
-        <mat-error *ngIf="addWorkEntryForm.get('breakMIN').invalid"
+        <mat-error *ngIf="editWorkEntryForm.get('breakMIN').invalid"
           >Only numbers up to 1000 and no decimals</mat-error
         >
       </mat-form-field>
@@ -161,7 +160,7 @@
       <button
         mat-raised-button
         (click)="handleSaveButtonClick()"
-        [disabled]="addWorkEntryForm.invalid || addWorkEntryForm.pristine"
+        [disabled]="editWorkEntryForm.invalid || editWorkEntryForm.pristine"
       >
         Save</button
       ><button mat-raised-button (click)="handleClearButtonClick()">

@@ -106,7 +106,6 @@ export class WorkEntriesController {
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          // console.log(req.body);
           const result: WorkEntry[] = await WorkEntriesService.editWorkEntry(
             // req.body as WorkEntry
             { ...req.body, workEntryId: req.params.workEntryId } as WorkEntry

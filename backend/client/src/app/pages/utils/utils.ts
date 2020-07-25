@@ -1,9 +1,4 @@
-import Axios, { AxiosResponse } from 'axios';
-import {
-  UserCredentials,
-  LoginResponse,
-  WorkEntry,
-} from '../../../../../../models';
+import * as moment from 'moment';
 
 export class Utils {
   static colors: Record<string, string> = {
@@ -12,36 +7,13 @@ export class Utils {
     blue: '#2F3C7E',
     black: '#000000',
   };
+
+  static convertDateToHH_MM(date: string): string {
+    const timeCombined = `${moment(date).hour()}:${moment(date).minute()}`;
+    const splitted = timeCombined.split(':');
+    let final =
+      splitted[0].length === 1 ? `0${splitted[0]}:` : `${splitted[0]}:`;
+    final += splitted[1].length === 1 ? `0${splitted[1]}` : `${splitted[0]}`;
+    return final;
+  }
 }
-// Get from ENV ?!
-// function createDefaults() {
-//   const instanse = Axios.create({
-//     baseURL: `http://localhost:3000/api/`,
-//     timeout: 20000,
-//     withCredentials: true,
-//   });
-//   instanse.interceptors.response.use((res: AxiosResponse<any>) => {
-//     if (res.data?.redirectToLogin) {
-//       // REDIRECTED!
-//       window.location.replace("http://localhost:3000");
-//     }
-//     return res;
-//   });
-//   return instanse;
-// }
-
-// export class AxiosUtils {
-//   static axios = createDefaults();
-
-//   static loginUser(userCredentials: UserCredentials) {
-//     return this.axios.post<LoginResponse>(`auth/login`, userCredentials, {});
-//   }
-
-//   static addWorkEntry(workEntry: WorkEntry) {
-//     return AxiosUtils.axios.post<WorkEntry>(
-//       `database/workentries`,
-//       workEntry,
-//       {}
-//     );
-//   }
-// }
