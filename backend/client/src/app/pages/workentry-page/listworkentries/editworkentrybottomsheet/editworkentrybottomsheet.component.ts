@@ -81,4 +81,8 @@ export class EditworkentrybottomsheetComponent implements OnInit {
     };
     this.bottomSheetRef.dismiss(actionResult);
   }
+
+  containsIllegalCharacter(text: string): boolean {
+    return text.includes(';');
+  }
 }

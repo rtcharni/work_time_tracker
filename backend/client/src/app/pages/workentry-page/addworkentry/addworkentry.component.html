@@ -107,6 +107,10 @@
           formControlName="startTime"
         />
         <mat-icon matSuffix>access_time</mat-icon>
+        <mat-error
+          *ngIf="addWorkEntryForm.get('startTime').hasError('endBeforeStart')"
+          >Start time should be before end time</mat-error
+        >
       </mat-form-field>
     </div>
 
@@ -124,6 +128,10 @@
           formControlName="endTime"
         />
         <mat-icon matSuffix>access_time</mat-icon>
+        <mat-error
+          *ngIf="addWorkEntryForm.get('endTime').hasError('endBeforeStart')"
+          >Start time should be before end time</mat-error
+        >
       </mat-form-field>
     </div>
 

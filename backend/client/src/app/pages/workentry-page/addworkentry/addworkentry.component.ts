@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { WorkEntryService } from '../../../services/workentry.service';
 import { WorkEntry, UserAndCompany } from '../../../../../../../models';
 import { UserService } from 'src/app/services/user.service';
 import * as moment from 'moment';
+import { Utils } from '../../utils/utils';
 
 @Component({
   selector: 'app-addworkentry',
@@ -12,24 +20,7 @@ import * as moment from 'moment';
 })
 export class AddworkentryComponent implements OnInit {
   private user: UserAndCompany = null;
-  // addWorkEntryForm: FormGroup;
-  addWorkEntryForm = new FormGroup({
-    title: new FormControl(null),
-    details: new FormControl(null),
-    customerName: new FormControl(null),
-    costCents: new FormControl(null, [
-      Validators.pattern('^\\d+,{0,1}\\d{0,2}$'),
-    ]),
-    date: new FormControl(null),
-    startTime: new FormControl(null),
-    endTime: new FormControl(null),
-    breakMIN: new FormControl(null, [
-      Validators.min(0),
-      Validators.max(1000),
-      Validators.pattern('[0-9]*'),
-    ]),
-    charged: new FormControl(null),
-  });
+  addWorkEntryForm: FormGroup = null;
 
   constructor(
     private workEntryService: WorkEntryService,
@@ -39,7 +30,8 @@ export class AddworkentryComponent implements OnInit {
   ngOnInit(): void {
     console.log(`add work entry IN INIT`);
     this.user = this.userService.getUser();
-    // this.addWorkEntryForm = this.initForm(this.user);
+    this.addWorkEntryForm = this.initForm(this.user);
+    this.addWorkEntryForm.valueChanges.subscribe((res) => console.log(res));
   }
 
   initForm(user: UserAndCompany): FormGroup {
@@ -85,6 +77,13 @@ export class AddworkentryComponent implements OnInit {
           break;
       }
     }
+
+    if (
+      user.config.workEntryFields.includes('startTime') &&
+      user.config.workEntryFields.includes('endTime')
+    ) {
+      form.setValidators(Utils.startAndEndtimeValidator());
+    }
     return form;
   }
 
@@ -112,7 +111,7 @@ export class AddworkentryComponent implements OnInit {
   }
 
   showFormField(fieldName: string): boolean {
-    return true; // REMOVE
+    // return true; // REMOVE
     return this.user.config.workEntryFields.includes(fieldName);
   }
 

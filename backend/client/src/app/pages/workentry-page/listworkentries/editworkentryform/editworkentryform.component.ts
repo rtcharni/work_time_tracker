@@ -94,6 +94,13 @@ export class EditworkentryformComponent implements OnInit {
           break;
       }
     }
+
+    if (
+      workEntryFields.includes('startTime') &&
+      workEntryFields.includes('endTime')
+    ) {
+      form.setValidators(Utils.startAndEndtimeValidator());
+    }
     return form;
   }
 

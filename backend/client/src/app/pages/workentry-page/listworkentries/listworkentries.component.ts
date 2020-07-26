@@ -82,17 +82,17 @@ export class ListworkentriesComponent implements OnInit {
         },
       })
       .afterDismissed()
-      .subscribe(async (result: BottomSheetActionResult) => {
+      .subscribe(async (result?: BottomSheetActionResult) => {
         console.log(result);
-        switch (result.action) {
+        switch (result?.action) {
           case 'addComment':
             break;
           case 'editEntry':
-            if (result.workEntry) {
+            if (result?.workEntry) {
             }
             break;
           case 'deleteEntry':
-            if (result.workEntry?.workEntryId) {
+            if (result?.workEntry?.workEntryId) {
               const index = this.dataSource.data.findIndex(
                 (entry) => entry.workEntryId === result.workEntry?.workEntryId
               );
