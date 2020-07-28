@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { UserAndCompany, User } from '../../../../../../../models/user';
 import { UserService } from '../../../services/user.service';
 import { WorkEntryService } from '../../../services/workentry.service';
@@ -48,6 +48,7 @@ export class ListworkentriesComponent implements OnInit {
   columnsToDisplay = [];
   expandedElement: WorkEntry | null;
 
+  @Input() showAllUsersEntries: boolean;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -58,13 +59,17 @@ export class ListworkentriesComponent implements OnInit {
   ) {}
 
   async getEntriesAndRenderTable(
-    user: UserAndCompany,
+    headerFields: string[],
+    userId: number,
+    companyId: number,
     start: Date,
     end: Date
   ): Promise<void> {
-    this.columnsToDisplay = user?.config.listWorkEntriesTableHeaderFields;
-    this.dataSource.data = await this.getWorkEntries(
-      user?.userId,
+    this.columnsToDisplay = headerFields;
+    this.dataSource.data = await this.workEntryService.getWorkEntries(
+      userId,
+      undefined,
+      companyId,
       moment(start).add(12, 'hour').toISOString(),
       moment(end).add(12, 'hour').toISOString()
     );
@@ -75,8 +80,15 @@ export class ListworkentriesComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     console.log(`list work entries IN INIT`);
     this.user = this.userService.getUser();
+
     if (this.user?.userId) {
-      this.getEntriesAndRenderTable(this.user, this.startDate, this.endDate);
+      this.getEntriesAndRenderTable(
+        this.user.config.listWorkEntriesTableHeaderFields,
+        this.showAllUsersEntries ? undefined : this.user.userId,
+        this.user.companyId,
+        this.startDate,
+        this.endDate
+      );
     }
   }
 
@@ -92,7 +104,13 @@ export class ListworkentriesComponent implements OnInit {
         this.startDate,
         this.endDate
       );
-      this.getEntriesAndRenderTable(this.user, this.startDate, this.endDate);
+      this.getEntriesAndRenderTable(
+        this.user.config.listWorkEntriesTableHeaderFields,
+        this.showAllUsersEntries ? undefined : this.user.userId,
+        this.user.companyId,
+        this.startDate,
+        this.endDate
+      );
     }
   }
 
@@ -235,21 +253,5 @@ export class ListworkentriesComponent implements OnInit {
         });
         return formattedComments ? comm + formattedComments.join('\n') : comm;
     }
-  }
-
-  async getWorkEntries(
-    userId: number,
-    from?: string,
-    to?: string
-  ): Promise<WorkEntry[]> {
-    const workEntries = await this.workEntryService.getWorkEntry(
-      userId,
-      undefined,
-      this.user.companyId,
-      from,
-      to
-    );
-    console.log(workEntries);
-    return workEntries;
   }
 }

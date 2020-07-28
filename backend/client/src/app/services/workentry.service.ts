@@ -15,7 +15,7 @@ export class WorkEntryService {
 
   constructor(private http: HttpClient) {}
 
-  public async getWorkEntry(
+  public async getWorkEntries(
     userId?: number,
     workEntryId?: number,
     companyId?: number,
