@@ -22,10 +22,6 @@ tr.element-row:not(.expanded-row):active {
   overflow: hidden;
 }
 
-.searchField {
-  margin-left: 5%;
-}
-
 .moreIcon {
   float: right;
   cursor: pointer;
@@ -33,4 +29,14 @@ tr.element-row:not(.expanded-row):active {
 
 .expandedDataDiv {
   white-space: pre-wrap;
+}
+
+.searchField {
+  width: 45%;
+  margin-left: 2%;
+  margin-top: 2%;
+}
+.dateField {
+  width: 45%;
+  margin-right: 5%;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UserAndCompany } from '../../../../../../../models/user';
+import { UserAndCompany, User } from '../../../../../../../models/user';
 import { UserService } from '../../../services/user.service';
 import { WorkEntryService } from '../../../services/workentry.service';
 import { WorkEntry } from '../../../../../../../models';
@@ -18,6 +18,7 @@ import { Constants } from '../../../../../../../utils';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { EditworkentrybottomsheetComponent } from './editworkentrybottomsheet/editworkentrybottomsheet.component';
 import { BottomSheetActionResult } from 'src/app/frontend-models/frontend.models';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-listworkentries',
@@ -40,13 +41,15 @@ import { BottomSheetActionResult } from 'src/app/frontend-models/frontend.models
 })
 export class ListworkentriesComponent implements OnInit {
   private user: UserAndCompany = null;
-  // workEntries: WorkEntry[] = [];
+  // On-going month on init
+  startDate: Date = moment().date(1).toDate();
+  endDate: Date = new Date();
   dataSource = new MatTableDataSource<WorkEntry>([]);
   columnsToDisplay = []; // ['title', 'details', 'date', 'charged']
   expandedElement: WorkEntry | null;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private userService: UserService,
@@ -54,15 +57,42 @@ export class ListworkentriesComponent implements OnInit {
     private bottomSheet: MatBottomSheet
   ) {}
 
+  async getEntriesAndRenderTable(
+    user: UserAndCompany,
+    start: Date,
+    end: Date
+  ): Promise<void> {
+    this.columnsToDisplay = user?.config.listWorkEntriesTableHeaderFields;
+    this.dataSource.data = await this.getWorkEntries(
+      user?.userId,
+      moment(start).add(12, 'hour').toISOString(),
+      moment(end).add(12, 'hour').toISOString()
+    );
+    // this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   async ngOnInit(): Promise<void> {
     console.log(`list work entries IN INIT`);
-
     this.user = this.userService.getUser();
     if (this.user?.userId) {
-      this.columnsToDisplay = this.user?.config.listWorkEntriesTableHeaderFields;
-      this.dataSource.data = await this.getWorkEntries(this.user.userId);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.getEntriesAndRenderTable(this.user, this.startDate, this.endDate);
+    }
+  }
+
+  handleDateChange(
+    startOrEnd: 'start' | 'end',
+    event: MatDatepickerInputEvent<Date>
+  ): void {
+    this.startDate = startOrEnd === 'start' ? event.value : this.startDate;
+    this.endDate = startOrEnd === 'end' ? event.value : this.endDate;
+    if (startOrEnd === 'end' && this.startDate && this.endDate) {
+      console.log(
+        'Fetching new work entries data!!',
+        this.startDate,
+        this.endDate
+      );
+      this.getEntriesAndRenderTable(this.user, this.startDate, this.endDate);
     }
   }
 
