@@ -45,7 +45,7 @@ export class ListworkentriesComponent implements OnInit {
   startDate: Date = moment().date(1).toDate();
   endDate: Date = new Date();
   dataSource = new MatTableDataSource<WorkEntry>([]);
-  columnsToDisplay = []; // ['title', 'details', 'date', 'charged']
+  columnsToDisplay = [];
   expandedElement: WorkEntry | null;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
