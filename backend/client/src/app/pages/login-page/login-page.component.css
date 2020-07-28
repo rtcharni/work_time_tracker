@@ -4,3 +4,16 @@
   width: 100vw;
   height: 100vh;
 }
+
+.forgotPasswordText {
+  margin-top: 2%;
+  cursor: pointer;
+}
+
+.forgotPasswordInput {
+  margin-top: 4%;
+}
+
+.forgotPasswordButton {
+  /* margin-top: 1%; */
+}

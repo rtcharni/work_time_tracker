@@ -199,33 +199,31 @@ export class ListworkentriesComponent implements OnInit {
   displayExpandedData(element: WorkEntry, field: string): string {
     switch (field) {
       case `title`:
-        return `Title: ${element.title}`;
+        return `Title: ${element.title ?? ''}`;
       case `details`:
-        return `Details: ${element.details}`;
+        return `Details: ${element.details ?? ''}`;
       case `customerName`:
-        return `Customer: ${element.customerName}`;
+        return `Customer: ${element.customerName ?? ''}`;
       case `costCents`:
-        return `Cost: ${element.costCents / 100}`;
+        return `Cost: ${element.costCents ? element.costCents / 100 : ''}`;
       case `date`:
         return `Date: ${
-          element.date
-            ? moment(element.date).format(Constants.DATEFORMAT)
-            : null
+          element.date ? moment(element.date).format(Constants.DATEFORMAT) : ''
         }`;
       case `startTime`:
         return `Start: ${
           element.startTime
             ? moment(element.startTime).format(Constants.DATEANDTIMEFORMAT)
-            : null
+            : ''
         }`;
       case `endTime`:
         return `End: ${
           element.endTime
             ? moment(element.endTime).format(Constants.DATEANDTIMEFORMAT)
-            : null
+            : ''
         }`;
       case `breakMIN`:
-        return `Break: ${element.breakMIN}`;
+        return `Break: ${element.breakMIN ?? ''}`;
       case `charged`:
         return `Charged: ${element.charged ? 'Yes' : 'No'}`;
       case 'comments':

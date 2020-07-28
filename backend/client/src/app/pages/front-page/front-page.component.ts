@@ -11,7 +11,7 @@ export class FrontPageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  handleImageNavigation(to: string): void {
-    this.router.navigate([to]);
-  }
+  // handleImageNavigation(to: string): void {
+  //   this.router.navigate([to]);
+  // }
 }

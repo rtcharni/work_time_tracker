@@ -1,14 +1,14 @@
 <div class="loginpage">
-  <h1 class="row justify-content-center">Welcome</h1>
+  <h1 class="row justify-content-center">App Name</h1>
 
-  <!-- UserId -->
+  <!-- Login -->
   <div class="row justify-content-center">
     <mat-form-field>
       <mat-label>User ID *</mat-label>
       <input matInput type="number" step="1" [(ngModel)]="userId" />
     </mat-form-field>
   </div>
-  <!-- Password -->
+
   <div class="row justify-content-center">
     <mat-form-field>
       <mat-label>Password *</mat-label>
@@ -19,6 +19,38 @@
   <div class="row justify-content-center">
     <button mat-raised-button color="primary" (click)="logInUser()">
       Login
+    </button>
+  </div>
+
+  <!-- Forgot password -->
+  <div
+    class="row justify-content-center forgotPasswordText"
+    (click)="showForgotPasswordInput = true"
+  >
+    <span>Forgot password?</span>
+  </div>
+
+  <div
+    class="row justify-content-center forgotPasswordInput"
+    *ngIf="showForgotPasswordInput"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>User ID</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="forgotPassworkUserId"
+        placeholder="Enter your User ID"
+      />
+    </mat-form-field>
+  </div>
+
+  <div
+    class="row justify-content-center forgotPasswordButton"
+    *ngIf="showForgotPasswordInput"
+  >
+    <button mat-raised-button color="primary" (click)="handleForgotPassword()">
+      Recover account
     </button>
   </div>
 </div>
