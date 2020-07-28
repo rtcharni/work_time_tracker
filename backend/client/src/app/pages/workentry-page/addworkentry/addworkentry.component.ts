@@ -1,17 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  ValidatorFn,
-  AbstractControl,
-  ValidationErrors,
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WorkEntryService } from '../../../services/workentry.service';
 import { WorkEntry, UserAndCompany } from '../../../../../../../models';
 import { UserService } from 'src/app/services/user.service';
 import * as moment from 'moment';
 import { Utils } from '../../utils/utils';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-addworkentry',
@@ -24,14 +18,15 @@ export class AddworkentryComponent implements OnInit {
 
   constructor(
     private workEntryService: WorkEntryService,
-    private userService: UserService
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     console.log(`add work entry IN INIT`);
     this.user = this.userService.getUser();
     this.addWorkEntryForm = this.initForm(this.user);
-    this.addWorkEntryForm.valueChanges.subscribe((res) => console.log(res));
+    // this.addWorkEntryForm.valueChanges.subscribe((res) => console.log(res));
   }
 
   initForm(user: UserAndCompany): FormGroup {
@@ -101,6 +96,12 @@ export class AddworkentryComponent implements OnInit {
       const res = await this.workEntryService.addWorkEntry(workEntry);
       if (res) {
         // success
+        this.snackBar.open('New entry added!', undefined, {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+        });
+        this.addWorkEntryForm.reset();
       } else {
         // error
       }

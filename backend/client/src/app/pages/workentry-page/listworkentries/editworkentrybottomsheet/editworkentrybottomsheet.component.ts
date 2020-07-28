@@ -9,6 +9,7 @@ import { WorkEntry } from '../../../../../../../../models';
 import { WorkEntryService } from 'src/app/services/workentry.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EditworkentryformComponent } from '../editworkentryform/editworkentryform.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-editworkentrybottomsheet',
@@ -25,17 +26,28 @@ export class EditworkentrybottomsheetComponent implements OnInit {
     >,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetAndDialogData,
     private workEntryService: WorkEntryService,
+    private snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
 
-  onOptionClick(action: string): void {
+  async onOptionClick(action: string): Promise<void> {
     if (action === 'addComment') {
       this.showComment = true;
     } else if (action === 'deleteEntry') {
-      // Show alert or simillar??
-      this.deleteEntry(this.data.workEntry);
+      if (confirm(`Delete entry with title - ${this.data.workEntry.title} ?`)) {
+        const actionResult = await this.deleteEntry(this.data.workEntry);
+        if (actionResult.workEntry) {
+          this.snackBar.open('Entry deleted!', undefined, {
+            duration: 2000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+          });
+        }
+
+        this.bottomSheetRef.dismiss(actionResult);
+      }
     } else if (action === 'editEntry') {
       this.dialog
         .open(EditworkentryformComponent, {
@@ -47,6 +59,13 @@ export class EditworkentrybottomsheetComponent implements OnInit {
             action: 'editEntry',
             workEntry: res,
           };
+          if (actionResult.workEntry) {
+            this.snackBar.open('Entry edited!', undefined, {
+              duration: 2000,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+            });
+          }
           this.bottomSheetRef.dismiss(actionResult);
         });
     }
@@ -71,7 +90,7 @@ export class EditworkentrybottomsheetComponent implements OnInit {
     this.bottomSheetRef.dismiss(actionResult);
   }
 
-  async deleteEntry(workEntry: WorkEntry): Promise<void> {
+  async deleteEntry(workEntry: WorkEntry): Promise<BottomSheetActionResult> {
     const res = await this.workEntryService.deleteWorkEntry(
       workEntry.workEntryId
     );
@@ -79,7 +98,7 @@ export class EditworkentrybottomsheetComponent implements OnInit {
       action: 'deleteEntry',
       workEntry: res,
     };
-    this.bottomSheetRef.dismiss(actionResult);
+    return actionResult;
   }
 
   containsIllegalCharacter(text: string): boolean {

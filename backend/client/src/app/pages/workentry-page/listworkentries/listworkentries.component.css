@@ -34,7 +34,6 @@ tr.element-row:not(.expanded-row):active {
 .searchField {
   width: 45%;
   margin-left: 2%;
-  margin-top: 2%;
 }
 .dateField {
   width: 45%;
