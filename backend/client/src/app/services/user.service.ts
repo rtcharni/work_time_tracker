@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import {
   Config,
@@ -13,14 +13,23 @@ import {
   providedIn: 'root',
 })
 export class UserService {
-  private baseUrl = 'http://localhost:3000';
-  private config: Config | null = null;
   private user: UserAndCompany | null = null;
 
   constructor(private http: HttpClient) {}
 
   public getUser(): UserAndCompany {
     return this.user;
+  }
+
+  public async getCompanysAllUsers(): Promise<User[]> {
+    const params: HttpParams = new HttpParams().set(
+      'companyId',
+      this.user.companyId.toString()
+    );
+    const users: User[] = await this.http
+      .get<User[]>(`/api/database/users`, { params })
+      .toPromise();
+    return users && users.length ? users : []; // or null
   }
 
   public async logInUser(

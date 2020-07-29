@@ -16,7 +16,7 @@ export class WorkEntryService {
   constructor(private http: HttpClient) {}
 
   public async getWorkEntries(
-    userId?: number,
+    userId?: number[],
     workEntryId?: number,
     companyId?: number,
     from?: string,
@@ -62,14 +62,19 @@ export class WorkEntryService {
   }
 
   private constructParamsForGetWorkEntry(
-    userId?: number,
+    // userId?: number,
+    userId?: number[],
     workEntryId?: number,
     companyId?: number,
     from?: string,
     to?: string
   ): HttpParams {
     let params = new HttpParams();
-    params = userId ? params.set('userId', userId.toString()) : params;
+    if (userId && userId.length) {
+      for (const user of userId) {
+        params = params.append('userId[]', user.toString());
+      }
+    }
     params = workEntryId
       ? params.set('workEntryId', workEntryId.toString())
       : params;

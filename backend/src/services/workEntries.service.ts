@@ -10,7 +10,7 @@ export class WorkEntriesService {
    * @param userId id of the user
    */
   static async getWorkEntries(
-    userId: number,
+    userId: number[],
     workEntryId: number,
     companyId: number,
     from: string,
@@ -18,7 +18,8 @@ export class WorkEntriesService {
   ): Promise<WorkEntry[]> {
     if (process.env.INPROD) {
       return await Queries.getWorkEntries(
-        userId ? [userId] : undefined,
+        // userId ? [userId] : undefined,
+        userId,
         workEntryId,
         companyId,
         from,

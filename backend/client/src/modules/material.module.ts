@@ -14,6 +14,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -35,6 +36,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatSelectModule,
   ],
   exports: [
     MatButtonModule,
@@ -53,6 +55,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatSelectModule,
   ],
 })
 export class MaterialModule {}
