@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { UserAndCompany, User } from '../../../../../../../models/user';
 import { UserService } from '../../../services/user.service';
 import { WorkEntryService } from '../../../services/workentry.service';
@@ -39,7 +46,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
     ]),
   ],
 })
-export class ListworkentriesComponent implements OnInit {
+export class ListworkentriesComponent implements OnInit, OnChanges {
   private user: UserAndCompany = null;
   // On-going month on init
   startDate: Date = moment().date(1).toDate();
@@ -48,7 +55,8 @@ export class ListworkentriesComponent implements OnInit {
   columnsToDisplay = [];
   expandedElement: WorkEntry | null;
 
-  @Input() showAllUsersEntries: boolean;
+  @Input() usersIds: number[];
+  @Input() useInputUsers: boolean;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -58,9 +66,50 @@ export class ListworkentriesComponent implements OnInit {
     private bottomSheet: MatBottomSheet
   ) {}
 
+  async ngOnInit(): Promise<void> {
+    console.log(`list work entries IN INIT`);
+    this.user = this.userService.getUser();
+
+    const usersToUse = this.useInputUsersOrLoggedInUser();
+    if (usersToUse) {
+      this.getEntriesAndRenderTable(
+        this.user.config.listWorkEntriesTableHeaderFields,
+        usersToUse,
+        this.user.companyId,
+        this.startDate,
+        this.endDate
+      );
+    } else {
+      this.dataSource.data = [];
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.usersIds.currentValue && !changes.usersIds.firstChange) {
+      if (!this.user) {
+        this.user = this.userService.getUser();
+      }
+
+      console.log(`has current value, input changed!`, changes);
+      console.log(this.user);
+      const usersToUse = this.useInputUsersOrLoggedInUser();
+      if (usersToUse) {
+        this.getEntriesAndRenderTable(
+          this.user.config.listWorkEntriesTableHeaderFields,
+          usersToUse,
+          this.user.companyId,
+          this.startDate,
+          this.endDate
+        );
+      } else {
+        this.dataSource.data = [];
+      }
+    }
+  }
+
   async getEntriesAndRenderTable(
     headerFields: string[],
-    userId: number,
+    userId: number[],
     companyId: number,
     start: Date,
     end: Date
@@ -77,21 +126,6 @@ export class ListworkentriesComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  async ngOnInit(): Promise<void> {
-    console.log(`list work entries IN INIT`);
-    this.user = this.userService.getUser();
-
-    if (this.user?.userId) {
-      this.getEntriesAndRenderTable(
-        this.user.config.listWorkEntriesTableHeaderFields,
-        this.showAllUsersEntries ? undefined : this.user.userId,
-        this.user.companyId,
-        this.startDate,
-        this.endDate
-      );
-    }
-  }
-
   handleDateChange(
     startOrEnd: 'start' | 'end',
     event: MatDatepickerInputEvent<Date>
@@ -104,14 +138,37 @@ export class ListworkentriesComponent implements OnInit {
         this.startDate,
         this.endDate
       );
-      this.getEntriesAndRenderTable(
-        this.user.config.listWorkEntriesTableHeaderFields,
-        this.showAllUsersEntries ? undefined : this.user.userId,
-        this.user.companyId,
-        this.startDate,
-        this.endDate
-      );
+
+      const usersToUse = this.useInputUsersOrLoggedInUser();
+      if (usersToUse) {
+        this.getEntriesAndRenderTable(
+          this.user.config.listWorkEntriesTableHeaderFields,
+          usersToUse,
+          this.user.companyId,
+          this.startDate,
+          this.endDate
+        );
+      } else {
+        // do nothing !? empty!
+        this.dataSource.data = [];
+      }
     }
+  }
+
+  useInputUsersOrLoggedInUser(): number[] {
+    let usersToUse: number[];
+    if (this.useInputUsers) {
+      if (this.usersIds?.length) {
+        usersToUse = this.usersIds;
+      } else {
+        // show empty
+        usersToUse = null;
+      }
+    } else {
+      // No input user, use logged in user
+      usersToUse = [this.user.userId];
+    }
+    return usersToUse;
   }
 
   applyFilter(event: Event): void {

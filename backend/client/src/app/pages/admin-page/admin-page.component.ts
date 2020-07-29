@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WorkEntry, UserAndCompany } from '../../../../../../models';
+import { WorkEntry, UserAndCompany, User } from '../../../../../../models';
 import { WorkEntryService } from 'src/app/services/workentry.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -10,12 +10,31 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AdminPageComponent implements OnInit {
   user: UserAndCompany;
+  allUsers: User[] = [];
+
+  tempUserIds: number[];
+  allUsersIds: number[];
+
   constructor(
     private workEntryService: WorkEntryService,
     private userService: UserService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.user = this.userService.getUser();
+    this.allUsers = await this.userService.getCompanysAllUsers();
+  }
+
+  onSelectionChange(selectedUserIds: number[]): void {
+    console.log(selectedUserIds);
+    this.tempUserIds = selectedUserIds;
+  }
+
+  handleApplyButton(): void {
+    if (this.tempUserIds.includes(-1)) {
+      this.allUsersIds = this.allUsers.map((user) => user.userId);
+    } else {
+      this.allUsersIds = this.tempUserIds;
+    }
   }
 }

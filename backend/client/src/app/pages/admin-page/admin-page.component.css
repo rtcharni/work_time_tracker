@@ -4,3 +4,19 @@
   width: 100vw;
   height: 100vh;
 }
+
+.usersSelect {
+  margin-left: 2%;
+  width: 100%;
+}
+
+.applyButton {
+  /* height: 100%;
+  margin-left: 2%; */
+  margin-top: 8%;
+  margin-left: 12%;
+}
+
+.divider {
+  margin-bottom: 2%;
+}
