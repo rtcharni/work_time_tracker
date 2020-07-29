@@ -20,7 +20,8 @@ export class WorkEntriesController {
   )[] {
     return [
       // Request param validators.
-      query("userId").isNumeric().toInt().optional(),
+      // query("userId").isNumeric().toInt().optional(),
+      query("userId").isArray().toArray().optional(),
       query("workEntryId").isNumeric().toInt().optional(),
       query("companyId").isNumeric().toInt().optional(),
       query("from").isISO8601().optional(),

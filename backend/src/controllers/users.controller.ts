@@ -32,7 +32,7 @@ export class UsersController {
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          const users: User[] | UserAndCompany = await UsersService.getUsers(
+          const users: User[] | UserAndCompany[] = await UsersService.getUsers(
             req.query.userId,
             req.query.companyId,
             req.query.withCompany
