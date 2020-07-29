@@ -4,7 +4,7 @@ import { WorkEntryService } from '../../../services/workentry.service';
 import { WorkEntry, UserAndCompany } from '../../../../../../../models';
 import { UserService } from 'src/app/services/user.service';
 import * as moment from 'moment';
-import { Utils } from '../../utils/utils';
+import { Utils } from '../../../utils/utils';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

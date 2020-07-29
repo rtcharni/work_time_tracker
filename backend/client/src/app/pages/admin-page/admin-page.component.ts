@@ -31,7 +31,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   handleApplyButton(): void {
-    if (this.tempUserIds.includes(-1)) {
+    if (this.tempUserIds?.includes(-1)) {
       this.allUsersIds = this.allUsers.map((user) => user.userId);
     } else {
       this.allUsersIds = this.tempUserIds;

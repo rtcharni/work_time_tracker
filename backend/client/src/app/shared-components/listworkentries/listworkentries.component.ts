@@ -6,10 +6,10 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { UserAndCompany, User } from '../../../../../../../models/user';
-import { UserService } from '../../../services/user.service';
-import { WorkEntryService } from '../../../services/workentry.service';
-import { WorkEntry } from '../../../../../../../models';
+import { UserAndCompany } from '../../../../../../models/user';
+import { UserService } from '../../services/user.service';
+import { WorkEntryService } from '../../services/workentry.service';
+import { WorkEntry } from '../../../../../../models';
 import {
   animate,
   state,
@@ -21,10 +21,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import * as moment from 'moment';
-import { Constants } from '../../../../../../../utils';
+import { Constants } from '../../../../../../utils';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { EditworkentrybottomsheetComponent } from './editworkentrybottomsheet/editworkentrybottomsheet.component';
-import { BottomSheetActionResult } from 'src/app/frontend-models/frontend.models';
+import { BottomSheetActionResult } from '../../../app/frontend-models/frontend.models';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
@@ -90,8 +90,6 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
         this.user = this.userService.getUser();
       }
 
-      console.log(`has current value, input changed!`, changes);
-      console.log(this.user);
       const usersToUse = this.useInputUsersOrLoggedInUser();
       if (usersToUse) {
         this.getEntriesAndRenderTable(
@@ -133,12 +131,6 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
     this.startDate = startOrEnd === 'start' ? event.value : this.startDate;
     this.endDate = startOrEnd === 'end' ? event.value : this.endDate;
     if (startOrEnd === 'end' && this.startDate && this.endDate) {
-      console.log(
-        'Fetching new work entries data!!',
-        this.startDate,
-        this.endDate
-      );
-
       const usersToUse = this.useInputUsersOrLoggedInUser();
       if (usersToUse) {
         this.getEntriesAndRenderTable(

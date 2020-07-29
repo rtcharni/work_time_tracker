@@ -4,8 +4,8 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import {
   BottomSheetActionResult,
   BottomSheetAndDialogData,
-} from '../../../../frontend-models/frontend.models';
-import { WorkEntry } from '../../../../../../../../models';
+} from '../../../frontend-models/frontend.models';
+import { WorkEntry } from '../../../../../../../models';
 import { WorkEntryService } from 'src/app/services/workentry.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EditworkentryformComponent } from '../editworkentryform/editworkentryform.component';

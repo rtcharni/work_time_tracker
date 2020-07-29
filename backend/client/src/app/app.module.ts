@@ -13,9 +13,9 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { FrontPageComponent } from './pages/front-page/front-page.component';
 import { WorkEntryPageComponent } from './pages/workentry-page/workentry-page.component';
 import { AddworkentryComponent } from './pages/workentry-page/addworkentry/addworkentry.component';
-import { ListworkentriesComponent } from './pages/workentry-page/listworkentries/listworkentries.component';
-import { EditworkentrybottomsheetComponent } from './pages/workentry-page/listworkentries/editworkentrybottomsheet/editworkentrybottomsheet.component';
-import { EditworkentryformComponent } from './pages/workentry-page/listworkentries/editworkentryform/editworkentryform.component';
+import { ListworkentriesComponent } from './shared-components/listworkentries/listworkentries.component';
+import { EditworkentrybottomsheetComponent } from './shared-components/listworkentries/editworkentrybottomsheet/editworkentrybottomsheet.component';
+import { EditworkentryformComponent } from './shared-components/listworkentries/editworkentryform/editworkentryform.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 
 @NgModule({

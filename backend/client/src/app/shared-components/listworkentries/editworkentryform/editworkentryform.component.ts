@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { WorkEntry, UserAndCompany } from '../../../../../../../../models';
+import { WorkEntry, UserAndCompany } from '../../../../../../../models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WorkEntryService } from 'src/app/services/workentry.service';
 import { UserService } from 'src/app/services/user.service';
