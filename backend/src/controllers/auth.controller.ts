@@ -28,7 +28,7 @@ export class AuthController {
             req.body as UserCredentials
           );
           if (loginResponse.success) {
-            loginResponse.userAndCompany.password = null;
+            // loginResponse.userAndCompany.password = null; // return password or null
             const token = TokenManagement.generateToken(
               loginResponse.userAndCompany
             );

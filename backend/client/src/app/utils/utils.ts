@@ -1,5 +1,10 @@
 import * as moment from 'moment';
-import { ValidatorFn, ValidationErrors, FormGroup } from '@angular/forms';
+import {
+  ValidatorFn,
+  ValidationErrors,
+  FormGroup,
+  FormControl,
+} from '@angular/forms';
 
 export class Utils {
   static colors: Record<string, string> = {
@@ -20,16 +25,35 @@ export class Utils {
 
   static startAndEndtimeValidator(): ValidatorFn {
     return (group: FormGroup): ValidationErrors => {
-      const startTime = group.controls.startTime.value;
-      const endTime = group.controls.endTime.value;
+      const startTime = group.get('startTime').value;
+      const endTime = group.get('endTime').value;
       if (startTime && endTime && startTime >= endTime) {
-        group.controls.startTime.setErrors({ endBeforeStart: true });
-        group.controls.endTime.setErrors({ endBeforeStart: true });
+        group.get('startTime').setErrors({ endBeforeStart: true });
+        group.get('endTime').setErrors({ endBeforeStart: true });
       } else {
-        group.controls.startTime.setErrors(null);
-        group.controls.endTime.setErrors(null);
+        group.get('startTime').setErrors(null);
+        group.get('endTime').setErrors(null);
       }
       return;
+    };
+  }
+
+  static passwordValidator(
+    group: FormGroup,
+    iAm: 'group' | 'control'
+  ): ValidatorFn {
+    return () => {
+      const password = group.get('password').value;
+      const verifyPassword = group.get('verifyPassword').value;
+      if (
+        password &&
+        verifyPassword &&
+        password !== verifyPassword &&
+        iAm === 'control'
+      ) {
+        return { passwordsNotMatching: true };
+      }
+      return null;
     };
   }
 }
