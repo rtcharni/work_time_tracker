@@ -7,7 +7,11 @@
         Users
       </ng-template>
       <ng-template matTabContent>
-        here
+        <!-- Content -->
+        <app-userform
+          (userSavedEvent)="receiveSavedUser($event)"
+          [user]="user"
+        ></app-userform>
       </ng-template>
     </mat-tab>
 

@@ -17,6 +17,7 @@ import { ListworkentriesComponent } from './shared-components/listworkentries/li
 import { EditworkentrybottomsheetComponent } from './shared-components/listworkentries/editworkentrybottomsheet/editworkentrybottomsheet.component';
 import { EditworkentryformComponent } from './shared-components/listworkentries/editworkentryform/editworkentryform.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { UserformComponent } from './pages/admin-page/userform/userform.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AdminPageComponent } from './pages/admin-page/admin-page.component';
     EditworkentrybottomsheetComponent,
     EditworkentryformComponent,
     AdminPageComponent,
+    UserformComponent,
   ],
   imports: [
     BrowserModule,

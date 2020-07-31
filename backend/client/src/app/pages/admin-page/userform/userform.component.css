@@ -1,0 +1,17 @@
+.buttonsDiv {
+  margin-top: 5%;
+}
+
+.adminIcon {
+  margin-left: 2%;
+}
+
+/* .adminSlider ::ng-deep .mat-slide-toggle-thumb {
+  background-image: url(../../../../assets/images/admin_icon2.png);
+  background-position: center;
+  background-size: cover;
+} */
+
+.adminLabel {
+  margin-right: 2%;
+}

@@ -15,6 +15,16 @@ export class AdminPageComponent implements OnInit {
   tempUserIds: number[];
   allUsersIds: number[];
 
+  mock: User = {
+    userId: undefined,
+    companyId: 1,
+    email: null,
+    firstName: null,
+    lastName: null,
+    admin: false,
+    password: null,
+  };
+
   constructor(
     private workEntryService: WorkEntryService,
     private userService: UserService
@@ -24,6 +34,8 @@ export class AdminPageComponent implements OnInit {
     this.user = this.userService.getUser();
     this.allUsers = await this.userService.getCompanysAllUsers();
   }
+
+  receiveSavedUser($event: User): any {}
 
   onSelectionChange(selectedUserIds: number[]): void {
     console.log(selectedUserIds);
