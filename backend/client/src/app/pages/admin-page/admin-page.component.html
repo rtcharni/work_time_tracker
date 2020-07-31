@@ -9,7 +9,7 @@
       <ng-template matTabContent>
         <!-- Content -->
         <app-userform
-          (userSavedEvent)="receiveSavedUser($event)"
+          (userFormEvent)="receiveUserFormEvent($event)"
           [user]="user"
         ></app-userform>
       </ng-template>

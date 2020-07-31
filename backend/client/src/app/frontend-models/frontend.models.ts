@@ -1,4 +1,4 @@
-import { WorkEntry, UserAndCompany } from '../../../../../models';
+import { WorkEntry, UserAndCompany, User } from '../../../../../models';
 
 export interface BottomSheetActionResult {
   action: 'addComment' | 'deleteEntry' | 'editEntry';
@@ -10,4 +10,9 @@ export interface BottomSheetAndDialogData {
   workEntry: WorkEntry;
   workFormFields: string[];
   userAndCompany: UserAndCompany;
+}
+
+export interface UserFormEvent {
+  user: User | UserAndCompany;
+  action: 'create' | 'edit' | 'delete';
 }

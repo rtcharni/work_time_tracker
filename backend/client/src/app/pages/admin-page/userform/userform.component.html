@@ -151,6 +151,14 @@
       ><button mat-raised-button (click)="handleClearButtonClick()">
         Clear
       </button>
+      <button
+        *ngIf="loggedUser.admin && user.userId"
+        mat-stroked-button
+        color="warn"
+        (click)="handleDeleteButtonClick()"
+      >
+        Delete
+      </button>
     </div>
   </form>
 </div>

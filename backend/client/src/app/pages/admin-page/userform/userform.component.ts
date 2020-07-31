@@ -4,6 +4,7 @@ import { UserAndCompany, User } from '../../../../../../../models';
 import { UserService } from 'src/app/services/user.service';
 import { Utils } from '../../../utils/utils';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserFormEvent } from 'src/app/frontend-models/frontend.models';
 
 @Component({
   selector: 'app-userform',
@@ -12,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UserformComponent implements OnInit {
   @Input() user: User;
-  @Output() userSavedEvent = new EventEmitter<User>();
+  @Output() userFormEvent = new EventEmitter<UserFormEvent>();
 
   loggedUser: UserAndCompany;
   userForm: FormGroup;
@@ -88,7 +89,10 @@ export class UserformComponent implements OnInit {
   handleSaveButtonClick(): void {
     const newUser: User = this.userForm.getRawValue();
     // console.log(`In user form, saving user`, newUser);
-    this.userSavedEvent.emit(newUser);
+    this.userFormEvent.emit({
+      user: newUser,
+      action: newUser.userId ? 'edit' : 'create',
+    });
     this.userForm = this.initForm(newUser.userId ? newUser : this.user);
     // this.userForm.markAsPristine();
     // this.userForm.reset({
@@ -112,11 +116,24 @@ export class UserformComponent implements OnInit {
     this.userForm = this.initForm(this.user);
   }
 
+  handleDeleteButtonClick(): void {
+    if (
+      confirm(
+        `Delete user: #${this.user.userId} - ${this.user.firstName} ${this.user.lastName}`
+      )
+    ) {
+      this.userFormEvent.emit({
+        user: this.user,
+        action: 'delete',
+      });
+    }
+  }
+
   isOriginalValue(
     newValue: string | boolean,
     oldValue: string | boolean,
     controlName: string
-  ): any {
+  ): void {
     if (newValue === oldValue) {
       this.userForm.get(controlName).markAsPristine();
     }

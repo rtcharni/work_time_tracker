@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WorkEntry, UserAndCompany, User } from '../../../../../../models';
 import { WorkEntryService } from 'src/app/services/workentry.service';
 import { UserService } from 'src/app/services/user.service';
+import { UserFormEvent } from 'src/app/frontend-models/frontend.models';
 
 @Component({
   selector: 'app-admin-page',
@@ -35,7 +36,9 @@ export class AdminPageComponent implements OnInit {
     this.allUsers = await this.userService.getCompanysAllUsers();
   }
 
-  receiveSavedUser($event: User): any {}
+  receiveUserFormEvent($event: UserFormEvent): any {
+    console.log($event);
+  }
 
   onSelectionChange(selectedUserIds: number[]): void {
     console.log(selectedUserIds);
