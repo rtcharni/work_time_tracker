@@ -5,9 +5,12 @@
   height: 100vh;
 }
 
-.usersSelect {
+.usersEntriesSelect {
   margin-left: 2%;
   width: 100%;
+}
+
+.usersProfileSelect {
 }
 
 .applyButton {

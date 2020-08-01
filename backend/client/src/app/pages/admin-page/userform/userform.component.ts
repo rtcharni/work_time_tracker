@@ -1,9 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserAndCompany, User } from '../../../../../../../models';
 import { UserService } from 'src/app/services/user.service';
 import { Utils } from '../../../utils/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserFormEvent } from 'src/app/frontend-models/frontend.models';
 
 @Component({
@@ -11,7 +18,7 @@ import { UserFormEvent } from 'src/app/frontend-models/frontend.models';
   templateUrl: './userform.component.html',
   styleUrls: ['./userform.component.css'],
 })
-export class UserformComponent implements OnInit {
+export class UserformComponent implements OnInit, OnChanges {
   @Input() user: User;
   @Output() userFormEvent = new EventEmitter<UserFormEvent>();
 
@@ -25,6 +32,13 @@ export class UserformComponent implements OnInit {
     this.userForm = this.initForm({ ...this.user });
     // console.log(`got user: `, this.user);
     console.log('in init', this.userForm);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    if (!changes.user.firstChange) {
+      this.userForm = this.initForm({ ...this.user });
+    }
   }
 
   private initForm(user: User | UserAndCompany): FormGroup {

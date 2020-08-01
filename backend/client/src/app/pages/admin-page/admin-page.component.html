@@ -1,5 +1,8 @@
 <div class="adminpage">
-  <mat-tab-group mat-stretch-tabs>
+  <mat-tab-group
+    mat-stretch-tabs
+    (selectedTabChange)="selectedTabChange($event)"
+  >
     <!-- Manage users tab -->
     <mat-tab>
       <ng-template mat-tab-label>
@@ -8,9 +11,22 @@
       </ng-template>
       <ng-template matTabContent>
         <!-- Content -->
+        <mat-form-field appearance="outline" class="usersProfileSelect">
+          <mat-label>Create or edit user</mat-label>
+          <mat-select
+            (selectionChange)="onUserProfileSelectionChange($event.value)"
+          >
+            <mat-option [value]="emptyUser">Create new user</mat-option>
+            <mat-option *ngFor="let user of allUsers" [value]="user"
+              >{{ user.userId }} - {{ user.firstName }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+
         <app-userform
+          *ngIf="selectedUserProfile"
           (userFormEvent)="receiveUserFormEvent($event)"
-          [user]="user"
+          [user]="selectedUserProfile"
         ></app-userform>
       </ng-template>
     </mat-tab>
@@ -24,10 +40,10 @@
       <ng-template matTabContent>
         <div class="row no-gutters justify-content-center">
           <div class="col-8">
-            <mat-form-field appearance="outline" class="usersSelect">
+            <mat-form-field appearance="outline" class="usersEntriesSelect">
               <mat-label>Select users for viewing</mat-label>
               <mat-select
-                (selectionChange)="onSelectionChange($event.value)"
+                (selectionChange)="onUserEntriesSelectionChange($event.value)"
                 multiple
               >
                 <mat-option #allSelected [value]="-1">All</mat-option>
