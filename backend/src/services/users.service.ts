@@ -15,7 +15,7 @@ export class UsersService {
     companyId: number,
     withCompany?: boolean
   ): Promise<User[] | UserAndCompany[]> {
-    if (process.env.INPROD) {
+    if (process.env.REALDATA) {
       return await Queries.getUsers(
         userId ? [userId] : undefined,
         companyId,
@@ -27,7 +27,7 @@ export class UsersService {
   }
 
   static async addUser(user: User): Promise<User[]> {
-    if (process.env.INPROD) {
+    if (process.env.REALDATA) {
       const encrypted = await bcrypt.hash(user.password, Constants.SALTROUNDS);
       user.password = encrypted;
       return await Queries.addGenericEntry(user, "users");
@@ -42,7 +42,7 @@ export class UsersService {
   }
 
   static async editUser(user: User): Promise<User[]> {
-    if (process.env.INPROD) {
+    if (process.env.REALDATA) {
       const encrypted = await bcrypt.hash(user.password, Constants.SALTROUNDS);
       user.password = encrypted;
       return await Queries.editGenericEntry<User>(
@@ -62,7 +62,7 @@ export class UsersService {
   }
 
   static async deleteUser(userId: number): Promise<User[]> {
-    if (process.env.INPROD) {
+    if (process.env.REALDATA) {
       return await Queries.deleteGenericEntry<User[]>(
         "users",
         "userId",
@@ -76,7 +76,7 @@ export class UsersService {
   static async logInUser(
     userCredentials: UserCredentials
   ): Promise<LoginResponse> {
-    if (process.env.INPROD) {
+    if (process.env.REALDATA) {
       // Fetch user and compare
       const userAndCompany = await this.getUsers(
         userCredentials.userId,

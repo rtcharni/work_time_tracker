@@ -16,7 +16,7 @@ export class WorkEntriesService {
     from: string,
     to: string
   ): Promise<WorkEntry[]> {
-    if (process.env.INPROD) {
+    if (process.env.REALDATA) {
       return await Queries.getWorkEntries(
         // userId ? [userId] : undefined,
         userId,
@@ -31,7 +31,7 @@ export class WorkEntriesService {
   }
 
   static async addWorkEntry(workEntry: WorkEntry): Promise<WorkEntry[]> {
-    if (process.env.INPROD) {
+    if (process.env.REALDATA) {
       return await Queries.addGenericEntry(workEntry, "work_entries");
     } else {
       return [
@@ -44,7 +44,7 @@ export class WorkEntriesService {
   }
 
   static async editWorkEntry(workEntry: WorkEntry): Promise<WorkEntry[]> {
-    if (process.env.INPROD) {
+    if (process.env.REALDATA) {
       return await Queries.editGenericEntry(
         workEntry,
         "work_entries",
@@ -57,7 +57,7 @@ export class WorkEntriesService {
   }
 
   static async deleteWorkEntry(workEntryId: number): Promise<WorkEntry[]> {
-    if (process.env.INPROD) {
+    if (process.env.REALDATA) {
       return await Queries.deleteGenericEntry<WorkEntry[]>(
         "work_entries",
         "workEntryId",
