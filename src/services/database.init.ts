@@ -7,25 +7,8 @@ function initDatabaseConnection() {
     console.log(`Initing DB connection..`);
     const conn = knex({
       client: "pg",
-      // connection: process.env.PG_CONNECTION_STRING,
-      connection: process.env.DATABASE_URL
-        ? process.env.DATABASE_URL
-        : {
-            host: process.env.DBHOST,
-            user: process.env.DBUSER,
-            password: process.env.DBPASSWORD,
-            database: process.env.DBDATABASE,
-            pool: {
-              min:
-                process.env.DBPOOLMIN === undefined
-                  ? 2
-                  : parseInt(process.env.DBPOOLMIN, 10),
-              max:
-                process.env.DBPOOLMAX === undefined
-                  ? 10
-                  : parseInt(process.env.DBPOOLMAX, 10),
-            },
-          },
+      connection: getConnection(),
+      migrations: getMigration(),
       debug: process.env.DBDEBUG ? true : false,
       acquireConnectionTimeout:
         process.env.DBTIMEOUT === undefined
@@ -38,6 +21,35 @@ function initDatabaseConnection() {
     console.error(`Error while making initial database connection`);
     console.error(error);
   }
+}
+
+function getMigration(): any {
+  if (process.env.NODE_ENV === "production" && process.env.REALDATA) {
+    return undefined;
+  }
+  return undefined;
+}
+
+function getConnection() {
+  if (process.env.DATABASE_URL) {
+    return process.env.DATABASE_URL;
+  }
+  return {
+    host: process.env.DBHOST,
+    user: process.env.DBUSER,
+    password: process.env.DBPASSWORD,
+    database: process.env.DBDATABASE,
+    pool: {
+      min:
+        process.env.DBPOOLMIN === undefined
+          ? 2
+          : parseInt(process.env.DBPOOLMIN, 10),
+      max:
+        process.env.DBPOOLMAX === undefined
+          ? 10
+          : parseInt(process.env.DBPOOLMAX, 10),
+    },
+  };
 }
 
 export class Database {
