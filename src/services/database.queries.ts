@@ -125,13 +125,13 @@ export class Queries {
   }
 
   static async editGenericFields(
-    values: any[],
     fields: string[],
+    values: any[],
     tableName: string,
     idColumnName: string,
     id: number,
     returnFields?: string[]
-  ): Promise<any> {
+  ): Promise<any[]> {
     const updateObject = Object.fromEntries(
       fields.map((_, i) => [fields[i], values[i]])
     );
@@ -195,7 +195,7 @@ export class Queries {
           .where((builder) => {
             builder.where("userId", user.userId);
           })
-          .update("passwordResetToken", token, "passwordResetToken");
+          .update("resetPasswordToken", token, "resetPasswordToken");
       });
     } catch (error) {
       console.error(

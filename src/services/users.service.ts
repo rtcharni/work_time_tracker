@@ -41,6 +41,7 @@ export class UsersService {
     }
   }
 
+  // TODO: This is wrong! if editing only name, password gets messed up!!
   static async editUser(user: User): Promise<User[]> {
     if (process.env.REALDATA) {
       const encrypted = await bcrypt.hash(user.password, Constants.SALTROUNDS);
