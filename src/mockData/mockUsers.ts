@@ -9,6 +9,7 @@ export const mockUsers: User[] = [
     lastName: "last",
     admin: true,
     password: "hashedpassword",
+    passwordResetToken: null,
   },
   {
     userId: 2,
@@ -18,6 +19,7 @@ export const mockUsers: User[] = [
     lastName: "last222",
     admin: false,
     password: "hashedpassword",
+    passwordResetToken: null,
   },
   {
     userId: 3,
@@ -27,5 +29,6 @@ export const mockUsers: User[] = [
     lastName: "basbas",
     admin: true,
     password: "hashedpassword",
+    passwordResetToken: null,
   },
 ];

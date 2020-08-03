@@ -8,6 +8,7 @@ export interface User {
   firstName: string;
   lastName: string;
   admin: boolean;
+  passwordResetToken: string;
 }
 
 export interface UserCredentials {
