@@ -124,6 +124,38 @@ export class Queries {
     }
   }
 
+  static async editGenericFields(
+    values: any[],
+    fields: string[],
+    tableName: string,
+    idColumnName: string,
+    id: number,
+    returnFields?: string[]
+  ): Promise<any> {
+    const updateObject = Object.fromEntries(
+      fields.map((_, i) => [fields[i], values[i]])
+    );
+    try {
+      return Database.db.transaction(async (trx) => {
+        return await trx
+          .withSchema("work-time-tracker")
+          .where((builder) => {
+            builder.where(idColumnName, id);
+            // check that work entry is not locked
+            if (tableName === "work_entries") builder.where("locked", false);
+          })
+          .update(updateObject, returnFields)
+          .into(tableName);
+      });
+    } catch (error) {
+      console.error(
+        `Error while editing generic fields at table ${tableName}, id ${id}, id-column ${idColumnName}, and update object: `,
+        updateObject
+      );
+      console.error(error);
+    }
+  }
+
   static async deleteGenericEntry<T>(
     tableName: string,
     idColumnName: string,
@@ -147,6 +179,27 @@ export class Queries {
     } catch (error) {
       console.error(
         `Error while deleting generic entry at table ${tableName}, id ${id}, id-column ${idColumnName}.`
+      );
+      console.error(error);
+    }
+  }
+
+  static async addUserPasswordResetToken(
+    user: User,
+    token: string
+  ): Promise<string[]> {
+    try {
+      return Database.db.transaction(async (trx) => {
+        return await trx
+          .withSchema("work-time-tracker")
+          .where((builder) => {
+            builder.where("userId", user.userId);
+          })
+          .update("passwordResetToken", token, "passwordResetToken");
+      });
+    } catch (error) {
+      console.error(
+        `Error while adding user password reset token to user with ID: ${user.userId} and Token: ${token}`
       );
       console.error(error);
     }
