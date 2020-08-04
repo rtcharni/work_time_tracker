@@ -3,20 +3,41 @@ import { User } from "../../models";
 import { Request, Response, NextFunction } from "express";
 
 export class TokenManagement {
-  public static generateToken(user: User): string {
+  public static generateLoginToken(user: User): string {
     try {
-      return jwt.sign({ ...user, password: undefined }, process.env.JWTSECRET, {
-        expiresIn: 60 * 30,
-        issuer: "Work Time Tracker",
-        subject: user.email,
-      });
+      return jwt.sign(
+        { ...user, password: undefined },
+        process.env.JWT_TOKEN_SECRET,
+        {
+          expiresIn: 60 * 60,
+          issuer: "Work Time Tracker",
+          subject: user.email,
+        }
+      );
     } catch (error) {
-      console.error(`Error while generating token`);
+      console.error(`Error while generating login token`);
       console.error(error);
     }
   }
 
-  public static validateTokenMiddleware(
+  public static generateResetPasswordToken(user: User): string {
+    try {
+      return jwt.sign(
+        { userId: user.userId, email: user.email },
+        process.env.JWT_PASSWORD_RESET_SECRET,
+        {
+          expiresIn: 60 * 30,
+          issuer: "Work Time Tracker",
+          subject: user.email,
+        }
+      );
+    } catch (error) {
+      console.error(`Error while generating reset password token`);
+      console.error(error);
+    }
+  }
+
+  public static validateLoginTokenMiddleware(
     req: Request,
     res: Response,
     next: NextFunction
@@ -30,7 +51,7 @@ export class TokenManagement {
         // res.redirect(302, "http://localhost:3000/");
         return;
       }
-      jwt.verify(token, process.env.JWTSECRET);
+      jwt.verify(token, process.env.JWT_TOKEN_SECRET);
       next();
     } catch (error) {
       console.error(`Error while verifying token`);

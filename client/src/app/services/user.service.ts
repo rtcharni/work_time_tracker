@@ -35,19 +35,36 @@ export class UserService {
   public async logInUser(
     userCredentials: UserCredentials
   ): Promise<LoginResponse> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
     const loginResponse = await this.http
       // .post<LoginResponse>(`${this.baseUrl}/api/auth/login`, userCredentials, {
-      .post<LoginResponse>(`/api/auth/login`, userCredentials, {
-        headers,
-      })
+      .post<LoginResponse>(`/api/auth/login`, userCredentials)
       .toPromise();
 
     this.user = loginResponse?.success ? loginResponse.userAndCompany : null;
     return loginResponse;
   }
 
-  // public async logOutUser( ): Promise<any> {  }
+  public async resetPassword(
+    token: string,
+    password: string,
+    verifyPassword: string
+  ): Promise<boolean> {
+    const res = await this.http
+      .post<boolean>(`/api/auth/resetpassword`, {
+        token,
+        password,
+        verifyPassword,
+      })
+      .toPromise();
+    return res;
+  }
+
+  public async forgotPassword(userId: number): Promise<boolean> {
+    const res = await this.http
+      .post<boolean>(`/api/auth/forgotpassword`, {
+        userId,
+      })
+      .toPromise();
+    return res;
+  }
 }

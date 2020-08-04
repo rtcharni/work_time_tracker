@@ -5,6 +5,7 @@ import { FrontPageComponent } from './pages/front-page/front-page.component';
 import { WorkEntryPageComponent } from './pages/workentry-page/workentry-page.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { NotfoundPageComponent } from './pages/notfound-page/notfound-page.component';
+import { ResetpasswordPageComponent } from './pages/resetpassword-page/resetpassword-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'frontpage', component: FrontPageComponent },
   { path: 'workentry', component: WorkEntryPageComponent },
   { path: 'admin', component: AdminPageComponent },
+  { path: 'resetpassword/:token', component: ResetpasswordPageComponent },
   { path: '404', component: NotfoundPageComponent },
   { path: '**', redirectTo: '404' },
 ];

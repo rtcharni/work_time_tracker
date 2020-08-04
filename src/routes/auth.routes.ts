@@ -16,8 +16,11 @@ export class AuthRoutes {
     const authController = new AuthController();
     this.router.use(
       "",
-      Router().post("/login", authController.logInUser())
-      // .post("/logout", authController.logOutUser())
+      Router()
+        .post("/login", authController.logInUser())
+        .post("/logout", authController.logOutUser())
+        .post("/forgotpassword", authController.forgotPassword())
+        .post("/resetpassword", authController.resetPassword())
     );
   }
 }

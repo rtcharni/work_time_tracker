@@ -25,6 +25,7 @@ export class AdminPageComponent implements OnInit {
     lastName: null,
     admin: false,
     password: null,
+    resetPasswordToken: null,
   };
 
   emptyUser: User = {
@@ -35,6 +36,7 @@ export class AdminPageComponent implements OnInit {
     email: null,
     admin: false,
     password: null,
+    resetPasswordToken: null,
   };
   selectedUserProfile: User;
 
