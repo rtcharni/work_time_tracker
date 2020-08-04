@@ -32,12 +32,28 @@ export class UserService {
     return users && users.length ? users : []; // or null
   }
 
+  public async addUser(user: User): Promise<User> {
+    const updatedUser = await this.http
+      .post<User[]>(`/api/database/users`, user)
+      .toPromise();
+
+    return updatedUser && updatedUser.length ? updatedUser[0] : null;
+  }
+
   public async editUser(user: User | UserAndCompany): Promise<User> {
     const updatedUser = await this.http
       .patch<User[]>(`/api/database/users/${user.userId}`, user)
       .toPromise();
 
     return updatedUser && updatedUser.length ? updatedUser[0] : null;
+  }
+
+  public async deleteUser(userId: number): Promise<User> {
+    const deletedUser = await this.http
+      .delete<User[]>(`/api/database/users/${userId}`)
+      .toPromise();
+
+    return deletedUser && deletedUser.length ? deletedUser[0] : null;
   }
 
   public async logInUser(

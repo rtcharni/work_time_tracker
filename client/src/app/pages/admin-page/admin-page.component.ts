@@ -53,9 +53,10 @@ export class AdminPageComponent implements OnInit {
     // IMPLEMENT HERE!!!!
     console.log(event);
     if (event.action === 'create') {
-      // create user
+      delete event.user.userId;
+      const newUser: User = await this.userService.addUser(event.user);
+      this.allUsers.push(newUser);
     } else if (event.action === 'edit') {
-      // edit user
       if (
         this.user.userId !== event.user.userId ||
         this.user.password === event.user.password
@@ -66,10 +67,17 @@ export class AdminPageComponent implements OnInit {
       delete event.user.resetPasswordToken;
 
       const updatedUser = await this.userService.editUser(event.user);
-      Object.assign(this.selectedUserProfile, updatedUser);
-      console.log('ALL USERS AFTER OBJECT ASSIGN', this.allUsers);
+      if (updatedUser) {
+        Object.assign(this.selectedUserProfile, updatedUser);
+      }
     } else if (event.action === 'delete') {
-      // delete user
+      const deleted = await this.userService.deleteUser(event.user.userId);
+      if (deleted) {
+        this.allUsers = this.allUsers.filter(
+          (user) => user.userId !== deleted.userId
+        );
+        this.selectedUserProfile = null;
+      }
     }
   }
 

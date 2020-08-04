@@ -29,12 +29,14 @@ export class UserformComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loggedUser = this.userService.getUser();
-    this.userForm = this.initForm({ ...this.user });
+    if (this.user) {
+      this.userForm = this.initForm({ ...this.user });
+    }
     console.log('in init', this.userForm);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes.user.firstChange) {
+    if (!changes.user.firstChange && this.user) {
       this.userForm = this.initForm({ ...this.user });
     }
   }
