@@ -89,14 +89,7 @@ export class UsersController {
     return [
       // Request param validators.
       param("userId").isNumeric().toInt(),
-      body([
-        "password",
-        "companyId",
-        "email",
-        "firstName",
-        "lastName",
-        "admin",
-      ]).exists(),
+      body().not().isEmpty(),
       body().custom((value) => {
         return true;
         // if (Validation.isUserValid(value)) {

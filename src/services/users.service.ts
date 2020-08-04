@@ -44,13 +44,24 @@ export class UsersService {
   // TODO: This is wrong! if editing only name, password gets messed up!!
   static async editUser(user: User): Promise<User[]> {
     if (process.env.REALDATA) {
-      const encrypted = await bcrypt.hash(user.password, Constants.SALTROUNDS);
-      user.password = encrypted;
-      return await Queries.editGenericEntry<User>(
-        user,
+      if (user.password) {
+        const encrypted = await bcrypt.hash(
+          user.password,
+          Constants.SALTROUNDS
+        );
+        user.password = encrypted;
+      }
+      const id: number = user.userId;
+      delete user.userId;
+      // console.log(Object.keys(user));
+      // console.log(Object.values(user));
+      // console.log(id);
+      return await Queries.editGenericFields(
+        Object.keys(user),
+        Object.values(user),
         "users",
         "userId",
-        user.userId
+        id
       );
     } else {
       return [

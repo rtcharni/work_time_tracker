@@ -30,12 +30,10 @@ export class UserformComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.loggedUser = this.userService.getUser();
     this.userForm = this.initForm({ ...this.user });
-    // console.log(`got user: `, this.user);
     console.log('in init', this.userForm);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if (!changes.user.firstChange) {
       this.userForm = this.initForm({ ...this.user });
     }
@@ -101,13 +99,16 @@ export class UserformComponent implements OnInit, OnChanges {
   }
 
   handleSaveButtonClick(): void {
-    const newUser: User = this.userForm.getRawValue();
+    const newUser: any = { ...this.userForm.getRawValue() };
+    delete newUser.verifyPassword;
     // console.log(`In user form, saving user`, newUser);
     this.userFormEvent.emit({
-      user: newUser,
+      user: newUser as User,
       action: newUser.userId ? 'edit' : 'create',
     });
-    this.userForm = this.initForm(newUser.userId ? newUser : this.user);
+    this.userForm = this.initForm(
+      newUser.userId ? { ...this.userForm.getRawValue() } : this.user
+    );
     // this.userForm.markAsPristine();
     // this.userForm.reset({
     //   userId: user.userId,
@@ -122,7 +123,6 @@ export class UserformComponent implements OnInit, OnChanges {
     // this.userForm.updateValueAndValidity();
     // this.userForm.markAsPristine();
     // this.userForm.markAsUntouched();
-
     console.log('in handle save button', this.userForm);
   }
 

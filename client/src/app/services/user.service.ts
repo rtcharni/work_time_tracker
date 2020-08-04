@@ -32,11 +32,18 @@ export class UserService {
     return users && users.length ? users : []; // or null
   }
 
+  public async editUser(user: User | UserAndCompany): Promise<User> {
+    const updatedUser = await this.http
+      .patch<User[]>(`/api/database/users/${user.userId}`, user)
+      .toPromise();
+
+    return updatedUser && updatedUser.length ? updatedUser[0] : null;
+  }
+
   public async logInUser(
     userCredentials: UserCredentials
   ): Promise<LoginResponse> {
     const loginResponse = await this.http
-      // .post<LoginResponse>(`${this.baseUrl}/api/auth/login`, userCredentials, {
       .post<LoginResponse>(`/api/auth/login`, userCredentials)
       .toPromise();
 

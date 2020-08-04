@@ -144,7 +144,7 @@ export class Queries {
             // check that work entry is not locked
             if (tableName === "work_entries") builder.where("locked", false);
           })
-          .update(updateObject, returnFields)
+          .update(updateObject, returnFields ? returnFields : "*")
           .into(tableName);
       });
     } catch (error) {

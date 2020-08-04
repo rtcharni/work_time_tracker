@@ -17,17 +17,6 @@ export class AdminPageComponent implements OnInit {
   tempUserIds: number[];
   allUsersIds: number[];
 
-  mock: User = {
-    userId: undefined,
-    companyId: 1,
-    email: null,
-    firstName: null,
-    lastName: null,
-    admin: false,
-    password: null,
-    resetPasswordToken: null,
-  };
-
   emptyUser: User = {
     userId: undefined,
     companyId: undefined,
@@ -60,9 +49,28 @@ export class AdminPageComponent implements OnInit {
     }
   }
 
-  receiveUserFormEvent($event: UserFormEvent): any {
+  async receiveUserFormEvent(event: UserFormEvent): Promise<any> {
     // IMPLEMENT HERE!!!!
-    console.log($event);
+    console.log(event);
+    if (event.action === 'create') {
+      // create user
+    } else if (event.action === 'edit') {
+      // edit user
+      if (
+        this.user.userId !== event.user.userId ||
+        this.user.password === event.user.password
+      ) {
+        delete event.user.password;
+      }
+      delete event.user.companyId;
+      delete event.user.resetPasswordToken;
+
+      const updatedUser = await this.userService.editUser(event.user);
+      Object.assign(this.selectedUserProfile, updatedUser);
+      console.log('ALL USERS AFTER OBJECT ASSIGN', this.allUsers);
+    } else if (event.action === 'delete') {
+      // delete user
+    }
   }
 
   onUserEntriesSelectionChange(selectedUserIds: number[]): void {

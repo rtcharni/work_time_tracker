@@ -46,7 +46,7 @@ export class DatabaseRoutes {
         // .post("/login", usersController.logInUser())
         .get("", usersController.getUsers())
         .post("", usersController.addUser())
-        .put("/:userId", usersController.editUser())
+        .patch("/:userId", usersController.editUser())
         .delete("/:userId", usersController.deleteUser())
     );
   }
