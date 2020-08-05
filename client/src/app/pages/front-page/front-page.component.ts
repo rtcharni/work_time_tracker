@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import { UserAndCompany } from '../../../../../models';
 
 @Component({
   selector: 'app-front-page',
@@ -7,11 +9,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./front-page.component.css'],
 })
 export class FrontPageComponent implements OnInit {
-  constructor(private router: Router) {}
+  user: UserAndCompany;
+  constructor(private router: Router, private userService: UserService) {}
 
-  ngOnInit(): void {}
-
-  // handleImageNavigation(to: string): void {
-  //   this.router.navigate([to]);
-  // }
+  ngOnInit(): void {
+    this.user = this.userService.getUser();
+  }
 }

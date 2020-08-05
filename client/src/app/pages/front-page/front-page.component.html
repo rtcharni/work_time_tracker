@@ -1,6 +1,6 @@
 <div class="frontpage">
   <div class="row no-gutters">
-    <!-- First card -->
+    <!-- Work card -->
     <mat-card class="col backgroundColor" routerLink="/workentry">
       <mat-card-header>
         <mat-card-title class="text">Worktime</mat-card-title>
@@ -14,8 +14,12 @@
       />
     </mat-card>
 
-    <!-- Second card -->
-    <mat-card class="col backgroundColor" routerLink="/admin">
+    <!-- Admin card, if admin -->
+    <mat-card
+      *ngIf="user.admin"
+      class="col backgroundColor"
+      routerLink="/admin"
+    >
       <mat-card-header>
         <mat-card-title class="text">Admin</mat-card-title>
         <!-- <mat-card-subtitle class="text">Admin</mat-card-subtitle> -->
@@ -25,6 +29,24 @@
         class="pageicon"
         src="../../../assets/images/admin_color.png"
         alt="Admin page"
+      />
+    </mat-card>
+
+    <!-- Profile card, if not admin -->
+    <mat-card
+      *ngIf="!user.admin"
+      class="col backgroundColor"
+      routerLink="/profile"
+    >
+      <mat-card-header>
+        <mat-card-title class="text">Profile</mat-card-title>
+        <!-- <mat-card-subtitle class="text">Admin</mat-card-subtitle> -->
+      </mat-card-header>
+      <img
+        mat-card-image
+        class="pageicon"
+        src="../../../assets/images/user_icon1.png"
+        alt="Profile page"
       />
     </mat-card>
   </div>

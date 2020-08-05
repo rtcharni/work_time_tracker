@@ -17,9 +17,10 @@ import { ListworkentriesComponent } from './shared-components/listworkentries/li
 import { EditworkentrybottomsheetComponent } from './shared-components/listworkentries/editworkentrybottomsheet/editworkentrybottomsheet.component';
 import { EditworkentryformComponent } from './shared-components/listworkentries/editworkentryform/editworkentryform.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
-import { UserformComponent } from './pages/admin-page/userform/userform.component';
+import { UserformComponent } from './shared-components/userform/userform.component';
 import { NotfoundPageComponent } from './pages/notfound-page/notfound-page.component';
 import { ResetpasswordPageComponent } from './pages/resetpassword-page/resetpassword-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ResetpasswordPageComponent } from './pages/resetpassword-page/resetpass
     UserformComponent,
     NotfoundPageComponent,
     ResetpasswordPageComponent,
+    ProfilePageComponent,
   ],
   imports: [
     BrowserModule,

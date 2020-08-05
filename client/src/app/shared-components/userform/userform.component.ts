@@ -8,10 +8,10 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserAndCompany, User } from '../../../../../../models';
-import { UserService } from 'src/app/services/user.service';
-import { Utils } from '../../../utils/utils';
-import { UserFormEvent } from 'src/app/frontend-models/frontend.models';
+import { UserAndCompany, User } from '../../../../../models';
+import { Utils } from '../../utils/utils';
+import { UserFormEvent } from '../../frontend-models/frontend.models';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-userform',

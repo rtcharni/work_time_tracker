@@ -1,0 +1,36 @@
+<div class="profilepage">
+  <mat-tab-group
+    mat-stretch-tabs
+    (selectedTabChange)="selectedTabChange($event)"
+  >
+    <!-- Me tab -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>account_circle</mat-icon>
+        Me
+      </ng-template>
+      <ng-template matTabContent>
+        <!-- Content -->
+        <div class="userform">
+          <app-userform
+            *ngIf="user"
+            (userFormEvent)="receiveUserFormEvent($event)"
+            [user]="user"
+          ></app-userform>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <!-- Some tab -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>live_help</mat-icon>
+        Support
+      </ng-template>
+      <ng-template matTabContent>
+        Support to come... Send message to admins Send message to app support
+        (me)
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>
