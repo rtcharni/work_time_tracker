@@ -1,0 +1,22 @@
+.notFoundPage {
+  height: 100%;
+  width: 100%;
+  background-color: #fbeaeb;
+  padding-top: 135px;
+}
+
+.text {
+  color: #2f3c7e;
+  margin-top: 10px;
+}
+
+.sorryIcon {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+
+.goToLoginButton {
+  margin-top: 20px;
+}
