@@ -142,7 +142,8 @@
 
     <div class="row justify-content-center no-gutters buttonsDiv">
       <button
-        mat-raised-button
+        mat-stroked-button
+        color="primary"
         class="saveButton"
         (click)="handleSaveButtonClick()"
         [disabled]="userForm.invalid || userForm.pristine"
@@ -152,9 +153,9 @@
         Clear
       </button>
       <button
-        *ngIf="loggedUser.admin && user.userId"
         mat-stroked-button
         color="warn"
+        *ngIf="loggedUser.admin && user.userId"
         (click)="handleDeleteButtonClick()"
       >
         Delete
