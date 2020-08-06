@@ -31,7 +31,7 @@ export class LoginPageComponent implements OnInit {
         password: this.password,
       });
       if (loginResponse.success) {
-        this.router.navigate(['frontpage']);
+        this.router.navigate(['app/frontpage']);
       } else {
         // Wrong credentials
         this.snackBar.open(`User ID or Password is incorrect`, null, {

@@ -7,14 +7,22 @@ import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { NotfoundPageComponent } from './pages/notfound-page/notfound-page.component';
 import { ResetpasswordPageComponent } from './pages/resetpassword-page/resetpassword-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { AuthGuardService } from './services/authguard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent },
-  { path: 'frontpage', component: FrontPageComponent },
-  { path: 'workentry', component: WorkEntryPageComponent },
-  { path: 'admin', component: AdminPageComponent },
-  { path: 'profile', component: ProfilePageComponent },
+  {
+    path: 'app',
+    canActivateChild: [AuthGuardService],
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'frontpage' },
+      { path: 'frontpage', component: FrontPageComponent },
+      { path: 'workentry', component: WorkEntryPageComponent },
+      { path: 'admin', component: AdminPageComponent },
+      { path: 'profile', component: ProfilePageComponent },
+    ],
+  },
   { path: 'resetpassword/:token', component: ResetpasswordPageComponent },
   { path: '404', component: NotfoundPageComponent },
   { path: '**', redirectTo: '404' },
@@ -25,3 +33,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
+// canActivate: [AuthGuardService],

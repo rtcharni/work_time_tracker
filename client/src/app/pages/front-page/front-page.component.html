@@ -1,7 +1,7 @@
 <div class="frontpage">
   <div class="row no-gutters">
     <!-- Work card -->
-    <mat-card class="col backgroundColor" routerLink="/workentry">
+    <mat-card class="col backgroundColor" routerLink="../workentry">
       <mat-card-header>
         <mat-card-title class="text">Worktime</mat-card-title>
         <!-- <mat-card-subtitle class="text">Worktime</mat-card-subtitle> -->
@@ -18,7 +18,7 @@
     <mat-card
       *ngIf="user.admin"
       class="col backgroundColor"
-      routerLink="/admin"
+      routerLink="../admin"
     >
       <mat-card-header>
         <mat-card-title class="text">Admin</mat-card-title>
@@ -36,7 +36,7 @@
     <mat-card
       *ngIf="!user.admin"
       class="col backgroundColor"
-      routerLink="/profile"
+      routerLink="../profile"
     >
       <mat-card-header>
         <mat-card-title class="text">Profile</mat-card-title>
