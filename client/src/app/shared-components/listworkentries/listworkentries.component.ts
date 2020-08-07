@@ -5,6 +5,8 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { UserAndCompany } from '../../../../../models/user';
 import { UserService } from '../../services/user.service';
@@ -47,6 +49,8 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
   ],
 })
 export class ListworkentriesComponent implements OnInit, OnChanges {
+  @Output() workEntriesChangedEvent = new EventEmitter<WorkEntry[]>();
+
   private user: UserAndCompany = null;
   // On-going month on init
   startDate: Date = moment().date(1).toDate();
@@ -122,6 +126,7 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
     );
     // this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.workEntriesChangedEvent.emit(this.dataSource.data);
   }
 
   handleDateChange(

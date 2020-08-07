@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UserAndCompany, User } from '../../../../../models';
-import { WorkEntryService } from 'src/app/services/workentry.service';
+import { UserAndCompany, User, WorkEntry } from '../../../../../models';
 import { UserService } from 'src/app/services/user.service';
 import { UserFormEvent } from 'src/app/frontend-models/frontend.models';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import * as json2csv from 'papaparse';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-page',
@@ -29,9 +30,11 @@ export class AdminPageComponent implements OnInit {
   };
   selectedUserProfile: User;
 
+  recentWorkEntriesToExport: WorkEntry[] = [];
+
   constructor(
-    private workEntryService: WorkEntryService,
-    private userService: UserService
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -97,5 +100,29 @@ export class AdminPageComponent implements OnInit {
     } else {
       this.allUsersIds = this.tempUserIds;
     }
+  }
+
+  receiveWorkEntriesChangedEvent($event: WorkEntry[]): void {
+    this.recentWorkEntriesToExport = $event;
+  }
+
+  exportToCsv(): void {
+    if (!this.recentWorkEntriesToExport.length) {
+      this.snackBar.open(`No entries to export..`, null, {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
+      return;
+    }
+    const csv = json2csv.unparse(this.recentWorkEntriesToExport, {
+      delimiter: ';',
+    });
+    console.log(csv);
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const anchor = document.createElement('a');
+    anchor.download = `workapp_work_entries_${new Date().toISOString()}.csv`;
+    anchor.href = window.URL.createObjectURL(blob);
+    anchor.click();
   }
 }

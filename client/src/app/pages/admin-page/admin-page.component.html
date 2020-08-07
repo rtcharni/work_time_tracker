@@ -11,7 +11,7 @@
       </ng-template>
       <ng-template matTabContent>
         <!-- Content -->
-        <mat-form-field appearance="outline" class="usersProfileSelect">
+        <mat-form-field appearance="outline">
           <mat-label>Create or edit user</mat-label>
           <mat-select
             (selectionChange)="onUserProfileSelectionChange($event.value)"
@@ -39,7 +39,7 @@
       </ng-template>
       <ng-template matTabContent>
         <div class="row no-gutters justify-content-center">
-          <div class="col-8">
+          <div class="col-6">
             <mat-form-field appearance="outline" class="usersEntriesSelect">
               <mat-label>Select users for viewing</mat-label>
               <mat-select
@@ -57,7 +57,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-4">
+          <div class="col">
             <button
               (click)="handleApplyButton()"
               mat-stroked-button
@@ -67,11 +67,31 @@
               Apply
             </button>
           </div>
+          <div class="col">
+            <button
+              mat-stroked-button
+              class="exportButton"
+              (click)="exportToCsv()"
+            >
+              <!-- Export -->
+              <mat-icon>cloud_download</mat-icon>
+            </button>
+
+            <!-- <button
+              (click)="exportToCsv()"
+              mat-stroked-button
+              color="primary"
+              class=""
+            >
+              Export
+            </button> -->
+          </div>
         </div>
 
         <mat-divider class="divider"></mat-divider>
 
         <app-listworkentries
+          (workEntriesChangedEvent)="receiveWorkEntriesChangedEvent($event)"
           [usersIds]="allUsersIds"
           [useInputUsers]="true"
         ></app-listworkentries>

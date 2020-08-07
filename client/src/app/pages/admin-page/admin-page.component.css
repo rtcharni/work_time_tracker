@@ -10,14 +10,15 @@
   width: 100%;
 }
 
-.usersProfileSelect {
+.applyButton {
+  margin-top: 10px;
+  margin-left: 10%;
 }
 
-.applyButton {
-  /* height: 100%;
-  margin-left: 2%; */
-  margin-top: 8%;
-  margin-left: 12%;
+.exportButton {
+  margin-top: 10px;
+  margin-left: 15px;
+  color: rebeccapurple;
 }
 
 .divider {
