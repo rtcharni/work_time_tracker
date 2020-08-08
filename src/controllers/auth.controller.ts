@@ -168,4 +168,27 @@ export class AuthController {
       BackendUtils.errorHandler("Could not logout user!"),
     ];
   }
+
+  public informUserCreated(): (
+    | ValidationChain
+    | RequestHandler
+    | ErrorRequestHandler
+  )[] {
+    return [
+      // Request param validators.
+      body(["userId", "firstName", "email"]).exists(),
+      // Error handler for request params
+      BackendUtils.validatorHandler(),
+      // Actual Request handler
+      async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          EmailService.sendInfoAboutCreatedUser(req.body);
+        } catch (error) {
+          next(error);
+        }
+      },
+      // Error handler
+      BackendUtils.errorHandler("Could not logout user!"),
+    ];
+  }
 }

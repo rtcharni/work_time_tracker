@@ -59,6 +59,14 @@ export class AdminPageComponent implements OnInit {
       delete event.user.userId;
       const newUser: User = await this.userService.addUser(event.user);
       this.allUsers.push(newUser);
+      // send mail to users email
+      this.userService.informUserCreated(newUser);
+      // show the id of created user
+      this.snackBar.open(`User created with ID: ${newUser.userId}`, 'Roger!', {
+        // duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     } else if (event.action === 'edit') {
       if (
         this.user.userId !== event.user.userId ||

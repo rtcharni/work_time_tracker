@@ -21,6 +21,7 @@ export class AuthRoutes {
         .post("/logout", authController.logOutUser())
         .post("/forgotpassword", authController.forgotPassword())
         .post("/resetpassword", authController.resetPassword())
+        .post("/informusercreated", authController.informUserCreated())
     );
   }
 }

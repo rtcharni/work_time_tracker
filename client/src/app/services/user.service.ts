@@ -90,4 +90,10 @@ export class UserService {
       .toPromise();
     return res;
   }
+
+  public async informUserCreated(user: User): Promise<void> {
+    this.http.post<void>(`/api/auth/informusercreated`, {
+      user,
+    });
+  }
 }
