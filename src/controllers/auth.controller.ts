@@ -135,7 +135,7 @@ export class AuthController {
         }
       },
       // Error handler
-      BackendUtils.errorHandler("Could not logout user!"),
+      BackendUtils.errorHandler("Could complete forgot password flow!"),
     ];
   }
 
@@ -165,7 +165,7 @@ export class AuthController {
         }
       },
       // Error handler
-      BackendUtils.errorHandler("Could not logout user!"),
+      BackendUtils.errorHandler("Could not reset user password!"),
     ];
   }
 
@@ -188,7 +188,9 @@ export class AuthController {
         }
       },
       // Error handler
-      BackendUtils.errorHandler("Could not logout user!"),
+      BackendUtils.errorHandler(
+        "Could not inform user about account creation!"
+      ),
     ];
   }
 }
