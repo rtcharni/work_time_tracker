@@ -5,6 +5,10 @@
   height: 100vh;
 }
 
+.workAppText {
+  color: #2f3c7e;
+}
+
 .forgotPasswordText {
   margin-top: 2%;
   cursor: pointer;
@@ -12,10 +16,6 @@
 
 .forgotPasswordInput {
   margin-top: 4%;
-}
-
-.forgotPasswordButton {
-  /* margin-top: 1%; */
 }
 
 .nextStepsCard {
