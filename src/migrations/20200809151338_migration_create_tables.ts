@@ -2,6 +2,7 @@ import * as Knex from "knex";
 
 export async function up(knex: Knex): Promise<any> {
   return knex.schema
+    .createSchema("work-time-tracker")
     .withSchema("work-time-tracker")
     .createTable("companies", (t) => {
       t.increments("companyId").primary().notNullable();
@@ -48,5 +49,6 @@ export async function down(knex: Knex): Promise<any> {
     .withSchema("work-time-tracker")
     .dropTableIfExists("work_entries")
     .dropTableIfExists("users")
-    .dropTableIfExists("companies");
+    .dropTableIfExists("companies")
+    .dropSchemaIfExists("work-time-tracker");
 }
