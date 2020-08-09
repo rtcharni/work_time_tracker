@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon",
     "build-all": "tsc && cd ./client && ng build --prod",
-    "deploydev": "git push heroku-dev development:master",
+    "deploydev": "git push heroku-dev development:master --force",
     "postinstall": "tsc",
     "heroku-postbuild": "cd client && npm i"
   },
