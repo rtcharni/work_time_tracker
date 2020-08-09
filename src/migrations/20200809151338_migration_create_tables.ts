@@ -22,7 +22,7 @@ export async function up(knex: Knex): Promise<any> {
           t.integer("companyId")
             .notNullable()
             .references("companyId")
-            .inTable("companies")
+            .inTable("work-time-tracker.companies")
             .index();
           t.string("email", 255);
           t.string("firstName", 255);
@@ -39,12 +39,12 @@ export async function up(knex: Knex): Promise<any> {
           t.integer("companyId")
             .notNullable()
             .references("companyId")
-            .inTable("companies")
+            .inTable("work-time-tracker.companies")
             .index();
           t.integer("userId")
             .notNullable()
             .references("userId")
-            .inTable("users");
+            .inTable("work-time-tracker.users");
           t.string("title", 255);
           t.text("details");
           t.string("customerName", 255);
