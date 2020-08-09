@@ -3,7 +3,7 @@ import knex from "knex";
 require("dotenv").config();
 // import { knexfile } from "../../knexfile";
 // tslint:disable-next-line: no-var-requires
-const knexfile = require("../../knexfile");
+const knexfile = require("../../../knexfile");
 
 function initDatabaseConnection() {
   try {
