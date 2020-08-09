@@ -1,5 +1,3 @@
-import knex from "knex";
-// tslint:disable-next-line: no-var-requires
 require("dotenv").config();
 
 export const knexfile = {
