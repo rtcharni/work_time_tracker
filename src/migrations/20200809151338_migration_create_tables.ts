@@ -10,25 +10,29 @@ export async function up(knex: Knex): Promise<any> {
       t.string("email", 255).notNullable();
       t.json("config");
     })
+    .withSchema("work-time-tracker")
     .createTable("users", (t) => {
       t.increments("userId").primary().notNullable();
       t.string("password", 255).notNullable();
       t.integer("companyId")
         .notNullable()
         .references("companyId")
-        .inTable("companies");
+        .inTable("companies")
+        .index();
       t.string("email", 255);
       t.string("firstName", 255);
       t.string("lastName", 255);
       t.boolean("admin").defaultTo(false);
       t.text("resetPasswordToken");
     })
+    .withSchema("work-time-tracker")
     .createTable("work_entries", (t) => {
       t.increments("workEntryId").primary().notNullable();
       t.integer("companyId")
         .notNullable()
         .references("companyId")
-        .inTable("companies");
+        .inTable("companies")
+        .index();
       t.integer("userId").notNullable().references("userId").inTable("users");
       t.string("title", 255);
       t.text("details");
