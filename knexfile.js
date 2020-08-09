@@ -13,14 +13,14 @@ module.exports = {
 };
 
 function getMigration() {
-  if (process.env.NODE_ENV === "production" && process.env.REALDATA) {
+  if (process.env.NODE_ENV === "production") {
     return { directory: `${__dirname}/dist/src/migrations` };
   }
   return undefined;
 }
 
 function getSeeds() {
-  if (process.env.NODE_ENV === "production" && process.env.REALDATA) {
+  if (process.env.NODE_ENV === "production") {
     return { directory: `${__dirname}/dist/src/seeds` };
   }
   return undefined;
