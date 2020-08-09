@@ -9,6 +9,7 @@ function initDatabaseConnection() {
       client: "pg",
       connection: getConnection(),
       migrations: getMigration(),
+      seeds: getSeeds(),
       debug: process.env.DBDEBUG ? true : false,
       acquireConnectionTimeout:
         process.env.DBTIMEOUT === undefined
@@ -23,9 +24,16 @@ function initDatabaseConnection() {
   }
 }
 
-function getMigration(): any {
+function getMigration(): knex.MigratorConfig {
   if (process.env.NODE_ENV === "production" && process.env.REALDATA) {
-    return undefined;
+    return { directory: `${__dirname}../migrations` };
+  }
+  return undefined;
+}
+
+function getSeeds(): knex.SeederConfig {
+  if (process.env.NODE_ENV === "production" && process.env.REALDATA) {
+    return { directory: `${__dirname}../seeds` };
   }
   return undefined;
 }
