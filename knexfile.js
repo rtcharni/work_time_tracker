@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-export const knexfile = {
+module.exports = {
   client: "pg",
   connection: getConnection(),
   migrations: getMigration(),
