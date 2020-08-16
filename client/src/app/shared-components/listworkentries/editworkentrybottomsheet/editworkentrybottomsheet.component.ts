@@ -1,10 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import {
-  BottomSheetActionResult,
-  BottomSheetAndDialogData,
-} from '../../../frontend-models/frontend.models';
+import { BottomSheetActionResult, BottomSheetAndDialogData } from '../../../frontend-models/frontend.models';
 import { WorkEntry } from '../../../../../../models';
 import { WorkEntryService } from 'src/app/services/workentry.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -21,9 +18,7 @@ export class EditworkentrybottomsheetComponent implements OnInit {
   showComment = false;
 
   constructor(
-    private bottomSheetRef: MatBottomSheetRef<
-      EditworkentrybottomsheetComponent
-    >,
+    private bottomSheetRef: MatBottomSheetRef<EditworkentrybottomsheetComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetAndDialogData,
     private workEntryService: WorkEntryService,
     private snackBar: MatSnackBar,
@@ -74,15 +69,19 @@ export class EditworkentrybottomsheetComponent implements OnInit {
 
   async saveComment(comment: string): Promise<void> {
     console.log(`SAving comment: `, comment);
-    const name = `${this.data.userAndCompany.lastName} ${this.data.userAndCompany.firstName} (${this.data.userAndCompany.name})`;
-    this.data.workEntry.comments
-      ? this.data.workEntry.comments.push(
-          `${new Date().toISOString()};${name};${comment}`
-        )
-      : (this.data.workEntry.comments = [
-          `${new Date().toISOString()};${name};${comment}`,
-        ]);
-    const res = await this.workEntryService.editWorkEntry(this.data.workEntry);
+
+    // !!!
+    // Implement new logic for saving comments to own table!
+
+    // const name = `${this.data.userAndCompany.lastName} ${this.data.userAndCompany.firstName} (${this.data.userAndCompany.name})`;
+    // this.data.workEntry.comments
+    //   ? this.data.workEntry.comments.push(
+    //       `${new Date().toISOString()};${name};${comment}`
+    //     )
+    //   : (this.data.workEntry.comments = [
+    //       `${new Date().toISOString()};${name};${comment}`,
+    //     ]);
+    // const res = await this.workEntryService.editWorkEntry(this.data.workEntry);
     const actionResult: BottomSheetActionResult = {
       action: 'addComment',
       comment,
@@ -91,9 +90,7 @@ export class EditworkentrybottomsheetComponent implements OnInit {
   }
 
   async deleteEntry(workEntry: WorkEntry): Promise<BottomSheetActionResult> {
-    const res = await this.workEntryService.deleteWorkEntry(
-      workEntry.workEntryId
-    );
+    const res = await this.workEntryService.deleteWorkEntry(workEntry.workEntryId);
     const actionResult: BottomSheetActionResult = {
       action: 'deleteEntry',
       workEntry: res,

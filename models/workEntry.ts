@@ -12,5 +12,5 @@ export interface WorkEntry {
   breakMIN: number;
   charged: boolean;
   locked: boolean;
-  comments: string[];
+  // comments: string[];
 }

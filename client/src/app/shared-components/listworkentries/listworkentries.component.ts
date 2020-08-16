@@ -1,24 +1,9 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { UserAndCompany } from '../../../../../models/user';
 import { UserService } from '../../services/user.service';
 import { WorkEntryService } from '../../services/workentry.service';
 import { WorkEntry } from '../../../../../models';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -37,14 +22,8 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
     trigger('detailExpand', [
       state('collapsed, void', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-      transition(
-        'expanded <=> void',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
@@ -64,11 +43,7 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(
-    private userService: UserService,
-    private workEntryService: WorkEntryService,
-    private bottomSheet: MatBottomSheet
-  ) {}
+  constructor(private userService: UserService, private workEntryService: WorkEntryService, private bottomSheet: MatBottomSheet) {}
 
   async ngOnInit(): Promise<void> {
     console.log(`list work entries IN INIT`);
@@ -109,13 +84,7 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
     }
   }
 
-  async getEntriesAndRenderTable(
-    headerFields: string[],
-    userId: number[],
-    companyId: number,
-    start: Date,
-    end: Date
-  ): Promise<void> {
+  async getEntriesAndRenderTable(headerFields: string[], userId: number[], companyId: number, start: Date, end: Date): Promise<void> {
     this.columnsToDisplay = headerFields;
     this.dataSource.data = await this.workEntryService.getWorkEntries(
       userId,
@@ -129,10 +98,7 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
     this.workEntriesChangedEvent.emit(this.dataSource.data);
   }
 
-  handleDateChange(
-    startOrEnd: 'start' | 'end',
-    event: MatDatepickerInputEvent<Date>
-  ): void {
+  handleDateChange(startOrEnd: 'start' | 'end', event: MatDatepickerInputEvent<Date>): void {
     this.startDate = startOrEnd === 'start' ? event.value : this.startDate;
     this.endDate = startOrEnd === 'end' ? event.value : this.endDate;
     if (startOrEnd === 'end' && this.startDate && this.endDate) {
@@ -195,9 +161,7 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
             break;
           case 'deleteEntry':
             if (result?.workEntry?.workEntryId) {
-              const index = this.dataSource.data.findIndex(
-                (entry) => entry.workEntryId === result.workEntry?.workEntryId
-              );
+              const index = this.dataSource.data.findIndex(entry => entry.workEntryId === result.workEntry?.workEntryId);
               this.dataSource.data.splice(index, 1);
               this.dataSource._updateChangeSubscription(); // <-- Refresh the datasource
             }
@@ -226,15 +190,12 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
         return 'Break';
       case 'charged':
         return 'Charged';
-      case 'comments':
-        return 'Comments';
+      // case 'comments':
+      //   return 'Comments';
     }
   }
 
-  displayTableData(
-    data: string | string[] | number | boolean,
-    field: string
-  ): any {
+  displayTableData(data: string | string[] | number | boolean, field: string): any {
     switch (field) {
       case 'title':
         return data;
@@ -245,26 +206,20 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
       case 'costCents':
         return (data as number) / 100;
       case 'date':
-        return data
-          ? moment(data as string).format(Constants.DATEFORMAT)
-          : null;
+        return data ? moment(data as string).format(Constants.DATEFORMAT) : null;
       case 'startTime':
-        return data
-          ? moment(data as string).format(Constants.DATEANDTIMEFORMAT)
-          : null;
+        return data ? moment(data as string).format(Constants.DATEANDTIMEFORMAT) : null;
       case 'endTime':
-        return data
-          ? moment(data as string).format(Constants.DATEANDTIMEFORMAT)
-          : null;
+        return data ? moment(data as string).format(Constants.DATEANDTIMEFORMAT) : null;
       case 'breakMIN':
         return data;
       case 'charged':
         return data === true ? 'Yes' : 'No';
-      case 'comments':
-        // How to display array of comment in one line !?
-        // Show last comment
-        // Refactor, ugly as hell ...
-        return data ? data[(data as string[]).length - 1].split(';')[2] : null;
+      // case 'comments':
+      // How to display array of comment in one line !?
+      // Show last comment
+      // Refactor, ugly as hell ...
+      // return data ? data[(data as string[]).length - 1].split(';')[2] : null;
     }
   }
 
@@ -279,33 +234,23 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
       case `costCents`:
         return `Cost: ${element.costCents ? element.costCents / 100 : ''}`;
       case `date`:
-        return `Date: ${
-          element.date ? moment(element.date).format(Constants.DATEFORMAT) : ''
-        }`;
+        return `Date: ${element.date ? moment(element.date).format(Constants.DATEFORMAT) : ''}`;
       case `startTime`:
-        return `Start: ${
-          element.startTime
-            ? moment(element.startTime).format(Constants.DATEANDTIMEFORMAT)
-            : ''
-        }`;
+        return `Start: ${element.startTime ? moment(element.startTime).format(Constants.DATEANDTIMEFORMAT) : ''}`;
       case `endTime`:
-        return `End: ${
-          element.endTime
-            ? moment(element.endTime).format(Constants.DATEANDTIMEFORMAT)
-            : ''
-        }`;
+        return `End: ${element.endTime ? moment(element.endTime).format(Constants.DATEANDTIMEFORMAT) : ''}`;
       case `breakMIN`:
-        return `Break: ${element.breakMIN ?? ''}`;
+        return `Break: ${element.breakMIN ?? ''} ${element.breakMIN ? 'min' : ''}`;
       case `charged`:
         return `Charged: ${element.charged ? 'Yes' : 'No'}`;
-      case 'comments':
-        const comm = `\nComments:\n`;
-        const formattedComments = element.comments?.map((comment) => {
-          const split = comment.split(';');
-          const time = moment(split[0]).format(Constants.DATEANDTIMEFORMAT);
-          return `${time} - ${split[1]}: ${split[2]}`;
-        });
-        return formattedComments ? comm + formattedComments.join('\n') : comm;
+      // case 'comments':
+      //   const comm = `\nComments:\n`;
+      //   const formattedComments = element.comments?.map((comment) => {
+      //     const split = comment.split(';');
+      //     const time = moment(split[0]).format(Constants.DATEANDTIMEFORMAT);
+      //     return `${time} - ${split[1]}: ${split[2]}`;
+      //   });
+      //   return formattedComments ? comm + formattedComments.join('\n') : comm;
     }
   }
 }
