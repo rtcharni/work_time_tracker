@@ -4,13 +4,11 @@ import { User } from '../../models';
 
 function createTransporter(): Mail {
   try {
-    console.log(process.env.EMAIL_USER);
-    console.log(process.env.EMAIL_PASSWORD);
     return nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD, // naturally, replace both with your real credentials or an application-specific password
+        pass: process.env.EMAIL_PASSWORD,
       },
       secure: true,
       debug: true,
@@ -26,7 +24,7 @@ export class EmailService {
   private static transporter: Mail = createTransporter();
   // TODO: pretty HTML format
   private static defaultOptions: SendMailOptions = {
-    from: 'Work App work.app.general@gmail.com', // real app name and new email address
+    from: 'Work App work.app.general@gmail.com',
     subject: 'Work App - ',
   };
 
