@@ -8,6 +8,7 @@ import { NotfoundPageComponent } from './pages/notfound-page/notfound-page.compo
 import { ResetpasswordPageComponent } from './pages/resetpassword-page/resetpassword-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { AuthGuardService } from './services/authguard.service';
+import { MessagingPageComponent } from './pages/messaging-page/messaging-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'workentry', component: WorkEntryPageComponent },
       { path: 'admin', component: AdminPageComponent },
       { path: 'profile', component: ProfilePageComponent },
+      { path: 'messaging', component: MessagingPageComponent },
     ],
   },
   { path: 'resetpassword/:token', component: ResetpasswordPageComponent },
