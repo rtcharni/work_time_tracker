@@ -4,6 +4,8 @@ import { User } from '../../models';
 
 function createTransporter(): Mail {
   try {
+    console.log(process.env.EMAIL_USER);
+    console.log(process.env.EMAIL_PASSWORD);
     return nodemailer.createTransport({
       service: 'gmail',
       auth: {
