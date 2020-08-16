@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:all": "ng serve & cd .. && nodemon",
     "build": "ng build",
     "deploydev": "git push heroku-dev development:master",
     "postinstall": "ng build --prod"
