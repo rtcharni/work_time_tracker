@@ -23,7 +23,7 @@ export async function up(knex: Knex): Promise<any> {
     .createTable('work_entries', t => {
       t.increments('workEntryId').primary().notNullable();
       t.integer('companyId').notNullable().references('companyId').inTable('work-time-tracker.companies').index();
-      t.integer('userId').notNullable().references('userId').inTable('work-time-tracker.users');
+      t.integer('userId').notNullable().references('userId').inTable('work-time-tracker.users').index();
       t.string('title', 255);
       t.text('details');
       t.string('customerName', 255);
@@ -35,12 +35,21 @@ export async function up(knex: Knex): Promise<any> {
       t.boolean('locked').defaultTo(false);
       t.bigInteger('costCents');
       // t.specificType("comments", "text[]");
+    })
+    .createTable('work_entry_messages', t => {
+      t.increments('messageId').primary().notNullable();
+      t.integer('companyId').notNullable().references('companyId').inTable('work-time-tracker.companies').index();
+      t.integer('userId').notNullable().references('userId').inTable('work-time-tracker.users').index();
+      t.integer('workEntryId').notNullable().references('workEntryId').inTable('work-time-tracker.work_entries').index();
+      t.text('message').notNullable();
+      t.timestamp('createdAt', { useTz: true }).notNullable();
     });
 }
 
 export async function down(knex: Knex): Promise<any> {
   return knex.schema
     .withSchema('work-time-tracker')
+    .dropTableIfExists('work_entry_messages')
     .dropTableIfExists('work_entries')
     .dropTableIfExists('users')
     .dropTableIfExists('companies')
