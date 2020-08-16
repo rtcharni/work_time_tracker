@@ -1,7 +1,7 @@
-import { WorkEntry } from "../../models";
-import { mockWorkEntries } from "../mockData";
-import { Database } from "./database.init";
-import { Queries } from "./database.queries";
+import { WorkEntry } from '../../models';
+import { mockWorkEntries } from '../mockData';
+import { Database } from './database.init';
+import { Queries } from './database.queries';
 
 export class WorkEntriesService {
   /**
@@ -32,7 +32,7 @@ export class WorkEntriesService {
 
   static async addWorkEntry(workEntry: WorkEntry): Promise<WorkEntry[]> {
     if (process.env.REALDATA) {
-      return await Queries.addGenericEntry(workEntry, "work_entries");
+      return await Queries.addGenericEntry(workEntry, 'work_entries');
     } else {
       return [
         {
@@ -45,12 +45,7 @@ export class WorkEntriesService {
 
   static async editWorkEntry(workEntry: WorkEntry): Promise<WorkEntry[]> {
     if (process.env.REALDATA) {
-      return await Queries.editGenericEntry(
-        workEntry,
-        "work_entries",
-        "workEntryId",
-        workEntry.workEntryId
-      );
+      return await Queries.editGenericEntry(workEntry, 'work_entries', 'workEntryId', workEntry.workEntryId);
     } else {
       return [workEntry];
     }
@@ -58,11 +53,7 @@ export class WorkEntriesService {
 
   static async deleteWorkEntry(workEntryId: number): Promise<WorkEntry[]> {
     if (process.env.REALDATA) {
-      return await Queries.deleteGenericEntry<WorkEntry[]>(
-        "work_entries",
-        "workEntryId",
-        workEntryId
-      );
+      return await Queries.deleteGenericEntry<WorkEntry[]>('work_entries', 'workEntryId', workEntryId);
     } else {
       return [Object.assign({}, mockWorkEntries[0], { workEntryId })];
     }
