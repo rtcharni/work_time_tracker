@@ -36,12 +36,12 @@ export async function up(knex: Knex): Promise<any> {
       t.bigInteger('costCents');
       // t.specificType("comments", "text[]");
     })
-    .createTable('work_entry_messages', t => {
-      t.increments('messageId').primary().notNullable();
+    .createTable('work_messages', t => {
+      t.increments('workMessageId').primary().notNullable();
       t.integer('companyId').notNullable().references('companyId').inTable('work-time-tracker.companies').index();
       t.integer('userId').notNullable().references('userId').inTable('work-time-tracker.users').index();
       t.integer('workEntryId').notNullable().references('workEntryId').inTable('work-time-tracker.work_entries').index();
-      t.text('message').notNullable();
+      t.text('workMessage').notNullable();
       t.timestamp('createdAt', { useTz: true }).notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
     });
 }
