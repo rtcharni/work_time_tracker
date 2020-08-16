@@ -42,7 +42,7 @@ export async function up(knex: Knex): Promise<any> {
       t.integer('userId').notNullable().references('userId').inTable('work-time-tracker.users').index();
       t.integer('workEntryId').notNullable().references('workEntryId').inTable('work-time-tracker.work_entries').index();
       t.text('message').notNullable();
-      t.timestamp('createdAt', { useTz: true }).notNullable();
+      t.timestamp('createdAt', { useTz: true }).notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'));
     });
 }
 
