@@ -21,6 +21,7 @@ import { UserformComponent } from './shared-components/userform/userform.compone
 import { NotfoundPageComponent } from './pages/notfound-page/notfound-page.component';
 import { ResetpasswordPageComponent } from './pages/resetpassword-page/resetpassword-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { MessagingPageComponent } from './pages/messaging-page/messaging-page.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     NotfoundPageComponent,
     ResetpasswordPageComponent,
     ProfilePageComponent,
+    MessagingPageComponent,
   ],
   imports: [
     BrowserModule,
