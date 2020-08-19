@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { WorkEntriesController, CompaniesController, UsersController } from '../controllers';
+import { WorkEntriesController, CompaniesController, UsersController, WorkMessagesController } from '../controllers';
 
 export class DatabaseRoutes {
   public router: Router;
@@ -46,10 +46,14 @@ export class DatabaseRoutes {
   }
 
   private initWorkMessagesRoutes(): void {
-    const usersController = new WorkMessagesController();
+    const workMessagesController = new WorkMessagesController();
     this.router.use(
       '/workmessages',
-      Router().get('', null).post('', null).patch('/:workMessageId', null).delete('/:workMessageId', null)
+      Router()
+        .get('', workMessagesController.getWorkMessages())
+        .post('', workMessagesController.addWorkMessage())
+        .patch('/:workMessageId', workMessagesController.editWorkMessage())
+        .delete('/:workMessageId', workMessagesController.deleteWorkMessage())
     );
   }
 }
