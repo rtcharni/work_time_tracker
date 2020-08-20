@@ -1,8 +1,8 @@
 export interface WorkMessage {
-  workMessageId: number;
-  userId: number;
-  companyId: number;
-  workEntryId: number;
+  workMessageId: number | undefined; // PK
+  userId: number; // FK
+  companyId: number; // FK
+  workEntryId: number; // FK
   workMessage: string;
   createdAt: string;
 }
