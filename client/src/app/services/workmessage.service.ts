@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import { WorkEntry, WorkMessage } from '../../../../models';
+import { WorkEntry, WorkMessage } from '@models';
 
 @Injectable({
   providedIn: 'root',

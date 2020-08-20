@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
-import { UserAndCompany } from '../../../../../models';
+import { UserService } from '@services';
+import { UserAndCompany } from '@models';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { UserFormEvent } from 'src/app/frontend-models/frontend.models';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,10 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ProfilePageComponent implements OnInit {
   user: UserAndCompany;
-  constructor(
-    private userService: UserService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private userService: UserService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.user = this.userService.getUser();

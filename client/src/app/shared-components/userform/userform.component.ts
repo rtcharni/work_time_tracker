@@ -1,17 +1,9 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserAndCompany, User } from '../../../../../models';
+import { UserAndCompany, User } from '@models';
 import { Utils } from '../../utils/utils';
 import { UserFormEvent } from '../../frontend-models/frontend.models';
-import { UserService } from '../../services/user.service';
+import { UserService } from '@services';
 
 @Component({
   selector: 'app-userform',
@@ -45,10 +37,7 @@ export class UserformComponent implements OnInit, OnChanges {
     const userForm = new FormGroup({
       userId: new FormControl(user.userId),
       companyId: new FormControl(user.companyId),
-      email: new FormControl(user.email, [
-        Validators.required,
-        Validators.email,
-      ]),
+      email: new FormControl(user.email, [Validators.required, Validators.email]),
       firstName: new FormControl(user.firstName, [Validators.required]),
       lastName: new FormControl(user.lastName, [Validators.required]),
       password: new FormControl(user.password),
@@ -70,31 +59,19 @@ export class UserformComponent implements OnInit, OnChanges {
       userForm.setValidators(Utils.passwordValidator(userForm, 'group'));
       userForm
         .get('password')
-        .setValidators([
-          Validators.required,
-          Validators.minLength(8),
-          Utils.passwordValidator(userForm, 'control'),
-        ]);
+        .setValidators([Validators.required, Validators.minLength(8), Utils.passwordValidator(userForm, 'control')]);
       userForm
         .get('verifyPassword')
-        .setValidators([
-          Validators.required,
-          Validators.minLength(8),
-          Utils.passwordValidator(userForm, 'control'),
-        ]);
+        .setValidators([Validators.required, Validators.minLength(8), Utils.passwordValidator(userForm, 'control')]);
     }
 
-    userForm.get('password').valueChanges.subscribe((value) => {
+    userForm.get('password').valueChanges.subscribe(value => {
       userForm.get('password').updateValueAndValidity({ emitEvent: false });
-      userForm
-        .get('verifyPassword')
-        .updateValueAndValidity({ emitEvent: false });
+      userForm.get('verifyPassword').updateValueAndValidity({ emitEvent: false });
     });
-    userForm.get('verifyPassword').valueChanges.subscribe((value) => {
+    userForm.get('verifyPassword').valueChanges.subscribe(value => {
       userForm.get('password').updateValueAndValidity({ emitEvent: false });
-      userForm
-        .get('verifyPassword')
-        .updateValueAndValidity({ emitEvent: false });
+      userForm.get('verifyPassword').updateValueAndValidity({ emitEvent: false });
     });
 
     return userForm;
@@ -108,9 +85,7 @@ export class UserformComponent implements OnInit, OnChanges {
       user: newUser as User,
       action: newUser.userId ? 'edit' : 'create',
     });
-    this.userForm = this.initForm(
-      newUser.userId ? { ...this.userForm.getRawValue() } : this.user
-    );
+    this.userForm = this.initForm(newUser.userId ? { ...this.userForm.getRawValue() } : this.user);
     // this.userForm.markAsPristine();
     // this.userForm.reset({
     //   userId: user.userId,
@@ -133,11 +108,7 @@ export class UserformComponent implements OnInit, OnChanges {
   }
 
   handleDeleteButtonClick(): void {
-    if (
-      confirm(
-        `Delete user: #${this.user.userId} - ${this.user.firstName} ${this.user.lastName}`
-      )
-    ) {
+    if (confirm(`Delete user: #${this.user.userId} - ${this.user.firstName} ${this.user.lastName}`)) {
       this.userFormEvent.emit({
         user: this.user,
         action: 'delete',
@@ -145,11 +116,7 @@ export class UserformComponent implements OnInit, OnChanges {
     }
   }
 
-  isOriginalValue(
-    newValue: string | boolean,
-    oldValue: string | boolean,
-    controlName: string
-  ): void {
+  isOriginalValue(newValue: string | boolean, oldValue: string | boolean, controlName: string): void {
     if (newValue === oldValue) {
       this.userForm.get(controlName).markAsPristine();
     }

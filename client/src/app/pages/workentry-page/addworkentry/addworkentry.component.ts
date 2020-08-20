@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { WorkEntryService } from '../../../services/workentry.service';
-import { WorkEntry, UserAndCompany } from '../../../../../../models';
-import { UserService } from 'src/app/services/user.service';
+import { WorkEntryService, UserService } from '@services';
+import { WorkEntry, UserAndCompany } from '@models';
 import * as moment from 'moment';
 import { Utils } from '../../../utils/utils';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,11 +15,7 @@ export class AddworkentryComponent implements OnInit {
   private user: UserAndCompany = null;
   addWorkEntryForm: FormGroup = null;
 
-  constructor(
-    private workEntryService: WorkEntryService,
-    private userService: UserService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private workEntryService: WorkEntryService, private userService: UserService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     console.log(`add work entry IN INIT`);
@@ -43,10 +38,7 @@ export class AddworkentryComponent implements OnInit {
           form.addControl('customerName', new FormControl(null));
           break;
         case 'costCents':
-          form.addControl(
-            'costCents',
-            new FormControl(null, [Validators.pattern('^\\d+,{0,1}\\d{0,2}$')])
-          );
+          form.addControl('costCents', new FormControl(null, [Validators.pattern('^\\d+,{0,1}\\d{0,2}$')]));
           break;
         case 'date':
           form.addControl('date', new FormControl(null));
@@ -60,11 +52,7 @@ export class AddworkentryComponent implements OnInit {
         case 'breakMIN':
           form.addControl(
             'breakMIN',
-            new FormControl(null, [
-              Validators.min(0),
-              Validators.max(1000),
-              Validators.pattern('[0-9]*'),
-            ])
+            new FormControl(null, [Validators.min(0), Validators.max(1000), Validators.pattern('[0-9]*')])
           );
           break;
         case 'charged':
@@ -73,10 +61,7 @@ export class AddworkentryComponent implements OnInit {
       }
     }
 
-    if (
-      user.config.workEntryFields.includes('startTime') &&
-      user.config.workEntryFields.includes('endTime')
-    ) {
+    if (user.config.workEntryFields.includes('startTime') && user.config.workEntryFields.includes('endTime')) {
       form.setValidators(Utils.startAndEndtimeValidator());
     }
     return form;
@@ -87,11 +72,7 @@ export class AddworkentryComponent implements OnInit {
     console.log(`Saving...`, values);
 
     if (this.addWorkEntryForm.valid) {
-      const workEntry: WorkEntry = this.convertToWorkEntry(
-        values,
-        this.user.userId,
-        this.user.companyId
-      );
+      const workEntry: WorkEntry = this.convertToWorkEntry(values, this.user.userId, this.user.companyId);
       console.log(workEntry);
       const res = await this.workEntryService.addWorkEntry(workEntry);
       if (res) {
@@ -116,11 +97,7 @@ export class AddworkentryComponent implements OnInit {
     return this.user.config.workEntryFields.includes(fieldName);
   }
 
-  convertToWorkEntry(
-    formValues: any,
-    userId: number,
-    companyId: number
-  ): WorkEntry {
+  convertToWorkEntry(formValues: any, userId: number, companyId: number): WorkEntry {
     const workEntry: WorkEntry = {
       ...formValues,
       userId,
@@ -137,9 +114,7 @@ export class AddworkentryComponent implements OnInit {
           .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
           .toISOString();
       } else {
-        workEntry.startTime = moment()
-          .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
-          .toISOString();
+        workEntry.startTime = moment().set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 }).toISOString();
       }
     }
 
@@ -150,9 +125,7 @@ export class AddworkentryComponent implements OnInit {
           .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
           .toISOString();
       } else {
-        workEntry.endTime = moment()
-          .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
-          .toISOString();
+        workEntry.endTime = moment().set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 }).toISOString();
       }
     }
 

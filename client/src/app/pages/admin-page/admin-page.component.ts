@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserAndCompany, User, WorkEntry } from '../../../../../models';
-import { UserService } from 'src/app/services/user.service';
+import { UserAndCompany, User, WorkEntry } from '@models';
+import { UserService } from '@services';
 import { UserFormEvent } from 'src/app/frontend-models/frontend.models';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import * as json2csv from 'papaparse';
@@ -32,10 +32,7 @@ export class AdminPageComponent implements OnInit {
 
   recentWorkEntriesToExport: WorkEntry[] = [];
 
-  constructor(
-    private userService: UserService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private userService: UserService, private snackBar: MatSnackBar) {}
 
   async ngOnInit(): Promise<void> {
     this.user = this.userService.getUser();
@@ -68,10 +65,7 @@ export class AdminPageComponent implements OnInit {
         verticalPosition: 'top',
       });
     } else if (event.action === 'edit') {
-      if (
-        this.user.userId !== event.user.userId ||
-        this.user.password === event.user.password
-      ) {
+      if (this.user.userId !== event.user.userId || this.user.password === event.user.password) {
         delete event.user.password;
       }
       delete event.user.companyId;
@@ -84,9 +78,7 @@ export class AdminPageComponent implements OnInit {
     } else if (event.action === 'delete') {
       const deleted = await this.userService.deleteUser(event.user.userId);
       if (deleted) {
-        this.allUsers = this.allUsers.filter(
-          (user) => user.userId !== deleted.userId
-        );
+        this.allUsers = this.allUsers.filter(user => user.userId !== deleted.userId);
         this.selectedUserProfile = null;
       }
     }
@@ -104,7 +96,7 @@ export class AdminPageComponent implements OnInit {
 
   handleApplyButton(): void {
     if (this.tempUserIds?.includes(-1)) {
-      this.allUsersIds = this.allUsers.map((user) => user.userId);
+      this.allUsersIds = this.allUsers.map(user => user.userId);
     } else {
       this.allUsersIds = this.tempUserIds;
     }

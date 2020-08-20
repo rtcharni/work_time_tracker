@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
-import { UserAndCompany } from '../../../../../models/user';
-import { UserService } from '../../services/user.service';
-import { WorkEntryService } from '../../services/workentry.service';
-import { WorkEntry } from '../../../../../models';
+import { WorkEntryService, UserService } from '@services';
+import { WorkEntry, UserAndCompany } from '@models';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';

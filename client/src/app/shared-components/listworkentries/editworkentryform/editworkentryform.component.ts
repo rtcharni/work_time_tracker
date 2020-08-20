@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { WorkEntry, UserAndCompany } from '../../../../../../models';
+import { WorkEntry } from '@models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { WorkEntryService } from 'src/app/services/workentry.service';
-import { UserService } from 'src/app/services/user.service';
+import { WorkEntryService } from '@services';
 import { BottomSheetAndDialogData } from 'src/app/frontend-models/frontend.models';
 import * as moment from 'moment';
 import { Utils } from '../../../utils/utils';
@@ -23,10 +22,7 @@ export class EditworkentryformComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.editWorkEntryForm = this.initForm(
-      this.dialogData.workFormFields,
-      this.dialogData.workEntry
-    );
+    this.editWorkEntryForm = this.initForm(this.dialogData.workFormFields, this.dialogData.workEntry);
   }
 
   initForm(workEntryFields: string[], workEntry: WorkEntry): FormGroup {
@@ -37,26 +33,17 @@ export class EditworkentryformComponent implements OnInit {
           form.addControl('title', new FormControl(workEntry.title || null));
           break;
         case 'details':
-          form.addControl(
-            'details',
-            new FormControl(workEntry.details || null)
-          );
+          form.addControl('details', new FormControl(workEntry.details || null));
           break;
         case 'customerName':
-          form.addControl(
-            'customerName',
-            new FormControl(workEntry.customerName || null)
-          );
+          form.addControl('customerName', new FormControl(workEntry.customerName || null));
           break;
         case 'costCents':
           form.addControl(
             'costCents',
-            new FormControl(
-              workEntry.costCents
-                ? (workEntry.costCents / 100).toString().replace('.', ',')
-                : null,
-              [Validators.pattern('^\\d+,{0,1}\\d{0,2}$')]
-            )
+            new FormControl(workEntry.costCents ? (workEntry.costCents / 100).toString().replace('.', ',') : null, [
+              Validators.pattern('^\\d+,{0,1}\\d{0,2}$'),
+            ])
           );
           break;
         case 'date':
@@ -79,26 +66,16 @@ export class EditworkentryformComponent implements OnInit {
         case 'breakMIN':
           form.addControl(
             'breakMIN',
-            new FormControl(workEntry.breakMIN || null, [
-              Validators.min(0),
-              Validators.max(1000),
-              Validators.pattern('[0-9]*'),
-            ])
+            new FormControl(workEntry.breakMIN || null, [Validators.min(0), Validators.max(1000), Validators.pattern('[0-9]*')])
           );
           break;
         case 'charged':
-          form.addControl(
-            'charged',
-            new FormControl(workEntry.charged || null)
-          );
+          form.addControl('charged', new FormControl(workEntry.charged || null));
           break;
       }
     }
 
-    if (
-      workEntryFields.includes('startTime') &&
-      workEntryFields.includes('endTime')
-    ) {
+    if (workEntryFields.includes('startTime') && workEntryFields.includes('endTime')) {
       form.setValidators(Utils.startAndEndtimeValidator());
     }
     return form;
@@ -131,16 +108,10 @@ export class EditworkentryformComponent implements OnInit {
   }
 
   convertToWorkEntry(formValues: any): WorkEntry {
-    const tempWorkEntry: WorkEntry = Object.assign(
-      {},
-      this.dialogData.workEntry,
-      formValues
-    );
+    const tempWorkEntry: WorkEntry = Object.assign({}, this.dialogData.workEntry, formValues);
 
     if (formValues.date) {
-      tempWorkEntry.date = moment(formValues.date)
-        .add(12, 'hour')
-        .toISOString();
+      tempWorkEntry.date = moment(formValues.date).add(12, 'hour').toISOString();
     }
 
     if (formValues.startTime) {
@@ -150,9 +121,7 @@ export class EditworkentryformComponent implements OnInit {
           .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
           .toISOString();
       } else {
-        tempWorkEntry.startTime = moment()
-          .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
-          .toISOString();
+        tempWorkEntry.startTime = moment().set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 }).toISOString();
       }
     }
 
@@ -163,9 +132,7 @@ export class EditworkentryformComponent implements OnInit {
           .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
           .toISOString();
       } else {
-        tempWorkEntry.endTime = moment()
-          .set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 })
-          .toISOString();
+        tempWorkEntry.endTime = moment().set({ hour: time[0], minute: time[1], second: 0, millisecond: 0 }).toISOString();
       }
     }
 
@@ -180,9 +147,6 @@ export class EditworkentryformComponent implements OnInit {
   }
 
   handleClearButtonClick(): void {
-    this.editWorkEntryForm = this.initForm(
-      this.dialogData.workFormFields,
-      this.dialogData.workEntry
-    );
+    this.editWorkEntryForm = this.initForm(this.dialogData.workFormFields, this.dialogData.workEntry);
   }
 }

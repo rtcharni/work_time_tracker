@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from '@services';
 
 @Component({
   selector: 'app-resetpassword-page',
@@ -37,11 +37,7 @@ export class ResetpasswordPageComponent implements OnInit {
     } else if (this.password !== this.verifyPassword) {
       this.showSnackbar('Passwords are not matching');
     } else {
-      const success = await this.userService.resetPassword(
-        this.token,
-        this.password,
-        this.verifyPassword
-      );
+      const success = await this.userService.resetPassword(this.token, this.password, this.verifyPassword);
       if (success) {
         this.passwordChanged = true;
         setTimeout(() => {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { LoginResponse } from '../../../../../models';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { UserService } from '@services';
+import { LoginResponse } from '@models';
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -16,11 +16,7 @@ export class LoginPageComponent implements OnInit {
   forgotPassworkUserId = null;
   showNextStepsInfo = false;
 
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private userService: UserService, private router: Router, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {}
 
@@ -54,19 +50,13 @@ export class LoginPageComponent implements OnInit {
   async handleForgotPassword(): Promise<void> {
     if (typeof this.forgotPassworkUserId === 'number') {
       // Allways return true not, to not give clues to evil users
-      const res = await this.userService.forgotPassword(
-        this.forgotPassworkUserId
-      );
+      const res = await this.userService.forgotPassword(this.forgotPassworkUserId);
 
-      this.snackBar.open(
-        `Recovery email has been sent to user's registered email`,
-        null,
-        {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-        }
-      );
+      this.snackBar.open(`Recovery email has been sent to user's registered email`, null, {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
       this.showNextStepsInfo = true;
     } else {
       // User ID is not number

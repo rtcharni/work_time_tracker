@@ -2,13 +2,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { BottomSheetActionResult, BottomSheetAndDialogData } from '../../../frontend-models/frontend.models';
-import { WorkEntry } from '../../../../../../models';
-import { WorkEntryService } from 'src/app/services/workentry.service';
-import { WorkMessageService } from 'src/app/services/workmessage.service';
+import { WorkEntry } from '@models';
+import { WorkEntryService, WorkMessageService, UserService } from '@services';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EditworkentryformComponent } from '../editworkentryform/editworkentryform.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-editworkentrybottomsheet',
