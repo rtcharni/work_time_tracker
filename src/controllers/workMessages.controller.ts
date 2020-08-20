@@ -49,10 +49,10 @@ export class WorkMessagesController {
       async (req: Request, res: Response, next: NextFunction) => {
         try {
           const workMessage: WorkMessage[] = await WorkMessagesService.addWorkMessage(
-            req.query.workMessage,
-            req.query.userId,
-            req.query.companyId,
-            req.query.workEntryId
+            req.body.workMessage,
+            req.body.userId,
+            req.body.companyId,
+            req.body.workEntryId
           );
           res.send(workMessage);
         } catch (error) {
@@ -76,7 +76,7 @@ export class WorkMessagesController {
         try {
           const workMessage: WorkMessage[] = await WorkMessagesService.editWorkMessage(
             (req.params.workMessageId as unknown) as number,
-            req.query.workMessage
+            req.body.workMessage
           );
           res.send(workMessage);
         } catch (error) {
