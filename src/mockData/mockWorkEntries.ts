@@ -15,7 +15,6 @@ export const mockWorkEntries: WorkEntry[] = [
     charged: null,
     locked: false,
     costCents: 0,
-    // comments: [],
   },
   {
     workEntryId: 2,
@@ -31,7 +30,6 @@ export const mockWorkEntries: WorkEntry[] = [
     charged: true,
     locked: false,
     costCents: 300012,
-    // comments: [],
   },
   {
     workEntryId: 3,
@@ -47,7 +45,6 @@ export const mockWorkEntries: WorkEntry[] = [
     charged: false,
     locked: false,
     costCents: null,
-    // comments: [],
   },
   {
     workEntryId: 4,
@@ -63,7 +60,6 @@ export const mockWorkEntries: WorkEntry[] = [
     charged: false,
     locked: false,
     costCents: 10000,
-    // comments: [],
   },
   {
     workEntryId: 5,
@@ -79,6 +75,5 @@ export const mockWorkEntries: WorkEntry[] = [
     charged: false,
     locked: false,
     costCents: 22000,
-    // comments: [],
   },
 ];

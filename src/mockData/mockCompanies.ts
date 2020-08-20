@@ -8,16 +8,7 @@ export const mockCompanies: Company[] = [
     config: {
       listWorkEntriesTableHeaderFields: ['title', 'date', 'charged'],
       workEntryFields: ['title', 'details', 'customerName', 'date', 'startTime', 'endTime', 'breakMIN', 'charged'],
-      expandedListWorkEntryFields: [
-        'details',
-        'customerName',
-        'costCents',
-        'startTime',
-        'endTime',
-        'breakMIN',
-        'charged',
-        // "comments",
-      ],
+      expandedListWorkEntryFields: ['details', 'customerName', 'costCents', 'startTime', 'endTime', 'breakMIN', 'charged'],
     },
   },
   {
@@ -27,16 +18,7 @@ export const mockCompanies: Company[] = [
     config: {
       listWorkEntriesTableHeaderFields: ['title', 'date', 'charged'],
       workEntryFields: ['title', 'details', 'customerName', 'date', 'startTime', 'endTime', 'breakMIN', 'charged'],
-      expandedListWorkEntryFields: [
-        'details',
-        'customerName',
-        'costCents',
-        'startTime',
-        'endTime',
-        'breakMIN',
-        'charged',
-        // "comments",
-      ],
+      expandedListWorkEntryFields: ['details', 'customerName', 'costCents', 'startTime', 'endTime', 'breakMIN', 'charged'],
     },
   },
   {
@@ -46,16 +28,7 @@ export const mockCompanies: Company[] = [
     config: {
       listWorkEntriesTableHeaderFields: ['title', 'date', 'charged'],
       workEntryFields: ['title', 'details', 'customerName', 'date', 'startTime', 'endTime', 'breakMIN', 'charged'],
-      expandedListWorkEntryFields: [
-        'details',
-        'customerName',
-        'costCents',
-        'startTime',
-        'endTime',
-        'breakMIN',
-        'charged',
-        // "comments",
-      ],
+      expandedListWorkEntryFields: ['details', 'customerName', 'costCents', 'startTime', 'endTime', 'breakMIN', 'charged'],
     },
   },
   {
@@ -65,16 +38,7 @@ export const mockCompanies: Company[] = [
     config: {
       listWorkEntriesTableHeaderFields: ['title', 'date', 'charged'],
       workEntryFields: ['title', 'details', 'customerName', 'date', 'startTime', 'endTime', 'breakMIN', 'charged'],
-      expandedListWorkEntryFields: [
-        'details',
-        'customerName',
-        'costCents',
-        'startTime',
-        'endTime',
-        'breakMIN',
-        'charged',
-        // "comments",
-      ],
+      expandedListWorkEntryFields: ['details', 'customerName', 'costCents', 'startTime', 'endTime', 'breakMIN', 'charged'],
     },
   },
   {
@@ -84,16 +48,7 @@ export const mockCompanies: Company[] = [
     config: {
       listWorkEntriesTableHeaderFields: ['title', 'date', 'charged'],
       workEntryFields: ['title', 'details', 'customerName', 'date', 'startTime', 'endTime', 'breakMIN', 'charged'],
-      expandedListWorkEntryFields: [
-        'details',
-        'customerName',
-        'costCents',
-        'startTime',
-        'endTime',
-        'breakMIN',
-        'charged',
-        // "comments",
-      ],
+      expandedListWorkEntryFields: ['details', 'customerName', 'costCents', 'startTime', 'endTime', 'breakMIN', 'charged'],
     },
   },
 ];

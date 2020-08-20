@@ -43,7 +43,11 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private userService: UserService, private workEntryService: WorkEntryService, private bottomSheet: MatBottomSheet) {}
+  constructor(
+    private userService: UserService,
+    private workEntryService: WorkEntryService,
+    private bottomSheet: MatBottomSheet
+  ) {}
 
   async ngOnInit(): Promise<void> {
     console.log(`list work entries IN INIT`);
@@ -84,7 +88,13 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
     }
   }
 
-  async getEntriesAndRenderTable(headerFields: string[], userId: number[], companyId: number, start: Date, end: Date): Promise<void> {
+  async getEntriesAndRenderTable(
+    headerFields: string[],
+    userId: number[],
+    companyId: number,
+    start: Date,
+    end: Date
+  ): Promise<void> {
     this.columnsToDisplay = headerFields;
     this.dataSource.data = await this.workEntryService.getWorkEntries(
       userId,
@@ -190,8 +200,6 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
         return 'Break';
       case 'charged':
         return 'Charged';
-      // case 'comments':
-      //   return 'Comments';
     }
   }
 
@@ -215,11 +223,6 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
         return data;
       case 'charged':
         return data === true ? 'Yes' : 'No';
-      // case 'comments':
-      // How to display array of comment in one line !?
-      // Show last comment
-      // Refactor, ugly as hell ...
-      // return data ? data[(data as string[]).length - 1].split(';')[2] : null;
     }
   }
 
@@ -243,14 +246,6 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
         return `Break: ${element.breakMIN ?? ''} ${element.breakMIN ? 'min' : ''}`;
       case `charged`:
         return `Charged: ${element.charged ? 'Yes' : 'No'}`;
-      // case 'comments':
-      //   const comm = `\nComments:\n`;
-      //   const formattedComments = element.comments?.map((comment) => {
-      //     const split = comment.split(';');
-      //     const time = moment(split[0]).format(Constants.DATEANDTIMEFORMAT);
-      //     return `${time} - ${split[1]}: ${split[2]}`;
-      //   });
-      //   return formattedComments ? comm + formattedComments.join('\n') : comm;
     }
   }
 }

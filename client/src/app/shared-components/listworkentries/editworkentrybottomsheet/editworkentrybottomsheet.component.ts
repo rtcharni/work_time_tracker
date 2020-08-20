@@ -4,9 +4,11 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { BottomSheetActionResult, BottomSheetAndDialogData } from '../../../frontend-models/frontend.models';
 import { WorkEntry } from '../../../../../../models';
 import { WorkEntryService } from 'src/app/services/workentry.service';
+import { WorkMessageService } from 'src/app/services/workmessage.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EditworkentryformComponent } from '../editworkentryform/editworkentryform.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-editworkentrybottomsheet',
@@ -22,7 +24,9 @@ export class EditworkentrybottomsheetComponent implements OnInit {
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: BottomSheetAndDialogData,
     private workEntryService: WorkEntryService,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private workMessageService: WorkMessageService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {}
@@ -68,23 +72,24 @@ export class EditworkentrybottomsheetComponent implements OnInit {
   }
 
   async saveComment(comment: string): Promise<void> {
-    console.log(`SAving comment: `, comment);
+    console.log(`Saving comment: `, comment);
 
-    // !!!
-    // Implement new logic for saving comments to own table!
-
-    // const name = `${this.data.userAndCompany.lastName} ${this.data.userAndCompany.firstName} (${this.data.userAndCompany.name})`;
-    // this.data.workEntry.comments
-    //   ? this.data.workEntry.comments.push(
-    //       `${new Date().toISOString()};${name};${comment}`
-    //     )
-    //   : (this.data.workEntry.comments = [
-    //       `${new Date().toISOString()};${name};${comment}`,
-    //     ]);
-    // const res = await this.workEntryService.editWorkEntry(this.data.workEntry);
+    const user = this.userService.getUser();
+    const res = await this.workMessageService.addWorkMessage({
+      workMessage: comment,
+      userId: user.userId,
+      companyId: user.companyId,
+      workEntryId: this.data.workEntry.workEntryId,
+    });
+    if (res) {
+      this.snackBar.open('Message added!', undefined, {
+        duration: 2500,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+      });
+    }
     const actionResult: BottomSheetActionResult = {
       action: 'addComment',
-      comment,
     };
     this.bottomSheetRef.dismiss(actionResult);
   }

@@ -34,7 +34,6 @@ export async function up(knex: Knex): Promise<any> {
       t.date('date');
       t.boolean('locked').defaultTo(false);
       t.bigInteger('costCents');
-      // t.specificType("comments", "text[]");
     })
     .createTable('work_messages', t => {
       t.increments('workMessageId').primary().notNullable();
