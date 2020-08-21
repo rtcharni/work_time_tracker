@@ -1,4 +1,4 @@
-import { User, WorkEntry, Company, UserAndCompany, WorkMessage } from '../../models';
+import { User, WorkEntry, Company, UserAndCompany, WorkMessage } from '@models';
 import { Database } from './database.init';
 import { BackendUtils } from '../backendUtils';
 

@@ -9,9 +9,21 @@
         "outDir": "dist",
         "baseUrl": ".",
         "paths": {
+            "@models": [
+                "models"
+            ],
+            "@controllers": [
+                "src/controllers"
+            ],
+            "@services": [
+                "src/services"
+            ],
+            "@mockdata": [
+                "src/mockdata"
+            ],
             "*": [
                 "node_modules/*"
-            ]
+            ],
         },
         "allowSyntheticDefaultImports": true
     },

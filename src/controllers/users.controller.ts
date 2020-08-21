@@ -1,32 +1,17 @@
-import {
-  Request,
-  Response,
-  NextFunction,
-  RequestHandler,
-  ErrorRequestHandler,
-} from "express";
-import { query, ValidationChain, body, param } from "express-validator";
-import { BackendUtils, TokenManagement } from "../backendUtils";
-import { UsersService } from "../services";
-import {
-  User,
-  UserCredentials,
-  LoginResponse,
-  UserAndCompany,
-} from "../../models";
-import { Validation } from "../../utils";
+import { Request, Response, NextFunction, RequestHandler, ErrorRequestHandler } from 'express';
+import { query, ValidationChain, body, param } from 'express-validator';
+import { BackendUtils, TokenManagement } from '../backendUtils';
+import { UsersService } from '@services';
+import { User, UserCredentials, LoginResponse, UserAndCompany } from '@models';
+import { Validation } from '../../utils';
 
 export class UsersController {
-  public getUsers(): (
-    | ValidationChain
-    | RequestHandler
-    | ErrorRequestHandler
-  )[] {
+  public getUsers(): (ValidationChain | RequestHandler | ErrorRequestHandler)[] {
     return [
       // Request param validators.
-      query("userId").isNumeric().toInt().optional(),
-      query("companyId").isNumeric().toInt().optional(),
-      query("withCompany").isBoolean().toBoolean().optional(),
+      query('userId').isNumeric().toInt().optional(),
+      query('companyId').isNumeric().toInt().optional(),
+      query('withCompany').isBoolean().toBoolean().optional(),
       // Error handler for request params
       BackendUtils.validatorHandler(),
       // Actual Request handler
@@ -43,22 +28,15 @@ export class UsersController {
         }
       },
       // Error handler
-      BackendUtils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler('Could not fetch events!'),
     ];
   }
 
   public addUser(): (ValidationChain | RequestHandler | ErrorRequestHandler)[] {
     return [
       // Request param validators.
-      body([
-        "password",
-        "companyId",
-        "email",
-        "firstName",
-        "lastName",
-        "admin",
-      ]).exists(),
-      body().custom((value) => {
+      body(['password', 'companyId', 'email', 'firstName', 'lastName', 'admin']).exists(),
+      body().custom(value => {
         return true;
         // if (Validation.isUserValid(value)) {
         //   return true;
@@ -77,20 +55,16 @@ export class UsersController {
         }
       },
       // Error handler
-      BackendUtils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler('Could not fetch events!'),
     ];
   }
 
-  public editUser(): (
-    | ValidationChain
-    | RequestHandler
-    | ErrorRequestHandler
-  )[] {
+  public editUser(): (ValidationChain | RequestHandler | ErrorRequestHandler)[] {
     return [
       // Request param validators.
-      param("userId").isNumeric().toInt(),
+      param('userId').isNumeric().toInt(),
       body().not().isEmpty(),
-      body().custom((value) => {
+      body().custom(value => {
         return true;
         // if (Validation.isUserValid(value)) {
         //   return true;
@@ -112,33 +86,27 @@ export class UsersController {
         }
       },
       // Error handler
-      BackendUtils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler('Could not fetch events!'),
     ];
   }
 
-  public deleteUser(): (
-    | ValidationChain
-    | RequestHandler
-    | ErrorRequestHandler
-  )[] {
+  public deleteUser(): (ValidationChain | RequestHandler | ErrorRequestHandler)[] {
     return [
       // Request param validators.
-      param("userId").isNumeric().toInt(),
+      param('userId').isNumeric().toInt(),
       // Error handler for request params
       BackendUtils.validatorHandler(),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          const deletedUser: User[] = await UsersService.deleteUser(
-            (req.params.userId as unknown) as number
-          );
+          const deletedUser: User[] = await UsersService.deleteUser((req.params.userId as unknown) as number);
           res.send(deletedUser);
         } catch (error) {
           next(error);
         }
       },
       // Error handler
-      BackendUtils.errorHandler("Could not fetch events!"),
+      BackendUtils.errorHandler('Could not fetch events!'),
     ];
   }
 }

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { WorkEntriesController, CompaniesController, UsersController, WorkMessagesController } from '../controllers';
+import { WorkEntriesController, CompaniesController, UsersController, WorkMessagesController } from '@controllers';
 
 export class DatabaseRoutes {
   public router: Router;

@@ -1,12 +1,6 @@
-import {
-  Request,
-  Response,
-  NextFunction,
-  RequestHandler,
-  ErrorRequestHandler,
-} from "express";
-import { validationResult } from "express-validator";
-import { AxiosResponse, AxiosError } from "axios";
+import { Request, Response, NextFunction, RequestHandler, ErrorRequestHandler } from 'express';
+import { validationResult } from 'express-validator';
+import { AxiosResponse, AxiosError } from 'axios';
 
 export class BackendUtils {
   /**
@@ -16,9 +10,7 @@ export class BackendUtils {
     return (req: Request, res: Response, next: NextFunction) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res
-          .status(422)
-          .json({ message: "Invalid parameters!", data: errors.array() });
+        return res.status(422).json({ message: 'Invalid parameters!', data: errors.array() });
       }
       next();
     };
@@ -29,12 +21,7 @@ export class BackendUtils {
    * @param message error message
    */
   public static errorHandler(message: string): ErrorRequestHandler {
-    return (
-      err: Error | AxiosError,
-      req: Request,
-      res: Response,
-      next: NextFunction
-    ) => {
+    return (err: Error | AxiosError, req: Request, res: Response, next: NextFunction) => {
       if ((err as AxiosError).isAxiosError) {
         const response: AxiosResponse = (err as AxiosError).response;
         console.error({
@@ -46,7 +33,7 @@ export class BackendUtils {
       } else {
         console.error(err);
         res.status(500).send({
-          message: "Internal server error!",
+          message: 'Internal server error!',
           data: (err as Error).message,
         });
       }
@@ -60,7 +47,7 @@ export class BackendUtils {
   public static convertObjectEmptyStringPropsToNull<T>(obj: T): T {
     const temp = (obj as unknown) as any;
     for (const k of Object.keys(temp)) {
-      if (temp[k] === "") {
+      if (temp[k] === '') {
         temp[k] = null;
       }
     }

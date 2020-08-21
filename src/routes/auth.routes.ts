@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { AuthController } from "../controllers";
+import { Router } from 'express';
+import { AuthController } from '@controllers';
 
 export class AuthRoutes {
   public router: Router;
@@ -15,13 +15,13 @@ export class AuthRoutes {
   private initAuthRoutes(): void {
     const authController = new AuthController();
     this.router.use(
-      "",
+      '',
       Router()
-        .post("/login", authController.logInUser())
-        .post("/logout", authController.logOutUser())
-        .post("/forgotpassword", authController.forgotPassword())
-        .post("/resetpassword", authController.resetPassword())
-        .post("/informusercreated", authController.informUserCreated())
+        .post('/login', authController.logInUser())
+        .post('/logout', authController.logOutUser())
+        .post('/forgotpassword', authController.forgotPassword())
+        .post('/resetpassword', authController.resetPassword())
+        .post('/informusercreated', authController.informUserCreated())
     );
   }
 }

@@ -1,6 +1,5 @@
-import { WorkEntry } from '../../models';
-import { mockWorkEntries } from '../mockData';
-import { Database } from './database.init';
+import { WorkEntry } from '@models';
+import { mockWorkEntries } from '@mockdata';
 import { Queries } from './database.queries';
 
 export class WorkEntriesService {

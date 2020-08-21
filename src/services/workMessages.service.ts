@@ -1,4 +1,4 @@
-import { WorkMessage } from '../../models';
+import { WorkMessage } from '@models';
 import { Queries } from './database.queries';
 
 export class WorkMessagesService {

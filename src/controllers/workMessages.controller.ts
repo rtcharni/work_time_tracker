@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction, RequestHandler, ErrorRequestHandler } from 'express';
 import { query, ValidationChain, body, param } from 'express-validator';
 import { BackendUtils } from '../backendUtils';
-import { WorkMessage } from '../../models';
-import { WorkMessagesService } from '../services';
+import { WorkMessage } from '@models';
+import { WorkMessagesService } from '@services';
 
 export class WorkMessagesController {
   public getWorkMessages(): (ValidationChain | RequestHandler | ErrorRequestHandler)[] {

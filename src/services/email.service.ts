@@ -1,6 +1,6 @@
 import nodemailer, { SendMailOptions } from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
-import { User } from '../../models';
+import { User } from '@models';
 
 function createTransporter(): Mail {
   try {
@@ -32,7 +32,9 @@ export class EmailService {
     const options = Object.assign({}, EmailService.defaultOptions, {
       to: email,
       text: `You issued a forgot password recovery process. Follow this link to reset your password to new one. Recovery process is active for 30 minutes. If you did not issue this recovery request then please do NOT do anything, because somebody is trying to issue this recovery on your behalf. Here is password recovery link for you to follow: ${
-        process.env.NODE_ENV === 'production' ? 'https://workapp-dev.herokuapp.com/resetpassword/' : 'http://localhost:4200/resetpassword/'
+        process.env.NODE_ENV === 'production'
+          ? 'https://workapp-dev.herokuapp.com/resetpassword/'
+          : 'http://localhost:4200/resetpassword/'
       }${passwordToken}`,
       subject: EmailService.defaultOptions.subject + 'Password recovery link',
     });
