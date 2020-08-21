@@ -29,6 +29,7 @@
     },
     "include": [
         "./src/**/*",
-        "utils/constants.ts"
+        "utils/constants.ts",
+        "src/backendUtils/validation.ts"
     ],
 }
