@@ -4,8 +4,11 @@ export async function seed(knex: Knex): Promise<any> {
   // Deletes ALL existing entries
   return knex
     .withSchema('work-time-tracker')
-    .table('work_entries')
+    .table('work_messages')
     .del()
+    .then(() => {
+      return knex.withSchema('work-time-tracker').table('work_entries').del();
+    })
     .then(() => {
       return knex.withSchema('work-time-tracker').table('users').del();
     })
