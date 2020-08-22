@@ -20,7 +20,7 @@ export class WorkmessagesTabComponent implements OnInit {
 
   async getWorkEntries() {
     const workEntries = await this.workEntryService.getWorkEntries(
-      [this.user.userId],
+      null,
       null,
       this.user.companyId,
       '2020-01-01T10:00:00.000Z',
