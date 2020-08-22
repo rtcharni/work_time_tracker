@@ -15,10 +15,10 @@ export class WorkMessageService {
     workEntryId?: number,
     from?: string,
     to?: string
-  ): Promise<WorkEntry[]> {
+  ): Promise<WorkMessage[]> {
     const params: HttpParams = this.constructParamsForGetWorkMessages(workMessageId, userId, companyId, workEntryId, from, to);
     const res = await this.http
-      .get<WorkEntry[]>(`/api/database/workmessages`, { params })
+      .get<WorkMessage[]>(`/api/database/workmessages`, { params })
       .toPromise();
     return res;
   }

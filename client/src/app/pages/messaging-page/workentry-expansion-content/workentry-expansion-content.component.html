@@ -1,0 +1,16 @@
+<div *ngIf="!workMessages.length">
+  <span>No messages..</span>
+</div>
+
+<div *ngIf="workMessages.length">
+  <p *ngFor="let message of workMessages">User: {{ message.userId }} - {{ message.workMessage }}</p>
+</div>
+
+<div class="">
+  <mat-form-field appearance="fill" class="sendMessageInput">
+    <!-- <mat-label>......</mat-label> -->
+    <input [(ngModel)]="messageText" matInput placeholder="Placeholder" />
+    <mat-icon class="sendIcon" (click)="handleSendMessageClick()" matSuffix>send</mat-icon>
+    <!-- <mat-hint>Hint</mat-hint> -->
+  </mat-form-field>
+</div>

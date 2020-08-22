@@ -22,6 +22,8 @@ import { NotfoundPageComponent } from './pages/notfound-page/notfound-page.compo
 import { ResetpasswordPageComponent } from './pages/resetpassword-page/resetpassword-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { MessagingPageComponent } from './pages/messaging-page/messaging-page.component';
+import { WorkentryExpansionContentComponent } from './pages/messaging-page/workentry-expansion-content/workentry-expansion-content.component';
+import { WorkmessagesTabComponent } from './pages/messaging-page/workmessages-tab/workmessages-tab.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { MessagingPageComponent } from './pages/messaging-page/messaging-page.co
     ResetpasswordPageComponent,
     ProfilePageComponent,
     MessagingPageComponent,
+    WorkentryExpansionContentComponent,
+    WorkmessagesTabComponent,
   ],
   imports: [
     BrowserModule,
