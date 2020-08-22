@@ -48,7 +48,7 @@ export async function up(knex: Knex): Promise<any> {
 export async function down(knex: Knex): Promise<any> {
   return knex.schema
     .withSchema('work-time-tracker')
-    .dropTableIfExists('work_entry_messages')
+    .dropTableIfExists('work_messages')
     .dropTableIfExists('work_entries')
     .dropTableIfExists('users')
     .dropTableIfExists('companies')
