@@ -7,8 +7,8 @@
   "scripts": {
     "start": "nodemon",
     "start:all": "nodemon & cd ./client && ng serve",
-    "build-all": "tsc && cd ./client && ng build --prod",
-    "deploydev": "git push heroku-dev development:master --force",
+    "build:all": "tsc && cd ./client && ng build --prod",
+    "deploy:dev": "git push heroku-dev development:master --force",
     "postinstall": "tsc",
     "heroku-postbuild": "cd client && npm i"
   },
@@ -24,6 +24,7 @@
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.13",
+    "module-alias": "^2.2.2",
     "moment": "^2.27.0",
     "nodemailer": "^6.4.11",
     "pg": "^7.18.2"
@@ -46,5 +47,11 @@
   "engines": {
     "node": "12.18.3",
     "npm": "6.14.6"
+  },
+  "_moduleAliases": {
+    "@models": "dist/models",
+    "@controllers": "dist/src/controllers",
+    "@services": "dist/src/services",
+    "@mockdata": "dist/src/mockdata"
   }
 }

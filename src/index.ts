@@ -1,3 +1,5 @@
+// tslint:disable-next-line: no-var-requires
+require('module-alias/register');
 import { App } from './app';
 // tslint:disable-next-line: no-var-requires
 require('dotenv').config();
