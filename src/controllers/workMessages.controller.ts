@@ -13,6 +13,7 @@ export class WorkMessagesController {
       query('workEntryId').isNumeric().toInt().optional(),
       query('from').isISO8601().optional(),
       query('to').isISO8601().optional(),
+      query('joinusers').isBoolean().toBoolean().optional(),
       BackendUtils.validatorHandler(),
 
       async (req: Request, res: Response, next: NextFunction) => {
@@ -23,7 +24,8 @@ export class WorkMessagesController {
             req.query.companyId,
             req.query.workEntryId,
             req.query.from,
-            req.query.to
+            req.query.to,
+            req.query.joinusers
           );
           res.send(workMessages);
         } catch (error) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WorkEntry, WorkMessage, UserAndCompany } from '@models';
+import { WorkEntry, WorkMessage, UserAndCompany, WorkMessageAndUser } from '@models';
 import { WorkMessageService } from '@services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class WorkentryExpansionContentComponent implements OnInit {
   @Input() workEntry: WorkEntry;
   @Input() user: UserAndCompany;
-  workMessages: WorkMessage[] = [];
+  workMessages: WorkMessageAndUser[] = [];
   messageText = '';
 
   constructor(private workMessageService: WorkMessageService, private snackBar: MatSnackBar) {}
@@ -23,7 +23,15 @@ export class WorkentryExpansionContentComponent implements OnInit {
   }
 
   async getWorkMessages(workEntryId: number) {
-    const workMessages = await this.workMessageService.getWorkMessages(null, null, null, workEntryId, null, null);
+    const workMessages = (await this.workMessageService.getWorkMessages(
+      null,
+      null,
+      null,
+      workEntryId,
+      null,
+      null,
+      true
+    )) as WorkMessageAndUser[];
     return workMessages;
   }
 
@@ -36,7 +44,8 @@ export class WorkentryExpansionContentComponent implements OnInit {
         workMessage: this.messageText,
       });
       if (res) {
-        this.workMessages.push(res);
+        const newMessage: any = { ...res, firstName: this.user.firstName, lastName: this.user.lastName };
+        this.workMessages.push(newMessage);
       }
       this.messageText = '';
     } else {

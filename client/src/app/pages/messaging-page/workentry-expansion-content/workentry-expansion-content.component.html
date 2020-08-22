@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="workMessages.length">
-  <p *ngFor="let message of workMessages">User: {{ message.userId }} - {{ message.workMessage }}</p>
+  <p *ngFor="let message of workMessages">{{ message.firstName }} {{ message.lastName }} - {{ message.workMessage }}</p>
 </div>
 
 <div class="">

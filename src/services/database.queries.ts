@@ -1,6 +1,7 @@
-import { User, WorkEntry, Company, UserAndCompany, WorkMessage } from '@models';
+import { User, WorkEntry, Company, UserAndCompany, WorkMessage, WorkMessageAndUser } from '@models';
 import { Database } from './database.init';
 import { BackendUtils } from '../backendUtils';
+import Knex from 'knex';
 
 export class Queries {
   static async getUsers(usersIds: number[] = [], companyId?: number, withCompany?: boolean): Promise<User[] | UserAndCompany[]> {
@@ -16,6 +17,7 @@ export class Queries {
         })
         .join('companies', 'users.companyId', 'companies.companyId')) as UserAndCompany[];
     } else {
+      // REFACTOR JOIN!
       return (await Database.db
         .withSchema('work-time-tracker')
         .select()
@@ -173,13 +175,15 @@ export class Queries {
     companyId: number,
     workEntryId: number,
     from: string,
-    to: string
-  ): Promise<WorkMessage[]> {
+    to: string,
+    joinusers: boolean
+  ): Promise<WorkMessage[] | WorkMessageAndUser[]> {
     try {
-      return await Database.db
+      const query = Database.db
         .withSchema('work-time-tracker')
         .select()
         .from<WorkMessage>('work_messages')
+        // .join('users', 'users.userId', 'work_messages.userId')
         .where(builder => {
           if (workMessageId) builder.where('workMessageId', workMessageId);
           if (userId) builder.where('userId', userId);
@@ -187,6 +191,10 @@ export class Queries {
           if (workEntryId) builder.where('workEntryId', workEntryId);
           if (from && to) builder.whereBetween('createdAt', [from, to]);
         });
+      if (joinusers) {
+        query.join('users', 'users.userId', 'work_messages.userId');
+      }
+      return await query;
     } catch (error) {
       console.error(`Error while fetching work messages`);
       console.error(error);
