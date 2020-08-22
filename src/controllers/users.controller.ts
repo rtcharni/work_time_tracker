@@ -3,7 +3,6 @@ import { query, ValidationChain, body, param } from 'express-validator';
 import { BackendUtils, TokenManagement } from '../backendUtils';
 import { UsersService } from '@services';
 import { User, UserCredentials, LoginResponse, UserAndCompany } from '@models';
-import { Validation } from '../../utils';
 
 export class UsersController {
   public getUsers(): (ValidationChain | RequestHandler | ErrorRequestHandler)[] {
