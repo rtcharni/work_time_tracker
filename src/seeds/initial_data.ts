@@ -42,6 +42,26 @@ export async function seed(knex: Knex): Promise<any> {
             admin: true,
             resetPasswordToken: null,
           },
+          {
+            userId: 2,
+            password: 'someRandomPasswordToBeChanged',
+            companyId: 1,
+            email: 'katja.tcharni@gmail.com',
+            firstName: 'Katja',
+            lastName: 'Tcharni',
+            admin: false,
+            resetPasswordToken: null,
+          },
+          {
+            userId: 3,
+            password: 'someRandomPasswordToBeChanged',
+            companyId: 1,
+            email: 'r_t88@msn.com',
+            firstName: 'Romppu',
+            lastName: 'Tcharni',
+            admin: false,
+            resetPasswordToken: null,
+          },
         ]);
     });
 }
