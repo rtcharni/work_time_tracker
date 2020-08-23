@@ -1,65 +1,41 @@
 <div class="frontpage">
   <div class="row no-gutters">
     <!-- Work card -->
-    <mat-card class="col backgroundColor" routerLink="../workentry">
+    <mat-card class="col backgroundColor matCard" routerLink="../workentry">
       <mat-card-header>
         <mat-card-title class="text">Worktime</mat-card-title>
         <!-- <mat-card-subtitle class="text">Worktime</mat-card-subtitle> -->
       </mat-card-header>
-      <img
-        mat-card-image
-        class="pageicon"
-        src="../../../assets/images/workentry_color1.png"
-        alt="Workentry page"
-      />
+      <img mat-card-image class="pageicon" src="../../../assets/images/workentry_color1.png" alt="Workentry page" />
     </mat-card>
 
     <!-- Profile card -->
-    <mat-card class="col backgroundColor" routerLink="../profile">
+    <mat-card class="col backgroundColor matCard" routerLink="../profile">
       <mat-card-header>
         <mat-card-title class="text">Profile</mat-card-title>
         <!-- <mat-card-subtitle class="text">Admin</mat-card-subtitle> -->
       </mat-card-header>
-      <img
-        mat-card-image
-        class="pageicon"
-        src="../../../assets/images/user_icon1.png"
-        alt="Profile page"
-      />
+      <img mat-card-image class="pageicon" src="../../../assets/images/user_icon1.png" alt="Profile page" />
     </mat-card>
   </div>
 
   <div class="row no-gutters">
     <!-- Admin card, if admin -->
-    <mat-card
-      *ngIf="user.admin"
-      class="col backgroundColor"
-      routerLink="../admin"
-    >
+    <mat-card *ngIf="user.admin" class="col backgroundColor matCard" routerLink="../admin">
       <mat-card-header>
         <mat-card-title class="text">Admin</mat-card-title>
         <!-- <mat-card-subtitle class="text">Admin</mat-card-subtitle> -->
       </mat-card-header>
-      <img
-        mat-card-image
-        class="pageicon"
-        src="../../../assets/images/admin_color.png"
-        alt="Admin page"
-      />
+      <img mat-card-image class="pageicon" src="../../../assets/images/admin_color.png" alt="Admin page" />
     </mat-card>
 
     <!-- Messaging -->
-    <mat-card class="col backgroundColor" routerLink="../messaging">
+    <mat-card class="col backgroundColor matCard" routerLink="../messaging">
       <mat-card-header>
         <mat-card-title class="text">Messaging</mat-card-title>
         <!-- <mat-card-subtitle class="text">Admin</mat-card-subtitle> -->
       </mat-card-header>
-      <img
-        mat-card-image
-        class="pageicon"
-        src="../../../assets/images/message_icon1.png"
-        alt="Messaging page"
-      />
+      <img mat-card-image class="pageicon" src="../../../assets/images/message_icon1.png" alt="Messaging page" />
     </mat-card>
   </div>
 </div>

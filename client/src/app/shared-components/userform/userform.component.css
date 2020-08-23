@@ -4,6 +4,7 @@
 
 .buttonsDiv {
   margin-top: 5%;
+  padding-bottom: 15px;
 }
 
 .adminIcon {
@@ -18,4 +19,8 @@
 
 .adminLabel {
   margin-right: 2%;
+}
+
+.clearButton {
+  margin: 0px 4px;
 }
