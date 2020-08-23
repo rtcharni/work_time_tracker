@@ -8,7 +8,6 @@ export class WorkEntriesController {
   public getWorkEntries(): (ValidationChain | RequestHandler | ErrorRequestHandler)[] {
     return [
       // Request param validators.
-      // query("userId").isNumeric().toInt().optional(),
       query('userId').isArray().toArray().optional(),
       query('workEntryId').isNumeric().toInt().optional(),
       query('companyId').isNumeric().toInt().optional(),
@@ -53,11 +52,6 @@ export class WorkEntriesController {
       async (req: Request, res: Response, next: NextFunction) => {
         try {
           console.log(req.cookies.auth);
-          // console.log(req.cookies);
-          // console.log(req.signedCookies);
-          // console.log(req.headers);
-          // console.log(req.headers.authorization);
-          // console.log(req.headers);
           const result: WorkEntry[] = await WorkEntriesService.addWorkEntry(req.body as WorkEntry);
           res.send(result);
         } catch (error) {
@@ -85,10 +79,10 @@ export class WorkEntriesController {
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          const result: WorkEntry[] = await WorkEntriesService.editWorkEntry(
-            // req.body as WorkEntry
-            { ...req.body, workEntryId: req.params.workEntryId } as WorkEntry
-          );
+          const result: WorkEntry[] = await WorkEntriesService.editWorkEntry({
+            ...req.body,
+            workEntryId: req.params.workEntryId,
+          } as WorkEntry);
           res.send(result);
         } catch (error) {
           next(error);
@@ -108,7 +102,6 @@ export class WorkEntriesController {
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
-          // console.log(req.body);
           const result: WorkEntry[] = await WorkEntriesService.deleteWorkEntry((req.params.workEntryId as unknown) as number);
           res.send(result);
         } catch (error) {

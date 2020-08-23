@@ -1,5 +1,5 @@
 <div class="frontpage">
-  <div class="row no-gutters">
+  <div class="row no-gutters justify-content-center">
     <!-- Work card -->
     <mat-card class="col backgroundColor matCard" routerLink="../workentry">
       <mat-card-header>
@@ -19,7 +19,7 @@
     </mat-card>
   </div>
 
-  <div class="row no-gutters">
+  <div class="row no-gutters justify-content-center">
     <!-- Admin card, if admin -->
     <mat-card *ngIf="user.admin" class="col backgroundColor matCard" routerLink="../admin">
       <mat-card-header>
@@ -37,5 +37,8 @@
       </mat-card-header>
       <img mat-card-image class="pageicon" src="../../../assets/images/message_icon1.png" alt="Messaging page" />
     </mat-card>
+
+    <!-- For empty col space. Rethink when adding new pages -->
+    <div *ngIf="!user.admin" class="col matCard"></div>
   </div>
 </div>
