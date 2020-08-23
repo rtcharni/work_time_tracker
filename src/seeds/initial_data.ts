@@ -5,7 +5,16 @@ export async function seed(knex: Knex): Promise<any> {
   return knex
     .withSchema('work-time-tracker')
     .table('work_messages')
-    .truncate()
+    .del()
+    .then(() => {
+      return knex.withSchema('work-time-tracker').table('work_entries').del();
+    })
+    .then(() => {
+      return knex.withSchema('work-time-tracker').table('users').del();
+    })
+    .then(() => {
+      return knex.withSchema('work-time-tracker').table('companies').del();
+    })
     .then(() => {
       return knex.withSchema('work-time-tracker').table('work_entries').truncate();
     })
