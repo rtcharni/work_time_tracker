@@ -20,7 +20,7 @@ export async function seed(knex: Knex): Promise<any> {
 
       .then(() => {
         return knex.raw(
-          'TRUNCATE TABLE work-time-tracker.work_messages, work-time-tracker.work_entries, work-time-tracker.users, work-time-tracker.companies CASCADE'
+          'TRUNCATE TABLE "work-time-tracker".work_messages, "work-time-tracker".work_entries, "work-time-tracker".users, "work-time-tracker".companies CASCADE'
         );
       })
       // .then(() => {
