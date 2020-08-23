@@ -1,5 +1,4 @@
 import moduleAlias from 'module-alias';
-
 if (process.env.NODE_ENV === 'production') {
   moduleAlias.addAliases({
     '@models': `${process.cwd()}/dist/models`,
@@ -8,7 +7,6 @@ if (process.env.NODE_ENV === 'production') {
     '@mockdata': `${process.cwd()}/dist/src/mockdata`,
   });
 }
-
 import { App } from './app';
 // tslint:disable-next-line: no-var-requires
 require('dotenv').config();
