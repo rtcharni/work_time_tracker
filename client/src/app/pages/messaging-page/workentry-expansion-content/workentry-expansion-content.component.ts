@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WorkEntry, WorkMessage, UserAndCompany, WorkMessageAndUser } from '@models';
+import { WorkEntry, UserAndCompany, WorkMessageAndUser } from '@models';
 import { WorkMessageService } from '@services';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import * as moment from 'moment';
+import { Constants } from '../../../../../../utils';
 
 @Component({
   selector: 'app-workentry-expansion-content',
@@ -11,18 +13,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class WorkentryExpansionContentComponent implements OnInit {
   @Input() workEntry: WorkEntry;
   @Input() user: UserAndCompany;
+
   workMessages: WorkMessageAndUser[] = [];
   messageText = '';
 
+  showEnterMessageInputOnTop = false;
+
   constructor(private workMessageService: WorkMessageService, private snackBar: MatSnackBar) {}
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     console.log('panel opened and got content', this.workEntry);
     this.workMessages = await this.getWorkMessages(this.workEntry.workEntryId);
     console.log('Got work messages!', this.workMessages);
   }
 
-  async getWorkMessages(workEntryId: number) {
+  async getWorkMessages(workEntryId: number): Promise<WorkMessageAndUser[]> {
     const workMessages = (await this.workMessageService.getWorkMessages(
       null,
       null,
@@ -35,7 +40,7 @@ export class WorkentryExpansionContentComponent implements OnInit {
     return workMessages;
   }
 
-  async handleSendMessageClick() {
+  async handleSendMessageClick(): Promise<void> {
     if (this.messageText.length) {
       const res = await this.workMessageService.addWorkMessage({
         userId: this.user.userId,
@@ -45,7 +50,7 @@ export class WorkentryExpansionContentComponent implements OnInit {
       });
       if (res) {
         const newMessage: any = { ...res, firstName: this.user.firstName, lastName: this.user.lastName };
-        this.workMessages.push(newMessage);
+        this.showEnterMessageInputOnTop ? this.workMessages.unshift(newMessage) : this.workMessages.push(newMessage);
       }
       this.messageText = '';
     } else {
@@ -55,5 +60,14 @@ export class WorkentryExpansionContentComponent implements OnInit {
         verticalPosition: 'top',
       });
     }
+  }
+
+  swapMessagesViewOrder(): void {
+    this.workMessages.reverse();
+    this.showEnterMessageInputOnTop = !this.showEnterMessageInputOnTop;
+  }
+
+  formatMessageCreatedAt(createdAt: string): string {
+    return moment(createdAt).format(Constants.DATEANDTIMEFORMAT);
   }
 }

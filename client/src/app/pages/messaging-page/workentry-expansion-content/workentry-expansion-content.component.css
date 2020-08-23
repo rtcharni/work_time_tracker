@@ -2,6 +2,28 @@
   width: 100% !important;
 }
 
+.sendMessageInputBottom {
+  margin-top: 10px;
+}
+
 .sendIcon {
   cursor: pointer;
+}
+
+.swapIcon {
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-size: 30px;
+}
+
+.messageCard {
+  margin-bottom: 5px;
+}
+
+.messageInfo {
+  font-style: italic;
+}
+
+.messageText {
+  font-weight: 500;
 }

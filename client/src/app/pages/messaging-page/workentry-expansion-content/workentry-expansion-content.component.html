@@ -3,11 +3,27 @@
 </div>
 
 <div *ngIf="workMessages.length">
-  <p *ngFor="let message of workMessages">{{ message.firstName }} {{ message.lastName }} - {{ message.workMessage }}</p>
+  <div class="row no-gutters justify-content-end">
+    <mat-icon (click)="swapMessagesViewOrder()" class="swapIcon">swap_vert</mat-icon>
+  </div>
+
+  <div *ngIf="showEnterMessageInputOnTop">
+    <mat-form-field appearance="fill" class="sendMessageInput">
+      <!-- <mat-label>......</mat-label> -->
+      <input [(ngModel)]="messageText" matInput placeholder="Enter message" />
+      <mat-icon class="sendIcon" (click)="handleSendMessageClick()" matSuffix>send</mat-icon>
+      <!-- <mat-hint>Hint</mat-hint> -->
+    </mat-form-field>
+  </div>
+
+  <mat-card class="messageCard" *ngFor="let message of workMessages">
+    <p class="messageInfo">{{ message.firstName }} {{ message.lastName }} - {{ formatMessageCreatedAt(message.createdAt) }}</p>
+    <p class="messageText">{{ message.workMessage }}</p>
+  </mat-card>
 </div>
 
-<div class="">
-  <mat-form-field appearance="fill" class="sendMessageInput">
+<div *ngIf="!showEnterMessageInputOnTop">
+  <mat-form-field appearance="fill" class="sendMessageInput sendMessageInputBottom">
     <!-- <mat-label>......</mat-label> -->
     <input [(ngModel)]="messageText" matInput placeholder="Enter message" />
     <mat-icon class="sendIcon" (click)="handleSendMessageClick()" matSuffix>send</mat-icon>
