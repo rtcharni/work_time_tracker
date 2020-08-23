@@ -1,33 +1,17 @@
 <div class="editworkentry">
   <form [formGroup]="editWorkEntryForm">
-    <div
-      class="row justify-content-center no-gutters"
-      *ngIf="showFormField('title')"
-    >
+    <div class="row justify-content-center no-gutters" *ngIf="showFormField('title')">
       <mat-form-field appearance="outline">
         <mat-label>Title:</mat-label>
-        <input
-          matInput
-          type="text"
-          placeholder="Enter here..."
-          formControlName="title"
-        />
+        <input matInput type="text" placeholder="Enter here..." formControlName="title" />
         <mat-icon matSuffix>subject</mat-icon>
       </mat-form-field>
     </div>
 
-    <div
-      class="row justify-content-center no-gutters"
-      *ngIf="showFormField('details')"
-    >
+    <div class="row justify-content-center no-gutters" *ngIf="showFormField('details')">
       <mat-form-field appearance="outline">
         <mat-label>Details:</mat-label>
-        <input
-          matInput
-          type="text"
-          placeholder="Enter here..."
-          formControlName="details"
-        />
+        <input matInput type="text" placeholder="Enter here..." formControlName="details" />
         <!-- <textarea
           rows="2"
           matInput
@@ -39,34 +23,18 @@
       </mat-form-field>
     </div>
 
-    <div
-      class="row justify-content-center no-gutters"
-      *ngIf="showFormField('customerName')"
-    >
+    <div class="row justify-content-center no-gutters" *ngIf="showFormField('customerName')">
       <mat-form-field appearance="outline">
         <mat-label>Customer:</mat-label>
-        <input
-          matInput
-          type="text"
-          placeholder="Enter here..."
-          formControlName="customerName"
-        />
+        <input matInput type="text" placeholder="Enter here..." formControlName="customerName" />
         <mat-icon matSuffix>account_box</mat-icon>
       </mat-form-field>
     </div>
 
-    <div
-      class="row justify-content-center no-gutters"
-      *ngIf="showFormField('costCents')"
-    >
+    <div class="row justify-content-center no-gutters" *ngIf="showFormField('costCents')">
       <mat-form-field appearance="outline">
         <mat-label>Cost:</mat-label>
-        <input
-          matInput
-          placeholder="Enter here..."
-          formControlName="costCents"
-          inputmode="numeric"
-        />
+        <input matInput placeholder="Enter here..." formControlName="costCents" inputmode="numeric" />
         <mat-icon matSuffix>money</mat-icon>
         <mat-error *ngIf="editWorkEntryForm.get('costCents').invalid"
           >Allowed numbers, one comma, and max two decimal points</mat-error
@@ -74,82 +42,42 @@
       </mat-form-field>
     </div>
 
-    <div
-      class="row justify-content-center no-gutters"
-      *ngIf="showFormField('date')"
-    >
+    <div class="row justify-content-center no-gutters" *ngIf="showFormField('date')">
       <mat-form-field appearance="outline">
         <mat-label>Date:</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          (focus)="picker.open()"
-          formControlName="date"
-        />
+        <input matInput [matDatepicker]="picker" (focus)="picker.open()" formControlName="date" />
         <mat-icon matSuffix>event</mat-icon>
         <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
         <mat-datepicker touchUi #picker></mat-datepicker>
       </mat-form-field>
     </div>
 
-    <div
-      class="row justify-content-center no-gutters"
-      *ngIf="showFormField('startTime')"
-    >
+    <div class="row justify-content-center no-gutters" *ngIf="showFormField('startTime')">
       <mat-form-field appearance="outline">
         <mat-label>Start time:</mat-label>
-        <input
-          matInput
-          type="time"
-          step="60"
-          placeholder="Enter here..."
-          formControlName="startTime"
-        />
+        <input matInput type="time" step="60" placeholder="Enter here..." formControlName="startTime" />
         <mat-icon matSuffix>access_time</mat-icon>
       </mat-form-field>
     </div>
 
-    <div
-      class="row justify-content-center no-gutters"
-      *ngIf="showFormField('endTime')"
-    >
+    <div class="row justify-content-center no-gutters" *ngIf="showFormField('endTime')">
       <mat-form-field appearance="outline">
         <mat-label>End time:</mat-label>
-        <input
-          matInput
-          type="time"
-          step="60"
-          placeholder="Enter here..."
-          formControlName="endTime"
-        />
+        <input matInput type="time" step="60" placeholder="Enter here..." formControlName="endTime" />
         <mat-icon matSuffix>access_time</mat-icon>
       </mat-form-field>
     </div>
 
-    <div
-      class="row justify-content-center no-gutters"
-      *ngIf="showFormField('breakMIN')"
-    >
+    <div class="row justify-content-center no-gutters" *ngIf="showFormField('breakMIN')">
       <mat-form-field appearance="outline">
         <mat-label>Break (min):</mat-label>
-        <input
-          matInput
-          step="1"
-          placeholder="Enter here..."
-          formControlName="breakMIN"
-          inputmode="numeric"
-        />
+        <input matInput step="1" placeholder="Enter here..." formControlName="breakMIN" inputmode="numeric" />
         <mat-icon matSuffix>free_breakfast</mat-icon>
-        <mat-error *ngIf="editWorkEntryForm.get('breakMIN').invalid"
-          >Only numbers up to 1000 and no decimals</mat-error
-        >
+        <mat-error *ngIf="editWorkEntryForm.get('breakMIN').invalid">Only numbers up to 1000 and no decimals</mat-error>
       </mat-form-field>
     </div>
 
-    <div
-      class="row justify-content-center no-gutters"
-      *ngIf="showFormField('charged')"
-    >
+    <div class="row justify-content-center no-gutters" *ngIf="showFormField('charged')">
       <mat-label>Charged:</mat-label>
       <mat-slide-toggle formControlName="charged"></mat-slide-toggle>
       <mat-icon matSuffix>attach_money</mat-icon>
