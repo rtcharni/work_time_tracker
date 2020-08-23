@@ -1,3 +1,5 @@
+import { User } from '@models';
+
 export interface WorkMessage {
   workMessageId?: number | undefined; // PK
   userId: number; // FK
@@ -6,3 +8,5 @@ export interface WorkMessage {
   workMessage: string;
   createdAt?: string | undefined;
 }
+
+export type WorkMessageAndUser = WorkMessage & User;

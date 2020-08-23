@@ -2,7 +2,7 @@ import knex from 'knex';
 // tslint:disable-next-line: no-var-requires
 require('dotenv').config();
 // tslint:disable-next-line: no-var-requires
-const knexfile = process.env.NODE_ENV === 'production' ? require('../../../knexfile') : require('../../knexfile');
+const knexfile = require(`${process.cwd()}/knexfile`);
 
 function initDatabaseConnection() {
   try {

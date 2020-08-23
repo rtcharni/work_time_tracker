@@ -1,17 +1,13 @@
 import * as Knex from 'knex';
+import bcrypt from 'bcrypt';
+import { Constants } from '../../utils';
 
 export async function seed(knex: Knex): Promise<any> {
-  // Deletes ALL existing entries
+  // Deletes ALL existing entries and reset PK sequence
   return knex
-    .withSchema('work-time-tracker')
-    .table('work_entries')
-    .del()
-    .then(() => {
-      return knex.withSchema('work-time-tracker').table('users').del();
-    })
-    .then(() => {
-      return knex.withSchema('work-time-tracker').table('companies').del();
-    })
+    .raw(
+      'TRUNCATE TABLE "work-time-tracker".work_messages, "work-time-tracker".work_entries, "work-time-tracker".users, "work-time-tracker".companies CASCADE'
+    )
     .then(() => {
       // Inserts companies
       return knex
@@ -26,20 +22,43 @@ export async function seed(knex: Knex): Promise<any> {
           },
         ]);
     })
-    .then(() => {
+    .then(async () => {
+      const roman1 = await bcrypt.hash('adminadmin', Constants.SALTROUNDS);
+      const katja = await bcrypt.hash('katjakatja', Constants.SALTROUNDS);
+      const roman2 = await bcrypt.hash('useruser', Constants.SALTROUNDS);
       // Inserts users
       return knex
         .withSchema('work-time-tracker')
         .table('users')
         .insert([
           {
-            userId: 1,
-            password: 'someRandomPasswordToBeChanged',
+            // userId: 1,
+            password: roman1,
             companyId: 1,
             email: 'roman.tcharni@gmail.com',
             firstName: 'Roman',
             lastName: 'Tcharni',
             admin: true,
+            resetPasswordToken: null,
+          },
+          {
+            // userId: 2,
+            password: 'someRandomPasswordToBeChanged',
+            companyId: 1,
+            email: 'katja.tcharni@gmail.com',
+            firstName: 'Katja',
+            lastName: 'Tcharni',
+            admin: false,
+            resetPasswordToken: null,
+          },
+          {
+            // userId: 3,
+            password: roman2,
+            companyId: 1,
+            email: 'r_t88@msn.com',
+            firstName: 'Romppu',
+            lastName: 'Tcharni',
+            admin: false,
             resetPasswordToken: null,
           },
         ]);

@@ -1,1 +1,22 @@
-<div class="messagingpage"></div>
+<div class="workMessagesTabs">
+  <mat-tab-group mat-stretch-tabs>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>chat</mat-icon>
+        Messages
+      </ng-template>
+      <ng-template matTabContent>
+        <app-workmessages-tab></app-workmessages-tab>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>date_range</mat-icon>
+        Future
+      </ng-template>
+      <ng-template matTabContent>
+        <mat-card>This feature is not implemented and is upcoming in future releases! :)</mat-card>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

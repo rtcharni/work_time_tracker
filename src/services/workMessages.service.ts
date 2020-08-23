@@ -1,4 +1,4 @@
-import { WorkMessage } from '@models';
+import { WorkMessage, WorkMessageAndUser } from '@models';
 import { Queries } from './database.queries';
 
 export class WorkMessagesService {
@@ -8,10 +8,15 @@ export class WorkMessagesService {
     companyId: number,
     workEntryId: number,
     from: string,
-    to: string
+    to: string,
+    joinusers: boolean
   ): Promise<WorkMessage[]> {
     if (process.env.REALDATA) {
-      return await Queries.getWorkMessages(workMessageId, userId, companyId, workEntryId, from, to);
+      let workMessages = await Queries.getWorkMessages(workMessageId, userId, companyId, workEntryId, from, to, joinusers);
+      if (joinusers) {
+        workMessages = WorkMessagesService.clearSensitiveUserDataFromMessages(workMessages as WorkMessageAndUser[]);
+      }
+      return workMessages;
     } else {
       // TODO mock data
       return null;
@@ -64,5 +69,16 @@ export class WorkMessagesService {
         // },
       ];
     }
+  }
+
+  static clearSensitiveUserDataFromMessages(workMessages: WorkMessageAndUser[]): WorkMessageAndUser[] {
+    for (const message of workMessages) {
+      delete message.admin;
+      delete message.email;
+      delete message.password;
+      delete message.resetPasswordToken;
+      delete message.userId;
+    }
+    return workMessages;
   }
 }

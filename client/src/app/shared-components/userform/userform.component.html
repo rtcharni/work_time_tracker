@@ -19,7 +19,12 @@
     <div class="row justify-content-center no-gutters">
       <mat-form-field appearance="outline">
         <mat-label>Email:</mat-label>
-        <input (input)="isOriginalValue(userForm.get('email').value, user.email, 'email')" matInput type="text" formControlName="email" />
+        <input
+          (input)="isOriginalValue(userForm.get('email').value, user.email, 'email')"
+          matInput
+          type="text"
+          formControlName="email"
+        />
         <mat-icon matSuffix>email</mat-icon>
         <mat-error *ngIf="userForm.get('email').hasError('required')">
           Field is required
@@ -81,7 +86,9 @@
         <mat-label>Verify password:</mat-label>
         <input matInput type="password" formControlName="verifyPassword" />
         <mat-icon matSuffix>vpn_key</mat-icon>
-        <mat-error *ngIf="userForm.get('verifyPassword').hasError('required') || userForm.get('verifyPassword').hasError('minlength')">
+        <mat-error
+          *ngIf="userForm.get('verifyPassword').hasError('required') || userForm.get('verifyPassword').hasError('minlength')"
+        >
           Required with minimum of 8 characters
         </mat-error>
         <mat-error *ngIf="userForm.get('verifyPassword').hasError('passwordsNotMatching')">
@@ -104,12 +111,11 @@
       <button
         mat-stroked-button
         color="primary"
-        class="saveButton"
         (click)="handleSaveButtonClick()"
         [disabled]="userForm.invalid || userForm.pristine"
       >
         {{ user.userId ? 'Save' : 'Create' }}</button
-      ><button mat-raised-button (click)="handleClearButtonClick()">
+      ><button class="clearButton" mat-stroked-button (click)="handleClearButtonClick()">
         Clear
       </button>
       <button mat-stroked-button color="warn" *ngIf="loggedUser.admin && user.userId" (click)="handleDeleteButtonClick()">

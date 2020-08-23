@@ -21,14 +21,11 @@ export class App {
   public renderFrontendInProduction(): void {
     if (process.env.NODE_ENV === 'production' && process.env.REALDATA) {
       console.log(`Backend reders Frontend! App is in the REALDATA and NODE_ENV is ${process.env.NODE_ENV}`);
-      this.app.use(Express.static(path.join(__dirname, '../../client/dist/client')));
+      console.log(`Current working dir: ${process.cwd()}`);
+      this.app.use(Express.static(path.join(process.cwd(), 'client/dist/client')));
       this.app.use((req: Request, res: Response, next: NextFunction) => {
-        res.sendFile(path.join(__dirname, '../../client/dist/client/index.html'));
+        res.sendFile(path.join(process.cwd(), 'client/dist/client/index.html'));
       });
-      // this.app.get("*", (req, res) => {
-      //   console.log(`I hit final route!`);
-      //   res.sendFile(path.join(__dirname, "../client/dist/client/index.html"));
-      // });
     }
   }
 

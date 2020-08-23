@@ -28,7 +28,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 export class ListworkentriesComponent implements OnInit, OnChanges {
   @Output() workEntriesChangedEvent = new EventEmitter<WorkEntry[]>();
 
-  private user: UserAndCompany = null;
+  user: UserAndCompany = null;
   // On-going month on init
   startDate: Date = moment().date(1).toDate();
   endDate: Date = new Date();

@@ -49,6 +49,7 @@ export class EditworkentrybottomsheetComponent implements OnInit {
       this.dialog
         .open(EditworkentryformComponent, {
           data: this.data,
+          height: '90%',
         })
         .afterClosed()
         .subscribe((res: WorkEntry) => {

@@ -1,0 +1,41 @@
+<div class="workMessagesTab">
+  <mat-form-field class="dateField" appearance="fill">
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input
+        matStartDate
+        placeholder="Start date"
+        [value]="startDate"
+        (dateChange)="handleDateChange('start', $event)"
+        (focus)="picker.open()"
+      />
+      <input
+        matEndDate
+        placeholder="End date"
+        [value]="endDate"
+        (dateChange)="handleDateChange('end', $event)"
+        (focus)="picker.open()"
+      />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker touchUi #picker></mat-date-range-picker>
+  </mat-form-field>
+
+  <mat-accordion *ngIf="workEntries.length">
+    <mat-expansion-panel *ngFor="let workEntry of workEntries">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ workEntry.title }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ workEntry.customerName }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <!-- Content loaded on open -->
+      <ng-template matExpansionPanelContent>
+        <app-workentry-expansion-content [workEntry]="workEntry" [user]="user"></app-workentry-expansion-content>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

@@ -42,7 +42,7 @@ export class ResetpasswordPageComponent implements OnInit {
         this.passwordChanged = true;
         setTimeout(() => {
           this.router.navigate(['login']);
-        }, 7000);
+        }, 4000);
       } else {
         this.unsuccessful = true;
       }

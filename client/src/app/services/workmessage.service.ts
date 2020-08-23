@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { WorkEntry, WorkMessage } from '@models';
+import { WorkEntry, WorkMessage, WorkMessageAndUser } from '@models';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +14,20 @@ export class WorkMessageService {
     companyId?: number,
     workEntryId?: number,
     from?: string,
-    to?: string
-  ): Promise<WorkEntry[]> {
-    const params: HttpParams = this.constructParamsForGetWorkMessages(workMessageId, userId, companyId, workEntryId, from, to);
+    to?: string,
+    joinusers?: boolean
+  ): Promise<WorkMessage[] | WorkMessageAndUser[]> {
+    const params: HttpParams = this.constructParamsForGetWorkMessages(
+      workMessageId,
+      userId,
+      companyId,
+      workEntryId,
+      from,
+      to,
+      joinusers
+    );
     const res = await this.http
-      .get<WorkEntry[]>(`/api/database/workmessages`, { params })
+      .get<WorkMessage[] | WorkMessageAndUser[]>(`/api/database/workmessages`, { params })
       .toPromise();
     return res;
   }
@@ -46,7 +55,8 @@ export class WorkMessageService {
     companyId?: number,
     workEntryId?: number,
     from?: string,
-    to?: string
+    to?: string,
+    joinusers?: boolean
   ): HttpParams {
     let params = new HttpParams();
     params = workMessageId ? params.set('workMessageId', workMessageId.toString()) : params;
@@ -55,6 +65,7 @@ export class WorkMessageService {
     params = workEntryId ? params.set('workEntryId', workEntryId.toString()) : params;
     params = from ? params.set('from', from) : params;
     params = to ? params.set('to', to) : params;
+    params = joinusers ? params.set('joinusers', joinusers.toString()) : params;
     return params;
   }
 }
