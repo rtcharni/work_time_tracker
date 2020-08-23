@@ -16,6 +16,9 @@ export async function seed(knex: Knex): Promise<any> {
       return knex.withSchema('work-time-tracker').table('companies').del();
     })
     .then(() => {
+      return knex.withSchema('work-time-tracker').table('work_messages').truncate();
+    })
+    .then(() => {
       return knex.withSchema('work-time-tracker').table('work_entries').truncate();
     })
     .then(() => {
