@@ -21,6 +21,8 @@
     <mat-date-range-picker touchUi #picker></mat-date-range-picker>
   </mat-form-field>
 
+  <mat-card *ngIf="!workEntries.length">No created entries between chosen dates..</mat-card>
+
   <mat-accordion *ngIf="workEntries.length">
     <mat-expansion-panel *ngFor="let workEntry of workEntries">
       <mat-expansion-panel-header>
