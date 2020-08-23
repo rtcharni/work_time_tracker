@@ -59,7 +59,7 @@ export async function seed(knex: Knex): Promise<any> {
           .table('users')
           .insert([
             {
-              userId: 1,
+              // userId: 1,
               password: password1,
               companyId: 1,
               email: 'roman.tcharni@gmail.com',
@@ -69,7 +69,7 @@ export async function seed(knex: Knex): Promise<any> {
               resetPasswordToken: null,
             },
             {
-              userId: 2,
+              // userId: 2,
               password: 'someRandomPasswordToBeChanged',
               companyId: 1,
               email: 'katja.tcharni@gmail.com',
@@ -79,7 +79,7 @@ export async function seed(knex: Knex): Promise<any> {
               resetPasswordToken: null,
             },
             {
-              userId: 3,
+              // userId: 3,
               password: password2,
               companyId: 1,
               email: 'r_t88@msn.com',
