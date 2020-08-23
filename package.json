@@ -9,7 +9,8 @@
     "start:all": "nodemon & cd ./client && ng serve",
     "build:all": "tsc && cd ./client && ng build --prod",
     "deploy:dev": "git push heroku-dev development:master --force",
-    "postinstall": "tsc"
+    "postinstall": "tsc",
+    "heroku-postbuild": "cd client && npm i"
   },
   "author": "Roman Tcharni",
   "license": "ISC",
