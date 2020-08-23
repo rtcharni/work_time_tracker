@@ -19,7 +19,9 @@ export async function seed(knex: Knex): Promise<any> {
       })
 
       .then(() => {
-        return knex.raw('TRUNCATE TABLE work_messages, work_entries, users, companies CASCADE');
+        return knex.raw(
+          'TRUNCATE TABLE work-time-tracker.work_messages, work-time-tracker.work_entries, work-time-tracker.users, work-time-tracker.companies CASCADE'
+        );
       })
       // .then(() => {
       //   return knex.withSchema('work-time-tracker').table('work_messages').truncate();
