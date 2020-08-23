@@ -3,6 +3,7 @@ import { Queries } from './database.queries';
 import { mockUsers, mockCompanies } from '@mockdata';
 import bcrypt from 'bcrypt';
 import { Constants } from '../../utils';
+import { EmailService } from './email.service';
 
 export class UsersService {
   static async getUsers(userId: number, companyId: number, withCompany?: boolean): Promise<User[] | UserAndCompany[]> {
@@ -17,7 +18,11 @@ export class UsersService {
     if (process.env.REALDATA) {
       const encrypted = await bcrypt.hash(user.password, Constants.SALTROUNDS);
       user.password = encrypted;
-      return await Queries.addGenericEntry(user, 'users');
+      const res = await Queries.addGenericEntry(user, 'users');
+      if (res && res.length) {
+        EmailService.sendInfoAboutCreatedUser(res[0]);
+      }
+      return res;
     } else {
       return [
         {

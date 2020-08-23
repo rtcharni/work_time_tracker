@@ -1,5 +1,6 @@
 import * as Knex from 'knex';
-// "heroku-postbuild": "cd client && npm i"
+import bcrypt from 'bcrypt';
+import { Constants } from '../../utils';
 
 export async function seed(knex: Knex): Promise<any> {
   // Deletes ALL existing entries
@@ -49,7 +50,9 @@ export async function seed(knex: Knex): Promise<any> {
             },
           ]);
       })
-      .then(() => {
+      .then(async () => {
+        const password1 = await bcrypt.hash('adminadmin', Constants.SALTROUNDS);
+        const password2 = await bcrypt.hash('useruser', Constants.SALTROUNDS);
         // Inserts users
         return knex
           .withSchema('work-time-tracker')
@@ -57,7 +60,7 @@ export async function seed(knex: Knex): Promise<any> {
           .insert([
             {
               userId: 1,
-              password: 'someRandomPasswordToBeChanged',
+              password: password1,
               companyId: 1,
               email: 'roman.tcharni@gmail.com',
               firstName: 'Roman',
@@ -77,7 +80,7 @@ export async function seed(knex: Knex): Promise<any> {
             },
             {
               userId: 3,
-              password: 'someRandomPasswordToBeChanged',
+              password: password2,
               companyId: 1,
               email: 'r_t88@msn.com',
               firstName: 'Romppu',
