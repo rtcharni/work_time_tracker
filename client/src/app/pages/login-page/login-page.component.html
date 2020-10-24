@@ -5,35 +5,27 @@
   <div class="row justify-content-center">
     <mat-form-field>
       <mat-label>User ID *</mat-label>
-      <input matInput type="number" step="1" [(ngModel)]="userId" />
+      <input matInput type="number" step="1" [(ngModel)]="userId" (keyup.enter)="logInUser()" />
     </mat-form-field>
   </div>
 
   <div class="row justify-content-center">
     <mat-form-field>
       <mat-label>Password *</mat-label>
-      <input matInput type="password" [(ngModel)]="password" />
+      <input matInput type="password" [(ngModel)]="password" (keyup.enter)="logInUser()" />
     </mat-form-field>
   </div>
 
   <div class="row justify-content-center">
-    <button mat-raised-button color="primary" (click)="logInUser()">
-      Login
-    </button>
+    <button mat-raised-button color="primary" (click)="logInUser()">Login</button>
   </div>
 
   <!-- Forgot password -->
-  <div
-    class="row justify-content-center forgotPasswordText"
-    (click)="showForgotPasswordInput = true"
-  >
+  <div class="row justify-content-center forgotPasswordText" (click)="showForgotPasswordInput = true">
     <span>Forgot password?</span>
   </div>
 
-  <div
-    class="row justify-content-center forgotPasswordInput"
-    *ngIf="showForgotPasswordInput"
-  >
+  <div class="row justify-content-center forgotPasswordInput" *ngIf="showForgotPasswordInput">
     <mat-form-field appearance="outline">
       <mat-label>User ID</mat-label>
       <input
@@ -41,21 +33,17 @@
         type="number"
         [(ngModel)]="forgotPassworkUserId"
         placeholder="Enter your User ID"
+        (keyup.enter)="handleForgotPassword()"
       />
     </mat-form-field>
   </div>
 
-  <div
-    class="row justify-content-center forgotPasswordButton"
-    *ngIf="showForgotPasswordInput"
-  >
-    <button mat-raised-button color="primary" (click)="handleForgotPassword()">
-      Recover account
-    </button>
+  <div class="row justify-content-center forgotPasswordButton" *ngIf="showForgotPasswordInput">
+    <button mat-raised-button color="primary" (click)="handleForgotPassword()">Recover account</button>
   </div>
 
   <mat-card class="nextStepsCard" *ngIf="showNextStepsInfo"
-    >Password recovery link is sent to possibly registered email. Please wait
-    few minutes to receive it and don't forget to check also your spam-box!
+    >Password recovery link is sent to possibly registered email. Please wait few minutes to receive it and don't forget to check
+    also your spam-box!
   </mat-card>
 </div>
