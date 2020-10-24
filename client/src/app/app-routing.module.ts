@@ -22,7 +22,7 @@ const routes: Routes = [
       { path: 'workentry', component: WorkEntryPageComponent },
       { path: 'admin', component: AdminPageComponent },
       { path: 'profile', component: ProfilePageComponent },
-      { path: 'messaging', component: MessagingPageComponent },
+      // { path: 'messaging', component: MessagingPageComponent },
     ],
   },
   { path: 'resetpassword/:token', component: ResetpasswordPageComponent },

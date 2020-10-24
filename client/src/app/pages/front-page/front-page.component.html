@@ -4,7 +4,6 @@
     <mat-card class="col backgroundColor matCard" routerLink="../workentry">
       <mat-card-header>
         <mat-card-title class="text">Worktime</mat-card-title>
-        <!-- <mat-card-subtitle class="text">Worktime</mat-card-subtitle> -->
       </mat-card-header>
       <img mat-card-image class="pageicon" src="../../../assets/images/workentry_color1.png" alt="Workentry page" />
     </mat-card>
@@ -13,7 +12,6 @@
     <mat-card class="col backgroundColor matCard" routerLink="../profile">
       <mat-card-header>
         <mat-card-title class="text">Profile</mat-card-title>
-        <!-- <mat-card-subtitle class="text">Admin</mat-card-subtitle> -->
       </mat-card-header>
       <img mat-card-image class="pageicon" src="../../../assets/images/user_icon1.png" alt="Profile page" />
     </mat-card>
@@ -24,19 +22,17 @@
     <mat-card *ngIf="user.admin" class="col backgroundColor matCard" routerLink="../admin">
       <mat-card-header>
         <mat-card-title class="text">Admin</mat-card-title>
-        <!-- <mat-card-subtitle class="text">Admin</mat-card-subtitle> -->
       </mat-card-header>
       <img mat-card-image class="pageicon" src="../../../assets/images/admin_color.png" alt="Admin page" />
     </mat-card>
 
     <!-- Messaging -->
-    <mat-card class="col backgroundColor matCard" routerLink="../messaging">
+    <!-- <mat-card class="col backgroundColor matCard" routerLink="../messaging">
       <mat-card-header>
         <mat-card-title class="text">Messaging</mat-card-title>
-        <!-- <mat-card-subtitle class="text">Admin</mat-card-subtitle> -->
       </mat-card-header>
       <img mat-card-image class="pageicon" src="../../../assets/images/message_icon1.png" alt="Messaging page" />
-    </mat-card>
+    </mat-card> -->
 
     <!-- For empty col space. Rethink when adding new pages -->
     <div *ngIf="!user.admin" class="col matCard"></div>
