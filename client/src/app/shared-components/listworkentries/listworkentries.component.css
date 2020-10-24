@@ -16,6 +16,7 @@ tr.element-row:not(.expanded-row):active {
 
 .element-row td {
   border-bottom-width: 0;
+  cursor: pointer;
 }
 
 .element-detail {

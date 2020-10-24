@@ -22,6 +22,7 @@ const routes: Routes = [
       { path: 'workentry', component: WorkEntryPageComponent },
       { path: 'admin', component: AdminPageComponent },
       { path: 'profile', component: ProfilePageComponent },
+      // Route to messaging page is commented out
       // { path: 'messaging', component: MessagingPageComponent },
     ],
   },
@@ -35,4 +36,3 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
-// canActivate: [AuthGuardService],

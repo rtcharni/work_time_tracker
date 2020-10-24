@@ -2,9 +2,7 @@
   <mat-form-field *ngIf="showComment" appearance="outline">
     <mat-label>Enter comment:</mat-label>
     <input matInput type="text" [(ngModel)]="comment" />
-    <mat-hint *ngIf="containsIllegalCharacter(comment)">
-      Don't use character ; It will mess up things...
-    </mat-hint>
+    <mat-hint *ngIf="containsIllegalCharacter(comment)"> Don't use character ; It will mess up things... </mat-hint>
     <button
       mat-button
       *ngIf="comment.length && !containsIllegalCharacter(comment)"
@@ -16,10 +14,11 @@
     </button>
   </mat-form-field>
 
-  <a mat-list-item (click)="onOptionClick('addComment')">
+  <!-- Adding comment is commented out -->
+  <!-- <a mat-list-item (click)="onOptionClick('addComment')">
     <span mat-line>Add comment</span>
     <span mat-line></span>
-  </a>
+  </a> -->
 
   <a mat-list-item (click)="onOptionClick('editEntry')">
     <span mat-line>Edit entry</span>
