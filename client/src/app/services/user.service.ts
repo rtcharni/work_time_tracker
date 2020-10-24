@@ -14,8 +14,9 @@ export class UserService {
     return this.user;
   }
 
-  public async getCompanysAllUsers(): Promise<User[]> {
-    const params: HttpParams = new HttpParams().set('companyId', this.user.companyId.toString());
+  public async getCompanysAllUsers(withoutDisabled?: boolean): Promise<User[]> {
+    let params: HttpParams = new HttpParams().set('companyId', this.user.companyId.toString());
+    params = withoutDisabled ? params.set('withoutDisabled', 'true') : params;
     const users: User[] = await this.http
       .get<User[]>(`/api/database/users`, { params })
       .toPromise();

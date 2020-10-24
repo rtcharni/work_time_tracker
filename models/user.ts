@@ -1,4 +1,4 @@
-import { Company } from "./company";
+import { Company } from './company';
 
 export interface User {
   userId: number | undefined; // PK - login name
@@ -9,6 +9,7 @@ export interface User {
   lastName: string;
   admin: boolean;
   resetPasswordToken: string;
+  disabled: boolean;
 }
 
 export interface UserCredentials {

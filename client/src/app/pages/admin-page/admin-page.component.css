@@ -24,3 +24,7 @@
 .divider {
   margin-bottom: 2%;
 }
+
+.userDisabled {
+  color: grey;
+}

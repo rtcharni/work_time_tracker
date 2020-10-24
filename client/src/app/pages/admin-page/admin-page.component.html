@@ -1,8 +1,5 @@
 <div class="adminpage">
-  <mat-tab-group
-    mat-stretch-tabs
-    (selectedTabChange)="selectedTabChange($event)"
-  >
+  <mat-tab-group mat-stretch-tabs (selectedTabChange)="selectedTabChange($event)">
     <!-- Manage users tab -->
     <mat-tab>
       <ng-template mat-tab-label>
@@ -12,13 +9,9 @@
       <ng-template matTabContent>
         <mat-form-field appearance="outline">
           <mat-label>Create or edit user</mat-label>
-          <mat-select
-            (selectionChange)="onUserProfileSelectionChange($event.value)"
-          >
+          <mat-select (selectionChange)="onUserProfileSelectionChange($event.value)">
             <mat-option [value]="emptyUser">Create new user</mat-option>
-            <mat-option *ngFor="let user of allUsers" [value]="user"
-              >{{ user.userId }} - {{ user.firstName }}</mat-option
-            >
+            <mat-option *ngFor="let user of allUsers" [value]="user">{{ user.userId }} - {{ user.firstName }}</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -41,37 +34,24 @@
           <div class="col-6">
             <mat-form-field appearance="outline" class="usersEntriesSelect">
               <mat-label>Select users for viewing</mat-label>
-              <mat-select
-                (selectionChange)="onUserEntriesSelectionChange($event.value)"
-                multiple
-              >
+              <mat-select (selectionChange)="onUserEntriesSelectionChange($event.value)" multiple>
                 <mat-option #allSelected [value]="-1">All</mat-option>
                 <mat-option
                   [disabled]="allSelected.selected"
                   *ngFor="let user of allUsers"
                   [value]="user.userId"
-                  >{{ user.userId }} - {{ user.firstName }}</mat-option
-                >
+                  [ngClass]="{ userDisabled: user.disabled === true }"
+                  >{{ user.userId }} - {{ user.firstName }} {{ user.disabled ? ' --- Deleted' : '' }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
 
           <div class="col">
-            <button
-              (click)="handleApplyButton()"
-              mat-stroked-button
-              color="primary"
-              class="applyButton"
-            >
-              Apply
-            </button>
+            <button (click)="handleApplyButton()" mat-stroked-button color="primary" class="applyButton">Apply</button>
           </div>
           <div class="col">
-            <button
-              mat-stroked-button
-              class="exportButton"
-              (click)="exportToCsv()"
-            >
+            <button mat-stroked-button class="exportButton" (click)="exportToCsv()">
               <!-- Export -->
               <mat-icon>cloud_download</mat-icon>
             </button>

@@ -27,6 +27,7 @@ export class AdminPageComponent implements OnInit {
     admin: false,
     password: null,
     resetPasswordToken: null,
+    disabled: false,
   };
   selectedUserProfile: User;
 
@@ -37,14 +38,20 @@ export class AdminPageComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.user = this.userService.getUser();
     this.emptyUser.companyId = this.user.companyId;
-    this.allUsers = await this.userService.getCompanysAllUsers();
+    this.allUsers = await this.userService.getCompanysAllUsers(true);
+    this.allUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
   }
 
-  selectedTabChange($event: MatTabChangeEvent): void {
+  async selectedTabChange($event: MatTabChangeEvent): Promise<void> {
     if ($event.index === 0) {
+      this.allUsers = await this.userService.getCompanysAllUsers(true);
+      this.allUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
       // tab changed to User profile tab. Do something if needed
     } else if ($event.index === 1) {
       // tab changed to Users work entries tab
+      this.allUsers = await this.userService.getCompanysAllUsers();
+      this.allUsers.sort((a, b) => a.firstName.localeCompare(b.firstName));
+      this.allUsers.sort((a, b) => (a.disabled ? 1 : -1));
       this.selectedUserProfile = undefined;
     }
   }

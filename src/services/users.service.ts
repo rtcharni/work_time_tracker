@@ -6,9 +6,14 @@ import { Constants } from '../../utils';
 import { EmailService } from './email.service';
 
 export class UsersService {
-  static async getUsers(userId: number, companyId: number, withCompany?: boolean): Promise<User[] | UserAndCompany[]> {
+  static async getUsers(
+    userId: number,
+    companyId: number,
+    withCompany?: boolean,
+    withoutDisabled?: boolean
+  ): Promise<User[] | UserAndCompany[]> {
     if (process.env.REALDATA) {
-      return await Queries.getUsers(userId ? [userId] : undefined, companyId, withCompany);
+      return await Queries.getUsers(userId ? [userId] : undefined, companyId, withCompany, withoutDisabled);
     } else {
       return mockUsers;
     }
@@ -56,7 +61,7 @@ export class UsersService {
 
   static async deleteUser(userId: number): Promise<User[]> {
     if (process.env.REALDATA) {
-      return await Queries.deleteGenericEntry<User[]>('users', 'userId', userId);
+      return await Queries.editGenericFields(['disabled'], [true], 'users', 'userId', userId);
     } else {
       return [mockUsers[0]];
     }
@@ -65,7 +70,7 @@ export class UsersService {
   static async logInUser(userCredentials: UserCredentials): Promise<LoginResponse> {
     if (process.env.REALDATA) {
       // Fetch user and compare
-      const userAndCompany = await this.getUsers(userCredentials.userId, undefined, true);
+      const userAndCompany = await this.getUsers(userCredentials.userId, undefined, true, true);
       if (userAndCompany.length === 1 && (await bcrypt.compare(userCredentials.password, userAndCompany[0].password))) {
         return {
           success: true,

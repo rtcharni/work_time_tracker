@@ -40,6 +40,7 @@ export async function seed(knex: Knex): Promise<any> {
             lastName: 'Tcharni',
             admin: true,
             resetPasswordToken: null,
+            disabled: false,
           },
           {
             // userId: 2,
@@ -50,6 +51,7 @@ export async function seed(knex: Knex): Promise<any> {
             lastName: 'Tcharni',
             admin: false,
             resetPasswordToken: null,
+            disabled: false,
           },
           {
             // userId: 3,
@@ -60,6 +62,7 @@ export async function seed(knex: Knex): Promise<any> {
             lastName: 'Tcharni',
             admin: false,
             resetPasswordToken: null,
+            disabled: false,
           },
         ]);
     });

@@ -4,30 +4,26 @@ import { BackendUtils } from '../backendUtils';
 import Knex from 'knex';
 
 export class Queries {
-  static async getUsers(usersIds: number[] = [], companyId?: number, withCompany?: boolean): Promise<User[] | UserAndCompany[]> {
+  static async getUsers(
+    usersIds: number[] = [],
+    companyId?: number,
+    withCompany?: boolean,
+    withoutDisabled?: boolean
+  ): Promise<User[] | UserAndCompany[]> {
+    const query = Database.db
+      .withSchema('work-time-tracker')
+      .select()
+      .from<User>('users')
+      .where(builder => {
+        if (usersIds.length === 1) builder.where('userId', usersIds[0]);
+        if (usersIds.length > 1) builder.whereIn('userId', usersIds);
+        if (companyId) builder.where('companyId', companyId);
+        if (withoutDisabled) builder.where('disabled', false);
+      });
     if (withCompany) {
-      return (await Database.db
-        .withSchema('work-time-tracker')
-        .select()
-        .from<User>('users')
-        .where(builder => {
-          if (usersIds.length === 1) builder.where('userId', usersIds[0]);
-          if (usersIds.length > 1) builder.whereIn('userId', usersIds);
-          if (companyId) builder.where('companyId', companyId);
-        })
-        .join('companies', 'users.companyId', 'companies.companyId')) as UserAndCompany[];
-    } else {
-      // REFACTOR JOIN!
-      return (await Database.db
-        .withSchema('work-time-tracker')
-        .select()
-        .from<User>('users')
-        .where(builder => {
-          if (usersIds.length === 1) builder.where('userId', usersIds[0]);
-          if (usersIds.length > 1) builder.whereIn('userId', usersIds);
-          if (companyId) builder.where('companyId', companyId);
-        })) as User[];
+      query.join('companies', 'users.companyId', 'companies.companyId');
     }
+    return withCompany ? ((await query) as UserAndCompany[]) : ((await query) as User[]);
   }
 
   static async getCompanies(companiesIds: number[] = []): Promise<Company[]> {
@@ -112,7 +108,7 @@ export class Queries {
     const updateObject = Object.fromEntries(fields.map((_, i) => [fields[i], values[i]]));
     try {
       return Database.db.transaction(async trx => {
-        return await trx
+        return (await trx
           .withSchema('work-time-tracker')
           .where(builder => {
             builder.where(idColumnName, id);
@@ -120,7 +116,7 @@ export class Queries {
             if (tableName === 'work_entries') builder.where('locked', false);
           })
           .update(updateObject, returnFields ? returnFields : '*')
-          .into(tableName);
+          .into(tableName)) as string[];
       });
     } catch (error) {
       console.error(
@@ -156,12 +152,12 @@ export class Queries {
   static async addUserPasswordResetToken(user: User, token: string): Promise<string[]> {
     try {
       return Database.db.transaction(async trx => {
-        return await trx
+        return (await trx
           .withSchema('work-time-tracker')
           .where(builder => {
             builder.where('userId', user.userId);
           })
-          .update('resetPasswordToken', token, 'resetPasswordToken');
+          .update('resetPasswordToken', token, 'resetPasswordToken')) as string[];
       });
     } catch (error) {
       console.error(`Error while adding user password reset token to user with ID: ${user.userId} and Token: ${token}`);

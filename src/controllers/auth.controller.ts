@@ -64,7 +64,7 @@ export class AuthController {
       async (req: Request, res: Response, next: NextFunction) => {
         try {
           // find user with given user id
-          const user = await UsersService.getUsers(req.body.userId, undefined, undefined);
+          const user = await UsersService.getUsers(req.body.userId, undefined, undefined, true);
 
           // found 0 or more than 1 user
           if (user.length !== 1) {

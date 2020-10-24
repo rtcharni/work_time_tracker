@@ -19,6 +19,7 @@ export async function up(knex: Knex): Promise<any> {
       t.string('lastName', 255);
       t.boolean('admin').defaultTo(false);
       t.text('resetPasswordToken');
+      t.boolean('disabled').defaultTo(false);
     })
     .createTable('work_entries', t => {
       t.increments('workEntryId').primary().notNullable();

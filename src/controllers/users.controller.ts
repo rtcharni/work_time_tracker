@@ -11,6 +11,7 @@ export class UsersController {
       query('userId').isNumeric().toInt().optional(),
       query('companyId').isNumeric().toInt().optional(),
       query('withCompany').isBoolean().toBoolean().optional(),
+      query('withoutDisabled').isBoolean().toBoolean().optional(),
       // Error handler for request params
       BackendUtils.validatorHandler(),
       // Actual Request handler
@@ -19,7 +20,8 @@ export class UsersController {
           const users: User[] | UserAndCompany[] = await UsersService.getUsers(
             req.query.userId,
             req.query.companyId,
-            req.query.withCompany
+            req.query.withCompany,
+            req.query.withoutDisabled
           );
           res.send(users);
         } catch (error) {
