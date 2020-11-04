@@ -45,6 +45,7 @@ export class App {
   private initRoutes(): void {
     this.app.use(
       '/api/database',
+      // First level validation
       // TokenManagement.validateTokenMiddleware,
       new DatabaseRoutes().router
     );
