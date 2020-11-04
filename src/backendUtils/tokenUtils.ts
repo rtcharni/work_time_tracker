@@ -31,28 +31,36 @@ export class TokenManagement {
   }
 
   public static validateLoginTokenMiddleware(req: Request, res: Response, next: NextFunction) {
+    // Skip middleware in dev
+    if (process.env.NODE_ENV !== 'production' && !process.env.REALDATA) {
+      return next();
+    }
+
     try {
-      console.log('IN MIDDLEWARE');
+      console.log('IN validateLoginTokenMiddleware');
       const token: string = req.cookies.auth;
       if (!token) {
         console.error('No existing token');
-        res.send({ redirectToLogin: true });
-        // res.redirect(302, "http://localhost:3000/");
-        return;
+        return res.send({ redirectToLogin: true });
+        // return res.redirect(302, "http://localhost:3000/");
       }
       jwt.verify(token, process.env.JWT_TOKEN_SECRET);
       next();
     } catch (error) {
       console.error(`Error while verifying token`);
       console.error(error);
+      return res.send({ redirectToLogin: true });
       // res.redirect("http://localhost:3000/login");
-      res.send({ redirectToLogin: true });
-      return;
     }
   }
 
   public static validateRequestActionMiddleware(reqPropCheck: RequestPropertyCheck[]): RequestHandler {
     return async (req: Request, res: Response, next: NextFunction) => {
+      // Skip middleware in dev
+      if (process.env.NODE_ENV !== 'production' && !process.env.REALDATA) {
+        return next();
+      }
+
       try {
         console.log('IN validateRequestActionMiddleware');
         const token = jwt.decode(req.cookies.auth) as {
@@ -85,17 +93,17 @@ export class TokenManagement {
     };
   }
 
-  private static requestToOwnCompany(req: Request, tokenCompany: number): boolean {
-    if (req.query.companyId && +req.query.companyId !== tokenCompany) {
-      console.error(`Request is not allowed. Company ${tokenCompany} is trying access other company ${req.query.companyId}`);
+  private static requestToOwnCompany(req: Request, tokenCompanyId: number): boolean {
+    if (req.query.companyId && +req.query.companyId !== tokenCompanyId) {
+      console.error(`Request is not allowed. Company ${tokenCompanyId} is trying access other company ${req.query.companyId}`);
       return false;
     }
-    if (req.body.companyId && +req.body.companyId !== tokenCompany) {
-      console.error(`Request is not allowed. Company ${tokenCompany} is trying access other company ${req.body.companyId}`);
+    if (req.body.companyId && +req.body.companyId !== tokenCompanyId) {
+      console.error(`Request is not allowed. Company ${tokenCompanyId} is trying access other company ${req.body.companyId}`);
       return false;
     }
-    if (req.params.companyId && +req.params.companyId !== tokenCompany) {
-      console.error(`Request is not allowed. Company ${tokenCompany} is trying access other company ${req.params.companyId}`);
+    if (req.params.companyId && +req.params.companyId !== tokenCompanyId) {
+      console.error(`Request is not allowed. Company ${tokenCompanyId} is trying access other company ${req.params.companyId}`);
       return false;
     }
     return true;
