@@ -94,7 +94,7 @@ export class EditworkentrybottomsheetComponent implements OnInit {
   }
 
   async deleteEntry(workEntry: WorkEntry): Promise<BottomSheetActionResult> {
-    const res = await this.workEntryService.deleteWorkEntry(workEntry.workEntryId);
+    const res = await this.workEntryService.deleteWorkEntry(workEntry);
     const actionResult: BottomSheetActionResult = {
       action: 'deleteEntry',
       workEntry: res,

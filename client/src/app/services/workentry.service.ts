@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { WorkEntry } from '@models';
+import { worker } from 'cluster';
 
 @Injectable({
   providedIn: 'root',
@@ -41,8 +42,11 @@ export class WorkEntryService {
     return this.lastAddedOrEditedEntry;
   }
 
-  public async deleteWorkEntry(workEntryId: number): Promise<WorkEntry> {
-    const res = await this.http.delete<WorkEntry[]>(`/api/database/workentries/${workEntryId}`).toPromise();
+  public async deleteWorkEntry(workEntry: WorkEntry): Promise<WorkEntry> {
+    const params = new HttpParams().set('userId', workEntry.userId.toString()).set('companyId', workEntry.companyId.toString());
+    const res = await this.http
+      .delete<WorkEntry[]>(`/api/database/workentries/${workEntry.workEntryId}`, { params })
+      .toPromise();
     return res.length ? res[0] : null;
   }
 
