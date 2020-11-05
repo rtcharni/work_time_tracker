@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler, ErrorRequestHandler } from 'express';
 import { query, ValidationChain, param, body } from 'express-validator';
-import { BackendUtils, Validation } from '../backendUtils';
+import { BackendUtils, TokenManagement, Validation } from '../backendUtils';
 import { WorkEntriesService } from '@services';
 import { WorkEntry } from '@models';
 
@@ -16,6 +16,10 @@ export class WorkEntriesController {
 
       // Error handler for request params
       BackendUtils.validatorHandler(),
+      // Request action validator
+
+      // TODO.. Not working because userId is an array and not just one number
+      // TokenManagement.validateRequestActionMiddleware([{propName:'userId',locatedInRequest:'query'}]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -32,7 +36,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      BackendUtils.errorHandler('Could not fetch events!'),
+      BackendUtils.errorHandler('Could not fetch work entries!'),
     ];
   }
 
@@ -48,6 +52,8 @@ export class WorkEntriesController {
       }),
       // Error handler for request params
       BackendUtils.validatorHandler(),
+      // Request action validator
+      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'body' }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -59,7 +65,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      BackendUtils.errorHandler('Could not fetch events!'),
+      BackendUtils.errorHandler('Could not add work entry!'),
     ];
   }
 
@@ -76,6 +82,8 @@ export class WorkEntriesController {
       }),
       // Error handler for request params
       BackendUtils.validatorHandler(),
+      // Request action validator
+      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'body' }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -89,7 +97,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      BackendUtils.errorHandler('Could not fetch events!'),
+      BackendUtils.errorHandler('Could not edit work entry!'),
     ];
   }
 
@@ -97,8 +105,11 @@ export class WorkEntriesController {
     return [
       // Request param validators.
       param('workEntryId').isNumeric().toInt(),
+      query(['companyId', 'userId']).isNumeric().toInt(),
       // Error handler for request params
       BackendUtils.validatorHandler(),
+      // Request action validator
+      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'query' }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -109,7 +120,7 @@ export class WorkEntriesController {
         }
       },
       // Error handler
-      BackendUtils.errorHandler('Could not fetch events!'),
+      BackendUtils.errorHandler('Could not delete work entry!'),
     ];
   }
 }
