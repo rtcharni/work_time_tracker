@@ -57,9 +57,9 @@ export class TokenManagement {
   public static validateRequestActionMiddleware(reqPropCheck: RequestPropertyCheck[]): RequestHandler {
     return async (req: Request, res: Response, next: NextFunction) => {
       // Skip middleware in dev
-      if (process.env.NODE_ENV !== 'production' && !process.env.REALDATA) {
-        return next();
-      }
+      // if (process.env.NODE_ENV !== 'production' && !process.env.REALDATA) {
+      //   return next();
+      // }
 
       try {
         console.log('IN validateRequestActionMiddleware');
@@ -76,11 +76,20 @@ export class TokenManagement {
         }
 
         for (const checkProp of reqPropCheck) {
-          if (token[checkProp.propName] !== req[checkProp.locatedInRequest][checkProp.propName]) {
+          if (checkProp.propName && checkProp.locatedInRequest) {
+            if (token[checkProp.propName] !== req[checkProp.locatedInRequest][checkProp.propName]) {
+              console.error(
+                `Request is not allowed. Token property ${checkProp.propName} with value ${
+                  token[checkProp.propName]
+                } is not matching request value of ${req[checkProp.locatedInRequest][checkProp.propName]}`
+              );
+              return res.status(403).send(`Request is not allowed`);
+            }
+          }
+
+          if (checkProp.mustBeAdmin && !token.admin) {
             console.error(
-              `Request is not allowed. Token property ${checkProp.propName} with value ${
-                token[checkProp.propName]
-              } is not matching request value of ${req[checkProp.locatedInRequest][checkProp.propName]}`
+              `Request is not allowed. User must be admin to make this request. User with ID ${token.userId} is not admin`
             );
             return res.status(403).send(`Request is not allowed`);
           }
@@ -113,4 +122,5 @@ export class TokenManagement {
 interface RequestPropertyCheck {
   propName: string;
   locatedInRequest: 'query' | 'body' | 'params';
+  mustBeAdmin: boolean;
 }
