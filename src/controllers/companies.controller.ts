@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler, ErrorRequestHandler } from 'express';
 import { query, ValidationChain } from 'express-validator';
-import { BackendUtils } from '../backendUtils';
+import { BackendUtils, TokenManagement } from '../backendUtils';
 import { CompaniesService } from '@services';
 import { Company } from '@models';
 
@@ -11,6 +11,8 @@ export class CompaniesController {
       query('companyId').isNumeric().toInt().optional(),
       // Error handler for request params
       BackendUtils.validatorHandler(),
+      // Request action validator
+      TokenManagement.validateRequestActionMiddleware([{ propName: 'companyId', locatedInRequest: 'query', mustBeAdmin: false }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
