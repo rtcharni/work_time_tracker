@@ -53,7 +53,7 @@ export class WorkEntriesController {
       // Error handler for request params
       BackendUtils.validatorHandler(),
       // Request action validator
-      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'body' }]),
+      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'body', mustBeAdmin: false }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -83,7 +83,7 @@ export class WorkEntriesController {
       // Error handler for request params
       BackendUtils.validatorHandler(),
       // Request action validator
-      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'body' }]),
+      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'body', mustBeAdmin: false }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -109,7 +109,7 @@ export class WorkEntriesController {
       // Error handler for request params
       BackendUtils.validatorHandler(),
       // Request action validator
-      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'query' }]),
+      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'query', mustBeAdmin: false }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
