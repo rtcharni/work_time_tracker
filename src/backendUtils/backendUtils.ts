@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction, RequestHandler, ErrorRequestHandler } from 'express';
 import { validationResult } from 'express-validator';
-import { AxiosResponse, AxiosError } from 'axios';
 
 export class BackendUtils {
   /**
@@ -21,22 +20,12 @@ export class BackendUtils {
    * @param message error message
    */
   public static errorHandler(message: string): ErrorRequestHandler {
-    return (err: Error | AxiosError, req: Request, res: Response, next: NextFunction) => {
-      if ((err as AxiosError).isAxiosError) {
-        const response: AxiosResponse = (err as AxiosError).response;
-        console.error({
-          message,
-          config: response.config,
-          data: response.data,
-        });
-        res.status(response.status).send({ message, data: response.data });
-      } else {
-        console.error(err);
-        res.status(500).send({
-          message: 'Internal server error!',
-          data: (err as Error).message,
-        });
-      }
+    return (err: Error, req: Request, res: Response, next: NextFunction) => {
+      console.error(err);
+      res.status(500).send({
+        message,
+        data: (err as Error).message,
+      });
     };
   }
 
