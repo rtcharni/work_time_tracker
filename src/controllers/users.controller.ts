@@ -14,6 +14,8 @@ export class UsersController {
       query('withoutDisabled').isBoolean().toBoolean().optional(),
       // Error handler for request params
       BackendUtils.validatorHandler(),
+      // Request action validator
+      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'query', mustBeAdmin: false }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -46,6 +48,8 @@ export class UsersController {
       }),
       // Error handler for request params
       BackendUtils.validatorHandler(),
+      // Request action validator
+      TokenManagement.validateRequestActionMiddleware([{ propName: null, locatedInRequest: null, mustBeAdmin: true }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -74,6 +78,8 @@ export class UsersController {
       }),
       // Error handler for request params
       BackendUtils.validatorHandler(),
+      // Request action validator
+      TokenManagement.validateRequestActionMiddleware([{ propName: 'userId', locatedInRequest: 'params', mustBeAdmin: false }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -97,6 +103,8 @@ export class UsersController {
       param('userId').isNumeric().toInt(),
       // Error handler for request params
       BackendUtils.validatorHandler(),
+      // Request action validator
+      TokenManagement.validateRequestActionMiddleware([{ propName: null, locatedInRequest: null, mustBeAdmin: true }]),
       // Actual Request handler
       async (req: Request, res: Response, next: NextFunction) => {
         try {
