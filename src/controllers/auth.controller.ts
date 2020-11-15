@@ -68,15 +68,14 @@ export class AuthController {
 
           // found 0 or more than 1 user
           if (user.length !== 1) {
-            res.send(true);
-            return;
+            return res.send(true);
           }
 
           if (user[0].resetPasswordToken) {
             try {
               jwt.verify(user[0].resetPasswordToken, process.env.JWT_PASSWORD_RESET_SECRET);
               console.log(`User with ID ${user[0].userId} has already requested reset password in the past 30 min`);
-              res.send(true);
+              return res.send(true);
             } catch (error) {
               console.log(`User has old reset password token that has expired`);
               // do nothing and continue code execution
@@ -91,7 +90,7 @@ export class AuthController {
           Queries.editGenericFields(['resetPasswordToken'], [token], 'users', 'userId', user[0].userId);
           // No need to await either of requests
 
-          res.send(true);
+          return res.send(true);
         } catch (error) {
           next(error);
         }
