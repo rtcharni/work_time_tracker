@@ -198,10 +198,12 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
         return 'Break';
       case 'charged':
         return 'Charged';
+      case 'duration':
+        return 'Duration';
     }
   }
 
-  displayTableData(data: string | string[] | number | boolean, field: string): any {
+  displayTableData(data: string | string[] | number | boolean, field: string, element: WorkEntry): any {
     switch (field) {
       case 'title':
         return data;
@@ -220,8 +222,21 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
       case 'breakMIN':
         return data;
       case 'charged':
-        return data === true ? 'Yes' : 'No';
+        return data ? 'Yes' : 'No';
+      case 'duration':
+        return element.startTime && element.endTime ? this.parseDurationFromStartAndEndTime(element) : null;
     }
+  }
+
+  private parseDurationFromStartAndEndTime(workEntry: WorkEntry): string {
+    const hoursDiff = Math.abs(moment(workEntry.startTime).hours() - moment(workEntry.endTime).hours());
+    const minutesDiff = Math.abs(moment(workEntry.startTime).minutes() - moment(workEntry.endTime).minutes());
+
+    const totalMinutesWithoutBreak = hoursDiff * 60 + minutesDiff - workEntry.breakMIN;
+    const hours = Math.floor(totalMinutesWithoutBreak / 60);
+    const minutes = totalMinutesWithoutBreak % 60;
+
+    return totalMinutesWithoutBreak > 0 ? `${hours ? `${hours}h ` : ''}${minutes ? `${minutes}min ` : ''}` : '';
   }
 
   displayExpandedData(element: WorkEntry, field: string): string {
@@ -244,6 +259,8 @@ export class ListworkentriesComponent implements OnInit, OnChanges {
         return `Break: ${element.breakMIN ?? ''} ${element.breakMIN ? 'min' : ''}`;
       case `charged`:
         return `Charged: ${element.charged ? 'Yes' : 'No'}`;
+      case `duration`:
+        return `Duration: ${element.startTime && element.endTime ? this.parseDurationFromStartAndEndTime(element) : ''}`;
     }
   }
 }

@@ -2,12 +2,7 @@
   <div class="row justify-content-between no-gutters">
     <mat-form-field class="searchField" appearance="fill">
       <mat-label>Search entries</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Enter here..."
-        #input
-      />
+      <input matInput (keyup)="applyFilter($event)" placeholder="Enter here..." #input />
     </mat-form-field>
 
     <mat-form-field class="dateField" appearance="fill">
@@ -33,46 +28,23 @@
     </mat-form-field>
   </div>
 
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    multiTemplateDataRows
-    class="mat-elevation-z2"
-    matSort
-  >
-    <ng-container
-      matColumnDef="{{ column }}"
-      *ngFor="let column of columnsToDisplay"
-    >
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z2" matSort>
+    <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ displayTableHeader(column) }}
       </th>
       <td mat-cell *matCellDef="let element">
-        {{ displayTableData(element[column], column) }}
+        {{ displayTableData(element[column], column, element) }}
       </td>
     </ng-container>
 
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
-      <td
-        mat-cell
-        *matCellDef="let element"
-        [attr.colspan]="columnsToDisplay.length"
-      >
-        <div
-          class="element-detail"
-          [@detailExpand]="
-            element == expandedElement ? 'expanded' : 'collapsed'
-          "
-        >
-          <mat-icon (click)="handleMoreIconClick(element)" class="moreIcon"
-            >more_vert</mat-icon
-          >
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <mat-icon (click)="handleMoreIconClick(element)" class="moreIcon">more_vert</mat-icon>
 
-          <div
-            class="expandedDataDiv"
-            *ngFor="let field of user.config.expandedListWorkEntryFields"
-          >
+          <div class="expandedDataDiv" *ngFor="let field of user.config.expandedListWorkEntryFields">
             {{ displayExpandedData(element, field) }}
           </div>
         </div>
@@ -87,17 +59,11 @@
       [class.expanded-row]="expandedElement === element"
       (click)="expandedElement = expandedElement === element ? null : element"
     ></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: ['expandedDetail']"
-      class="detail-row"
-    ></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 
     <!-- Row shown when there is no matching data. -->
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">
-        No found data ..
-      </td>
+      <td class="mat-cell" colspan="4">No found data ..</td>
     </tr>
   </table>
 
