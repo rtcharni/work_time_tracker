@@ -4,7 +4,7 @@ export const mockCompanies: Company[] = [
   {
     companyId: 1,
     name: 'company Y',
-    email: 'bas@gmail.com',
+    companyEmail: 'bas@gmail.com',
     config: {
       listWorkEntriesTableHeaderFields: ['title', 'date', 'charged'],
       workEntryFields: ['title', 'details', 'customerName', 'date', 'startTime', 'endTime', 'breakMIN', 'charged'],
@@ -14,7 +14,7 @@ export const mockCompanies: Company[] = [
   {
     companyId: 2,
     name: 'company A',
-    email: 'bar@gmail.com',
+    companyEmail: 'bar@gmail.com',
     config: {
       listWorkEntriesTableHeaderFields: ['title', 'date', 'charged'],
       workEntryFields: ['title', 'details', 'customerName', 'date', 'startTime', 'endTime', 'breakMIN', 'charged'],
@@ -24,7 +24,7 @@ export const mockCompanies: Company[] = [
   {
     companyId: 3,
     name: 'company BB',
-    email: 'foo@gmail.com',
+    companyEmail: 'foo@gmail.com',
     config: {
       listWorkEntriesTableHeaderFields: ['title', 'date', 'charged'],
       workEntryFields: ['title', 'details', 'customerName', 'date', 'startTime', 'endTime', 'breakMIN', 'charged'],
@@ -34,7 +34,7 @@ export const mockCompanies: Company[] = [
   {
     companyId: 4,
     name: 'company OOO',
-    email: 'foofee@gmail.com',
+    companyEmail: 'foofee@gmail.com',
     config: {
       listWorkEntriesTableHeaderFields: ['title', 'date', 'charged'],
       workEntryFields: ['title', 'details', 'customerName', 'date', 'startTime', 'endTime', 'breakMIN', 'charged'],
@@ -44,7 +44,7 @@ export const mockCompanies: Company[] = [
   {
     companyId: 5,
     name: 'company QWER',
-    email: 'asdf@gmail.com',
+    companyEmail: 'asdf@gmail.com',
     config: {
       listWorkEntriesTableHeaderFields: ['title', 'date', 'charged'],
       workEntryFields: ['title', 'details', 'customerName', 'date', 'startTime', 'endTime', 'breakMIN', 'charged'],

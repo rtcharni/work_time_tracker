@@ -1,8 +1,8 @@
-import { Config } from "./config";
+import { Config } from './config';
 
 export interface Company {
   companyId: number; // PK
   name: string;
-  email: string;
+  companyEmail: string;
   config: Config;
 }

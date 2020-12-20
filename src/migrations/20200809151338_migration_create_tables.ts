@@ -7,7 +7,7 @@ export async function up(knex: Knex): Promise<any> {
     .createTable('companies', t => {
       t.increments('companyId').primary().notNullable();
       t.string('name', 255).notNullable();
-      t.string('email', 255).notNullable();
+      t.string('companyEmail', 255).notNullable();
       t.json('config');
     })
     .createTable('users', t => {

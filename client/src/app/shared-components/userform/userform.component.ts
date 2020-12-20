@@ -80,26 +80,11 @@ export class UserformComponent implements OnInit, OnChanges {
   handleSaveButtonClick(): void {
     const newUser: any = { ...this.userForm.getRawValue() };
     delete newUser.verifyPassword;
-    // console.log(`In user form, saving user`, newUser);
     this.userFormEvent.emit({
       user: newUser as User,
       action: newUser.userId ? 'edit' : 'create',
     });
     this.userForm = this.initForm(newUser.userId ? { ...this.userForm.getRawValue() } : this.user);
-    // this.userForm.markAsPristine();
-    // this.userForm.reset({
-    //   userId: user.userId,
-    //   companyId: user.companyId,
-    //   email: user.email,
-    //   firstName: user.firstName,
-    //   lastName: user.lastName,
-    //   password: user.password,
-    //   verifyPassword: user.password,
-    //   admin: user.admin,
-    // });
-    // this.userForm.updateValueAndValidity();
-    // this.userForm.markAsPristine();
-    // this.userForm.markAsUntouched();
     console.log('in handle save button', this.userForm);
   }
 

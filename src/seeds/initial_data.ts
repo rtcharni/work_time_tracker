@@ -17,7 +17,7 @@ export async function seed(knex: Knex): Promise<any> {
           {
             companyId: 1,
             name: 'Roman Super Company Oy',
-            email: 'roman.tcharni@gmail.com',
+            companyEmail: 'roman.tcharni@gmail.com',
             config: `{"listWorkEntriesTableHeaderFields":["title", "date", "charged"],"workEntryFields":["title","details","customerName","costCents","date","startTime","endTime","breakMIN","charged"],"expandedListWorkEntryFields":["details","customerName","costCents","startTime","endTime","breakMIN","charged"]}`,
           },
         ]);
