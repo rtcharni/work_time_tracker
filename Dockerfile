@@ -1,9 +1,5 @@
 FROM node:14-alpine
 
-ENV PORT=3000
-ENV NODE_ENV=production
-ENV REALDATA=1
-
 RUN apk add python make gcc g++
 
 WORKDIR /app
@@ -21,6 +17,10 @@ RUN npm i
 WORKDIR /app
 
 RUN npm run build:all
+
+ENV PORT=3000
+ENV NODE_ENV=production
+ENV REALDATA=1
 
 EXPOSE 3000
 
