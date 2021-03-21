@@ -2,6 +2,7 @@
 
 application.zip
 deploy-aws.sh
+db-*.sh
 
 # dependencies
 /client/node_modules
