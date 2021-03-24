@@ -1,10 +1,11 @@
+import path from 'path';
 import moduleAlias from 'module-alias';
 if (process.env.NODE_ENV === 'production') {
   moduleAlias.addAliases({
-    '@models': `${process.cwd()}/dist/models`,
-    '@controllers': `${process.cwd()}/dist/src/controllers`,
-    '@services': `${process.cwd()}/dist/src/services`,
-    '@mockdata': `${process.cwd()}/dist/src/mockdata`,
+    '@models': path.resolve(__dirname, '..', 'models'),
+    '@controllers': path.resolve(__dirname, 'controllers'),
+    '@services': path.resolve(__dirname, 'services'),
+    '@mockdata': path.resolve(__dirname, 'mockdata'),
   });
 }
 import { App } from './app';
