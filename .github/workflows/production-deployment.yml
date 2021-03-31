@@ -1,15 +1,18 @@
-name: project-build
+name: build-and-deploy
 on:
   push:
     branches:
-      - '!development'
-      - '!master'
+      - 'development'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - shell: bash
+        env:
+          SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - run: npm i -g @angular/cli typescript
       - run: npm i
       - run: cd client && npm i
+      - run: ssh -i $SSH_KEY ec2-user@ec2-18-195-52-54.eu-central-1.compute.amazonaws.com
