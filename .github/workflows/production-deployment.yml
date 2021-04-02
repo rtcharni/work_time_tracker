@@ -24,5 +24,6 @@ jobs:
           key: cached-zipper-application
 
       - name: Check result
-      - run: echo "Running ls to check"
-      - run: ls -al
+        run: |
+          echo "CHeck result"
+          ls -al
