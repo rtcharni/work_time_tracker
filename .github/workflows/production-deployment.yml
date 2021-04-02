@@ -15,6 +15,7 @@ jobs:
         run: |
           npm i -g @angular/cli typescript && npm i
           cd client && npm i && cd ..
+          npm audit
           zip -r application.zip ./ -x *.DS_Store .git/\* node_modules/\* client/node_modules/\*
 
       - name: Cache zipped application
@@ -65,5 +66,11 @@ jobs:
           username: 'ec2-user'
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            whoami
-            ls -al
+            rm -rf work_time_tracker
+            unzip application.zip -d work_time_tracker
+            cd work_time_tracker
+            export NODE_ENV=development
+            npm i
+            export NODE_ENV=production
+            pm2 delete all
+            pm2 start dist/src/index.js
