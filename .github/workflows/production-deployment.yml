@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - name: Build both projects
-      - run: |
+        run: |
           echo "Running needed npm i & project builds"
           npm i -g @angular/cli typescript && npm i
           cd client && npm i && cd ..
@@ -23,5 +23,6 @@ jobs:
           path: application.zip
           key: cached-zipper-application
 
-      - run: echo "Running ls to check"
-      - run: ls -al
+      - name: Check result
+        run: echo "Running ls to check"
+        run: ls -al
