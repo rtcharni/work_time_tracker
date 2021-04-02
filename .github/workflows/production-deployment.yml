@@ -11,10 +11,8 @@ jobs:
       - uses: actions/setup-node@v1
       - name: Build both projects
         run: |
-          echo "Running needed npm i & project builds"
           npm i -g @angular/cli typescript && npm i
           cd client && npm i && cd ..
-          echo "Zipping application"
           zip -r application.zip ./ -x *.DS_Store .git/\* node_modules/\* client/node_modules/\*
 
       - name: Cache zipped application
@@ -25,5 +23,22 @@ jobs:
 
       - name: Check result
         run: |
-          echo "CHeck result"
+          echo "Check result"
+          ls -al
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - name: Get cached zipped application
+        uses: actions/cache@v2
+        with:
+          path: application.zip
+          key: cached-zipper-application
+
+      - name: Check result
+        run: |
+          echo "Check result"
           ls -al
