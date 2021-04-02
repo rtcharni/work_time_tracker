@@ -9,9 +9,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
-        env:
-          SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-      - run: npm i -g @angular/cli typescript
-      - run: npm i
-      - run: cd client && npm i
-      - run: ssh -i $SSH_KEY ec2-user@ec2-18-195-52-54.eu-central-1.compute.amazonaws.com
+
+      - name: Build both projects
+      - run: |
+        echo "Running needed npm i & project builds"
+        npm i -g @angular/cli typescript && npm i
+        cd client && npm i && cd ..
+        echo "Zipping application"
+        zip -r application.zip ./ -x *.DS_Store .git/\* node_modules/\* client/node_modules/\*
+
+      - name: Cache zipped application
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: application.zip
+          key: cached-zipper-application
+        
+      -run:
+        echo "Running ls to check"
