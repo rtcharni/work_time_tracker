@@ -13,7 +13,8 @@ jobs:
       - name: Build both projects
       - run: |
         echo "Running needed npm i & project builds"
-        npm i -g @angular/cli typescript && npm i
+        npm i -g @angular/cli typescript
+        npm i
         cd client && npm i && cd ..
         echo "Zipping application"
         zip -r application.zip ./ -x *.DS_Store .git/\* node_modules/\* client/node_modules/\*
