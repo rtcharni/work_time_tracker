@@ -44,3 +44,12 @@ jobs:
         run: |
           echo "Check result"
           ls -al
+
+      - name: Deploy to AWS EC2
+        uses: easingthemes/ssh-deploy@v2.1.6
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          SOURCE: 'application.zip'
+          REMOTE_HOST: 'ec2-18-195-52-54.eu-central-1.compute.amazonaws.com'
+          REMOTE_USER: 'ec2-user'
+          TARGET: '~/'
