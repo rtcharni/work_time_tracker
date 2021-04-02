@@ -25,5 +25,5 @@ jobs:
           path: application.zip
           key: cached-zipper-application
         
-      -run:
+      - run:
         echo "Running ls to check"
