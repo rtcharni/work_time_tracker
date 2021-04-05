@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: work-time-tracker
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - '3000:3000'
+    restart: always
+    environment:
+      DBHOST: postgres
+      DBUSER: postgres
+      DBPASSWORD: postgres
+      DBDATABASE: postgres
+      DBPORT: 5432
+
+  postgres:
+    container_name: postgres-db
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - '5432:5432'
+    expose:
+      - '5432'
+    volumes:
+      - work-time-tracker-vol:/var/lib/postgresql/data
+
+volumes:
+  work-time-tracker-vol:
